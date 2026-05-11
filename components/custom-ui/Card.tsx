@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn('bg-white rounded-2xl shadow-sm p-4', className)} {...props} />
+  <div ref={ref} className={cn('bg-white/95 dark:bg-zinc-900/95 backdrop-blur-sm rounded-2xl shadow-sm border border-gray-100 dark:border-zinc-800 p-4 transition-all duration-300 hover:shadow-md', className)} {...props} />
 ));
 
 Card.displayName = 'Card';

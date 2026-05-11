@@ -10,4 +10,4 @@ export const navigationItems = [
   { label: 'Settings', href: '/settings', icon: React.createElement(Settings, { size: 20 }) },
 ];
 
-export const bottomTabs = navigationItems.slice(0, 5);
+export const bottomTabs = navigationItems;

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 
@@ -17,7 +18,7 @@ interface SidebarProps {
   shopName?: string;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ items, logo, shopName }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ items, logo = '/logo.png' }) => {
   const pathname = usePathname();
 
   return (
@@ -25,11 +26,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ items, logo, shopName }) => {
       {/* Logo Section */}
       <div className="p-4 border-b border-gray-200">
         <div className="flex items-center gap-3">
-          {logo && <img src={logo} alt="Logo" className="w-8 h-8 rounded" />}
-          <div>
-            <h1 className="text-sm font-bold text-gray-900">{shopName || 'OrderKro'}</h1>
-            <p className="text-xs text-gray-400">Seller Hub</p>
-          </div>
+          <Image
+            src={logo}
+            alt="OrderKaro"
+            width={150}
+            height={50}
+            className="rounded"
+          />
         </div>
       </div>
 

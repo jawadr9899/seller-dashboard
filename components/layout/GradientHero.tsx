@@ -15,10 +15,10 @@ export const GradientHero: React.FC<GradientHeroProps> = ({
   label,
   value,
   trend,
-  from = 'from-blue-600',
-  to = 'to-purple-700',
+  from,
+  to,
 }) => (
-  <div className={`bg-gradient-to-br ${from} ${to} text-white rounded-2xl p-6 mb-6`}>
+  <div className={`gradient-cyan-purple text-white rounded-2xl p-6 mb-6`}>
     <p className="text-white/80 text-xs font-semibold uppercase mb-2">{label}</p>
     <div className="flex items-baseline justify-between">
       <h2 className="text-3xl md:text-4xl font-bold">{value}</h2>
