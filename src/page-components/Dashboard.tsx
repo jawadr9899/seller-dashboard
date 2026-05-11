@@ -31,16 +31,15 @@ const chartData = [
 export const Dashboard: React.FC = () => {
   const dispatch = useAppDispatch();
   const dashboard = useAppSelector((state) => state.dashboard);
-
   return (
     <div className="flex bg-gray-50">
-      <Sidebar items={navigationItems} shopName={dashboard.shopName} />
+      <Sidebar items={navigationItems} logo={"/logo.png"}    />
 
       <main className="flex-1 pb-20 lg:pb-0">
         <div className="p-4 md:p-6 max-w-7xl mx-auto">
           {/* Hero Section */}
           <PageHeader
-            title={`Good morning, ${dashboard.shopName}!`}
+            title={`Good morning,from Order Karo`}
             label="Today's Overview"
             subtitle="Keep track of your orders and earnings"
           />
@@ -101,7 +100,7 @@ export const Dashboard: React.FC = () => {
           </div>
 
           {/* Incoming Orders */}
-          <SectionHeader title="Incoming Orders" dot="red" action="View All" />
+          <SectionHeader title="Incoming Orders" dot="red" action="View All" href="/orders" />
           <div className="space-y-3 mb-6">
             {dashboard.orders.map((order) => (
               <OrderCard

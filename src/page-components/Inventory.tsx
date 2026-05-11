@@ -8,7 +8,6 @@ import { BottomTabBar } from '@/components/layout/BottomTabBar';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/custom-ui/Button';
 import { Input } from '@/components/custom-ui/Input';
-import { Badge } from '@/components/custom-ui/Badge';
 import { ProductRow } from '@/components/cards/ProductRow';
 
 import { navigationItems, bottomTabs } from '@/config/navigation';

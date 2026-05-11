@@ -25,12 +25,12 @@ export const Chat: React.FC = () => {
   const messages = selectedContactId ? conversations[selectedContactId] || [] : [];
 
   return (
-    <div className="flex bg-gray-50">
+    <div className="flex h-screen bg-gray-50 flex-col lg:flex-row overflow-hidden">
       <Sidebar items={navigationItems} />
 
-      <main className="flex-1 pb-20 lg:pb-0 flex">
-        {/* Contact List - Hidden on mobile */}
-        <div className="hidden lg:flex lg:w-80 bg-white border-r border-gray-200 flex-col">
+      <main className="flex-1 pb-16 lg:pb-0 flex flex-col lg:flex-row overflow-hidden">
+        {/* Contact List */}
+        <div className={`lg:w-80 bg-white border-r border-gray-200 flex-col ${selectedContact ? 'hidden lg:flex' : 'flex flex-1'}`}>
           <div className="p-4 border-b border-gray-200">
             <PageHeader title="Messages" />
           </div>
@@ -51,23 +51,27 @@ export const Chat: React.FC = () => {
         </div>
 
         {/* Chat Panel */}
-        <div className="flex-1 flex flex-col">
+        <div className={`flex-1 flex flex-col min-h-0 ${!selectedContact ? 'hidden lg:flex' : 'flex'}`}>
           {selectedContact ? (
             <>
               {/* Chat Header */}
-              <div className="border-b border-gray-200 bg-white p-4 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <Avatar src={selectedContact.avatar} size="md" online={selectedContact.online} alt={selectedContact.name} />
-                  <div>
-                    <h2 className="text-sm font-bold text-gray-900">{selectedContact.name}</h2>
-                    <p className="text-xs text-gray-500">{selectedContact.online ? 'ONLINE' : 'OFFLINE'} · REGULAR CUSTOMER</p>
-                  </div>
+              <div className="border-b border-gray-200 bg-white p-4 flex items-center gap-3">
+                <button
+                  className="lg:hidden text-gray-500 hover:text-cyan-600 mr-2"
+                  onClick={() => dispatch(selectContact(null))}
+                >
+                  ←
+                </button>
+                <Avatar src={selectedContact.avatar} size="md" online={selectedContact.online} alt={selectedContact.name} />
+                <div className="flex-1">
+                  <h2 className="text-sm font-bold text-gray-900">{selectedContact.name}</h2>
+                  <p className="text-xs text-gray-500">{selectedContact.online ? 'ONLINE' : 'OFFLINE'} · REGULAR CUSTOMER</p>
                 </div>
                 <button className="text-gray-500 hover:text-gray-700 text-xl">⋮</button>
               </div>
 
               {/* Messages */}
-              <div className="flex-1 overflow-y-auto p-4 bg-white">
+              <div className="flex-1 overflow-y-auto p-4 bg-gray-50/50">
                 {messages.length > 0 ? (
                   <div>
                     {messages.map((msg) => (
@@ -102,9 +106,6 @@ export const Chat: React.FC = () => {
             </div>
           )}
         </div>
-
-        {/* Mobile Contact List Overlay */}
-        <div className="lg:hidden fixed inset-0 bg-black/50 pointer-events-none" />
       </main>
 
       <BottomTabBar items={bottomTabs} />
