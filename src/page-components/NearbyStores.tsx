@@ -1,41 +1,129 @@
 "use client";
 
-import React, { useState } from "react";
-import { dummyStores } from "@/dummy/nearby-stores";
+import React, { useState, useMemo } from "react";
+import { dummyProducts } from "@/dummy/nearby-stores";
 
 export default function NearbyStores() {
   const [activeTab, setActiveTab] = useState("nearby");
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Use a fixed number of items per page to avoid heavy JS computations
-  const itemsPerPage = 5;
+  // New Filters State
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([
+    "All",
+  ]);
+  const [maxDistance, setMaxDistance] = useState<number>(10);
 
-  // Filter stores based on the active tab (e.g., Nearby = distance <= 2.5 km)
-  const filteredStores =
-    activeTab === "nearby"
-      ? dummyStores.filter((store) => parseFloat(store.distance) <= 2.5)
-      : dummyStores;
+  const itemsPerPage = 6;
+
+  // Extract unique categories from dummy data
+  const allCategories = useMemo(() => {
+    const cats = Array.from(
+      new Set(dummyProducts.map((product) => product.category)),
+    );
+    return ["All", ...cats];
+  }, []);
+
+  const handleCategoryToggle = (category: string) => {
+    if (category === "All") {
+      setSelectedCategories(["All"]);
+    } else {
+      let newCats = selectedCategories.filter((c) => c !== "All");
+      if (newCats.includes(category)) {
+        newCats = newCats.filter((c) => c !== category);
+        if (newCats.length === 0) newCats = ["All"];
+      } else {
+        newCats.push(category);
+      }
+      setSelectedCategories(newCats);
+    }
+    setCurrentPage(1);
+  };
+
+  // Filter products based on search, category, distance, and tab
+  const filteredProducts = useMemo(() => {
+    return dummyProducts.filter((product) => {
+      // Search Filter
+      if (
+        searchQuery &&
+        !product.name.toLowerCase().includes(searchQuery.toLowerCase())
+      ) {
+        return false;
+      }
+
+      // Category Filter
+      if (
+        !selectedCategories.includes("All") &&
+        !selectedCategories.includes(product.category)
+      ) {
+        return false;
+      }
+
+      // Distance Slider Filter
+      const productDist = parseFloat(product.distance);
+      if (productDist > maxDistance) {
+        return false;
+      }
+
+      // Tab Filter (Nearby visually restricts to <= 2.5km as an extra fast-filter)
+      if (activeTab === "nearby" && productDist > 2.5) {
+        return false;
+      }
+
+      return true;
+    });
+  }, [searchQuery, selectedCategories, maxDistance, activeTab]);
 
   const totalPages = Math.max(
     1,
-    Math.ceil(filteredStores.length / itemsPerPage),
+    Math.ceil(filteredProducts.length / itemsPerPage),
   );
 
-  const currentStores = filteredStores.slice(
+  const currentProducts = filteredProducts.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
   );
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
-    <div className="h-full w-full flex flex-col font-sans">
+    <div className="w-full flex flex-col font-sans min-h-screen">
+      {/* Gradient Header Background (Absolute) */}
+      <div className="absolute top-0 left-0 right-0 h-[280px] gradient-cyan-purple z-0 rounded-b-[60px] opacity-10 pointer-events-none"></div>
+
       {/* ---------------- MOBILE VIEW ---------------- */}
-      <div className="md:hidden flex flex-col h-full overflow-hidden bg-[#f0f3f6]">
-        {/* Mobile Top Tabs Toggle with Gradient Background */}
-        <div className="pt-6 pb-12 px-4 flex justify-center shrink-0 gradient-cyan-purple rounded-b-[40px] shadow-sm -mb-6 relative z-0">
+      <div className="md:hidden flex flex-col min-h-screen bg-[#f0f3f6] relative z-10">
+        {/* Mobile Search Bar */}
+        <div className="px-4 pt-6 pb-2">
+          <div className="relative w-full">
+            <svg
+              className="w-5 h-5 text-gray-400 absolute left-4 top-3.5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-11 pr-4 py-3 rounded-full border border-transparent focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 shadow-sm text-sm outline-none transition-all"
+            />
+          </div>
+        </div>
+
+        {/* Mobile Top Tabs Toggle */}
+        <div className="pb-12 px-4 flex justify-center shrink-0 gradient-cyan-purple rounded-b-[40px] shadow-sm -mb-6 mt-4 relative z-0">
           <div className="bg-white/20 backdrop-blur-sm rounded-full p-1 flex w-full max-w-[320px] shadow-inner">
             <button
               onClick={() => {
@@ -61,7 +149,7 @@ export default function NearbyStores() {
                   />
                 </svg>
               )}
-              Nearby Stores
+              Nearby Products
             </button>
             <button
               onClick={() => {
@@ -74,43 +162,62 @@ export default function NearbyStores() {
                   : "text-white/80 hover:text-white"
               }`}
             >
-              All Stores
+              All Products
             </button>
           </div>
         </div>
 
         {/* Mobile Main Content Area */}
-        <div className="bg-[#fcfdfd] rounded-t-[32px] pt-8 px-6 pb-6 shadow-[0_-8px_24px_rgba(0,0,0,0.08)] flex-1 flex flex-col overflow-hidden relative z-10">
+        <div className="bg-[#fcfdfd] rounded-t-[32px] pt-8 px-6 pb-6 shadow-[0_-8px_24px_rgba(0,0,0,0.08)] flex-1 flex flex-col relative z-10">
+          {/* Distance Filter (Mobile) */}
+          <div className="mb-6 px-2">
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-sm font-bold text-gray-700">Distance</span>
+              <span className="text-sm text-[#00a3b4] font-bold">
+                Up to {maxDistance}km
+              </span>
+            </div>
+            <input
+              type="range"
+              min="0.5"
+              max="20"
+              step="0.5"
+              value={maxDistance}
+              onChange={(e) => {
+                setMaxDistance(parseFloat(e.target.value));
+                setCurrentPage(1);
+              }}
+              className="w-full accent-[#00a3b4]"
+            />
+          </div>
+
           {/* Header */}
           <div className="flex items-center justify-between mb-6 shrink-0">
             <div className="flex items-center gap-3">
               <div className="w-[5px] h-[20px] bg-[#00a3b4] rounded-full"></div>
               <h3 className="text-[19px] font-bold text-[#002b3d]">
-                {activeTab === "nearby" ? "Trending Nearby" : "All Stores"}
+                {activeTab === "nearby" ? "Trending Nearby" : "All Products"}
               </h3>
             </div>
-            <button className="text-[13px] font-bold text-[#00a3b4] tracking-wide uppercase">
-              FILTERS
-            </button>
           </div>
 
-          {/* Mobile Cards - CSS constraints handle overflow */}
-          <div className="flex-1 flex flex-col gap-3 overflow-hidden">
-            {currentStores.slice(0, 4).map((store, index) => (
+          {/* Mobile Cards */}
+          <div className="flex flex-col gap-3">
+            {currentProducts.slice(0, 4).map((product, index) => (
               <div
                 key={index}
-                className="bg-white rounded-[24px] p-4 flex items-center gap-4 shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-gray-50/50 shrink-0"
+                className="bg-white rounded-[24px] p-4 flex items-center gap-4 shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:shadow-[0_0_20px_rgba(0,163,180,0.3)] border border-transparent hover:border-[#00a3b4] transition-all duration-300 shrink-0 group"
               >
                 {/* Image */}
                 <div className="relative shrink-0">
                   <div className="w-[72px] h-[72px] rounded-full p-[2px] bg-gradient-to-tr from-[#00a3b4] to-[#007489]">
                     <img
-                      src={store.image}
-                      alt={store.mobileName}
+                      src={product.image}
+                      alt={product.mobileName}
                       className="w-full h-full rounded-full border-2 border-white object-cover"
                     />
                   </div>
-                  {store.isNew && (
+                  {product.isNew && (
                     <span className="absolute -bottom-1 -right-2 bg-[#ff5298] text-white text-[10px] font-bold px-2 py-[2px] rounded-md uppercase tracking-wider border-2 border-white">
                       NEW
                     </span>
@@ -120,8 +227,8 @@ export default function NearbyStores() {
                 {/* Details */}
                 <div className="flex-1 min-w-0 py-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <h4 className="font-bold text-[#002b3d] text-[17px] truncate">
-                      {store.mobileName}
+                    <h4 className="font-bold text-[#002b3d] text-[17px] truncate group-hover:text-[#00a3b4] transition-colors">
+                      {product.mobileName}
                     </h4>
                     <span className="flex items-center text-[#ff5298] text-[13px] font-bold shrink-0">
                       <svg
@@ -131,21 +238,26 @@ export default function NearbyStores() {
                       >
                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                       </svg>
-                      {store.rating}
+                      {product.rating}
                     </span>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <span className="text-[#00a3b4] text-[12px] font-bold tracking-wide uppercase">
-                      {store.mobileCategory}
+                  <div className="flex flex-col gap-0.5">
+                    <span className="text-gray-500 text-[12px] font-medium truncate">
+                      {product.shopName}
                     </span>
-                    <span className="text-[#00a3b4] text-[13px] font-medium">
-                      {store.mobileDistance}
-                    </span>
+                    <div className="flex items-center gap-3">
+                      <span className="text-[#00a3b4] text-[13px] font-bold tracking-wide uppercase">
+                        {product.price}
+                      </span>
+                      <span className="text-gray-400 text-[12px] font-medium">
+                        {product.mobileDistance} away
+                      </span>
+                    </div>
                   </div>
                 </div>
 
                 {/* Arrow Button */}
-                <button className="w-11 h-11 shrink-0 bg-[#f4f7f8] rounded-xl flex items-center justify-center text-[#002b3d] hover:bg-[#e4ebed] transition-colors">
+                <button className="w-11 h-11 shrink-0 bg-[#f4f7f8] rounded-xl flex items-center justify-center text-[#002b3d] group-hover:bg-[#00a3b4] group-hover:text-white transition-colors">
                   <svg
                     className="w-5 h-5"
                     fill="none"
@@ -163,327 +275,20 @@ export default function NearbyStores() {
               </div>
             ))}
 
-            {currentStores.length === 0 && (
-              <div className="flex items-center justify-center h-full text-gray-400">
-                No stores found.
+            {currentProducts.length === 0 && (
+              <div className="flex items-center justify-center h-32 text-[#7da2a9] font-medium">
+                No products found. Try adjusting filters.
               </div>
             )}
           </div>
 
           {/* Mobile Pagination */}
-          <div className="flex justify-center items-center gap-2 mt-4 shrink-0">
-            <button
-              onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
-              disabled={currentPage === 1}
-              className="w-10 h-10 flex items-center justify-center rounded-xl bg-[#f4f7f8] text-[#cbd5db] disabled:opacity-50 transition-opacity"
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                strokeWidth={2.5}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-            </button>
-
-            {Array.from({ length: totalPages }).map((_, i) => {
-              const page = i + 1;
-              const isActive = currentPage === page;
-              return (
-                <button
-                  key={page}
-                  onClick={() => handlePageChange(page)}
-                  className={`w-10 h-10 flex items-center justify-center rounded-xl font-bold text-[15px] ${
-                    isActive
-                      ? "gradient-blue-pink text-white"
-                      : "text-[#007489]"
-                  }`}
-                >
-                  {page}
-                </button>
-              );
-            })}
-
-            <button
-              onClick={() =>
-                handlePageChange(Math.min(totalPages, currentPage + 1))
-              }
-              disabled={currentPage === totalPages}
-              className="w-10 h-10 flex items-center justify-center rounded-xl bg-[#f4f7f8] text-[#002b3d] disabled:opacity-50 transition-opacity"
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                strokeWidth={2.5}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* ---------------- DESKTOP VIEW ---------------- */}
-      <div className="hidden md:flex flex-col max-w-[1200px] w-full mx-auto p-8 h-full overflow-hidden relative">
-        {/* Desktop Header area */}
-        <div className="flex items-center justify-between mb-8 shrink-0 relative z-10">
-          <h2 className="text-3xl font-bold text-[#002b3d]">Store Explorer</h2>
-        
-        </div>
-
-        {/* Gradient Header for Desktop Tabs */}
-        <div className="absolute top-0 left-0 right-0 h-[280px] gradient-cyan-purple z-0 rounded-b-[60px] opacity-10 pointer-events-none"></div>
-
-        {/* Desktop Main Card */}
-        <div className="bg-white rounded-[32px] p-8 shadow-[0_8px_30px_rgba(0,0,0,0.04)] flex-1 flex flex-col overflow-hidden relative z-10">
-          {/* Top Bar inside card */}
-          <div className="flex items-center justify-between border-b border-gray-100 pb-4 mb-4 shrink-0">
-            <div className="flex gap-8">
-              <button
-                onClick={() => {
-                  setActiveTab("nearby");
-                  setCurrentPage(1);
-                }}
-                className={`flex items-center gap-2 pb-4 -mb-[17px] text-[15px] font-bold transition-colors ${
-                  activeTab === "nearby"
-                    ? "text-[#00a3b4] border-b-2 border-[#00a3b4]"
-                    : "text-gray-400 hover:text-gray-600"
-                }`}
-              >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                  />
-                </svg>
-                Nearby Stores
-              </button>
-              <button
-                onClick={() => {
-                  setActiveTab("all");
-                  setCurrentPage(1);
-                }}
-                className={`flex items-center gap-2 pb-4 -mb-[17px] text-[15px] font-bold transition-colors ${
-                  activeTab === "all"
-                    ? "text-[#00a3b4] border-b-2 border-[#00a3b4]"
-                    : "text-[#7da2a9] hover:text-[#007489]"
-                }`}
-              >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M4 6h16M4 10h16M4 14h16M4 18h16"
-                  />
-                </svg>
-                All Stores
-              </button>
-            </div>
-
-            <div className="flex items-center gap-6">
-              <button className="flex items-center gap-2 text-[#7da2a9] text-[14px] font-bold hover:text-[#007489]">
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
-                  />
-                </svg>
-                Filters
-              </button>
-              <button className="flex items-center gap-2 text-[#7da2a9] text-[14px] font-bold hover:text-[#007489]">
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"
-                  />
-                </svg>
-                Sort
-              </button>
-            </div>
-          </div>
-
-          {/* Desktop Table - Pure CSS handles overflow without JS calcs */}
-          <div className="flex-1 overflow-hidden flex flex-col">
-            <table className="w-full text-left border-collapse flex flex-col h-full">
-              <thead className="shrink-0 w-full display-table">
-                <tr className="text-[11px] font-bold text-[#8fa7af] uppercase tracking-wider border-b border-gray-50 flex w-full">
-                  <th className="pb-4 font-extrabold w-[35%]">Store Name</th>
-                  <th className="pb-4 font-extrabold w-[15%]">Category</th>
-                  <th className="pb-4 font-extrabold w-[15%]">Distance</th>
-                  <th className="pb-4 font-extrabold w-[15%]">Rating</th>
-                  <th className="pb-4 font-extrabold w-[10%]">Status</th>
-                  <th className="pb-4 font-extrabold w-[10%] text-right">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="flex-1 flex flex-col divide-y divide-gray-50/50 overflow-hidden">
-                {currentStores.map((store, index) => (
-                  <tr
-                    key={index}
-                    className="hover:bg-gray-50/30 transition-colors group flex w-full items-center shrink-0 min-h-[85px] max-h-[90px]"
-                  >
-                    <td className="w-[35%] py-2">
-                      <div className="flex items-center gap-4">
-                        <div className="w-14 h-14 rounded-[14px] bg-[#f4f7f8] overflow-hidden shrink-0 border border-gray-100">
-                          <img
-                            src={store.image}
-                            alt={store.name}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        <div>
-                          <div className="font-bold text-[#002b3d] text-[16px] truncate">
-                            {store.name}
-                          </div>
-                          <div className="text-[13px] text-[#7da2a9] font-medium mt-0.5">
-                            ID: {store.id}
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="w-[15%] py-2">
-                      <span className="inline-block px-4 py-1.5 rounded-full bg-[#f4f7f8] text-[#00a3b4] text-[13px] font-bold">
-                        {store.category}
-                      </span>
-                    </td>
-                    <td className="w-[15%] py-2 text-[#002b3d] text-[15px] font-medium">
-                      {store.distance}
-                    </td>
-                    <td className="w-[15%] py-2">
-                      <div className="flex items-center gap-1.5">
-                        <svg
-                          className="w-4 h-4 text-[#00a3b4]"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                        >
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                        <span className="font-bold text-[#002b3d] text-[15px]">
-                          {store.rating}
-                        </span>
-                        <span className="text-[#8fa7af] text-[14px]">
-                          ({store.reviews})
-                        </span>
-                      </div>
-                    </td>
-                    <td className="w-[10%] py-2">
-                      <div className="flex items-center gap-2">
-                        <div
-                          className={`w-2 h-2 rounded-full ${store.status === "Active" ? "bg-[#00c853]" : "bg-[#b0bec5]"}`}
-                        ></div>
-                        <span
-                          className={`text-[14px] font-bold ${store.status === "Active" ? "text-[#00a3b4]" : "text-[#8fa7af]"}`}
-                        >
-                          {store.status}
-                        </span>
-                      </div>
-                    </td>
-                    <td className="w-[10%] py-2 flex justify-end">
-                      <div className="flex items-center gap-3 pr-2">
-                        <button className="text-[#00a3b4] hover:text-[#007489] transition-colors">
-                          <svg
-                            className="w-5 h-5"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            strokeWidth={2}
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                            />
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                            />
-                          </svg>
-                        </button>
-                        <button className="text-[#00a3b4] hover:text-[#007489] transition-colors">
-                          <svg
-                            className="w-5 h-5"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            strokeWidth={2}
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                            />
-                          </svg>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-
-                {currentStores.length === 0 && (
-                  <tr className="flex items-center justify-center h-full text-gray-400">
-                    <td>No stores found.</td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Desktop Pagination */}
-          <div className="flex items-center justify-between mt-4 pt-4 shrink-0">
-            <div className="text-[#00a3b4] text-[14px] font-bold">
-              Showing{" "}
-              {currentStores.length > 0
-                ? (currentPage - 1) * itemsPerPage + 1
-                : 0}
-              -{Math.min(currentPage * itemsPerPage, filteredStores.length)} of{" "}
-              {filteredStores.length} stores
-            </div>
-            <div className="flex items-center gap-1.5">
+          {filteredProducts.length > 0 && (
+            <div className="flex justify-center items-center gap-2 mt-8 shrink-0">
               <button
                 onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
                 disabled={currentPage === 1}
-                className="w-8 h-8 flex items-center justify-center rounded-lg text-[#8fa7af] hover:bg-[#f4f7f8] transition-colors disabled:opacity-50"
+                className="w-10 h-10 flex items-center justify-center rounded-xl bg-[#f4f7f8] text-[#cbd5db] disabled:opacity-50 transition-opacity"
               >
                 <svg
                   className="w-5 h-5"
@@ -507,10 +312,10 @@ export default function NearbyStores() {
                   <button
                     key={page}
                     onClick={() => handlePageChange(page)}
-                    className={`w-8 h-8 flex items-center justify-center rounded-xl font-bold text-[14px] transition-colors ${
+                    className={`w-10 h-10 flex items-center justify-center rounded-xl font-bold text-[15px] ${
                       isActive
                         ? "gradient-blue-pink text-white"
-                        : "text-[#8fa7af] hover:bg-[#f4f7f8]"
+                        : "text-[#007489]"
                     }`}
                   >
                     {page}
@@ -523,7 +328,7 @@ export default function NearbyStores() {
                   handlePageChange(Math.min(totalPages, currentPage + 1))
                 }
                 disabled={currentPage === totalPages}
-                className="w-8 h-8 flex items-center justify-center rounded-lg text-[#00a3b4] hover:bg-[#f4f7f8] transition-colors disabled:opacity-50"
+                className="w-10 h-10 flex items-center justify-center rounded-xl bg-[#f4f7f8] text-[#002b3d] disabled:opacity-50 transition-opacity"
               >
                 <svg
                   className="w-5 h-5"
@@ -540,6 +345,458 @@ export default function NearbyStores() {
                 </svg>
               </button>
             </div>
+          )}
+        </div>
+      </div>
+
+      {/* ---------------- DESKTOP VIEW ---------------- */}
+      <div className="hidden md:flex flex-col max-w-[1400px] w-full mx-auto p-8 min-h-screen relative z-10">
+        {/* Centered Search Bar */}
+        <div className="w-full max-w-2xl mx-auto mb-8 relative z-20">
+          <svg
+            className="w-6 h-6 text-[#7da2a9] absolute left-5 top-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2.5}
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+            />
+          </svg>
+          <input
+            type="text"
+            placeholder="Search for products by name..."
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setCurrentPage(1);
+            }}
+            className="w-full pl-14 pr-6 py-4 rounded-full border-2 border-white shadow-[0_8px_30px_rgba(0,0,0,0.06)] bg-white/90 backdrop-blur-md focus:border-[#00a3b4] focus:outline-none focus:ring-4 focus:ring-[#00a3b4]/20 text-[#002b3d] font-medium text-lg transition-all"
+          />
+        </div>
+
+        <div className="flex items-start gap-8 w-full">
+          {/* Mini Sidebar Filters */}
+          <aside className="w-72 shrink-0 bg-white rounded-[32px] p-6 shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-gray-100 sticky top-8 z-10 flex flex-col gap-8">
+            <div>
+              <h3 className="text-xl font-bold text-[#002b3d] mb-6 flex items-center gap-2">
+                <svg
+                  className="w-5 h-5 text-[#00a3b4]"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+                  />
+                </svg>
+                Filters
+              </h3>
+
+              {/* Category Filter */}
+              <div className="mb-8">
+                <h4 className="font-bold text-gray-400 text-xs uppercase tracking-widest mb-4">
+                  Category
+                </h4>
+                <div className="space-y-3">
+                  {allCategories.map((cat) => (
+                    <label
+                      key={cat}
+                      className="flex items-center gap-3 cursor-pointer group"
+                    >
+                      <div className="relative flex items-center justify-center">
+                        <input
+                          type="checkbox"
+                          checked={selectedCategories.includes(cat)}
+                          onChange={() => handleCategoryToggle(cat)}
+                          className="peer appearance-none w-5 h-5 border-2 border-gray-300 rounded-[6px] checked:bg-[#00a3b4] checked:border-[#00a3b4] hover:border-[#00a3b4] transition-colors cursor-pointer"
+                        />
+                        <svg
+                          className="w-3 h-3 text-white absolute pointer-events-none opacity-0 peer-checked:opacity-100"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          strokeWidth={3}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                      </div>
+                      <span
+                        className={`text-[15px] font-medium transition-colors ${selectedCategories.includes(cat) ? "text-[#002b3d]" : "text-gray-500 group-hover:text-[#00a3b4]"}`}
+                      >
+                        {cat}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Distance Filter */}
+              <div>
+                <div className="flex justify-between items-center mb-4">
+                  <h4 className="font-bold text-gray-400 text-xs uppercase tracking-widest">
+                    Distance
+                  </h4>
+                  <span className="text-[13px] text-[#00a3b4] font-bold bg-[#e4ebed] px-2 py-0.5 rounded-md">
+                    {maxDistance} km
+                  </span>
+                </div>
+                <input
+                  type="range"
+                  min="0.5"
+                  max="20"
+                  step="0.5"
+                  value={maxDistance}
+                  onChange={(e) => {
+                    setMaxDistance(parseFloat(e.target.value));
+                    setCurrentPage(1);
+                  }}
+                  className="w-full h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#00a3b4]"
+                />
+                <div className="flex justify-between text-xs font-bold text-gray-400 mt-2">
+                  <span>0km</span>
+                  <span>20km</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Reset Button */}
+            <button
+              onClick={() => {
+                setSearchQuery("");
+                setSelectedCategories(["All"]);
+                setMaxDistance(10);
+                setCurrentPage(1);
+              }}
+              className="w-full py-3 rounded-xl bg-gray-50 text-gray-500 font-bold text-sm hover:bg-gray-100 hover:text-[#002b3d] transition-colors mt-auto"
+            >
+              Reset Filters
+            </button>
+          </aside>
+
+          {/* Desktop Main Card */}
+          <div className="bg-white rounded-[32px] p-8 shadow-[0_8px_30px_rgba(0,0,0,0.04)] flex flex-col relative z-10 flex-1 min-h-[600px]">
+            {/* Top Bar inside card - CENTERED TABS */}
+            <div className="relative flex items-center justify-center border-b border-gray-100 pb-4 mb-6 shrink-0">
+              {/* Centered Tabs */}
+              <div className="flex gap-8">
+                <button
+                  onClick={() => {
+                    setActiveTab("nearby");
+                    setCurrentPage(1);
+                  }}
+                  className={`flex items-center gap-2 pb-4 -mb-[17px] text-[15px] font-bold transition-colors ${
+                    activeTab === "nearby"
+                      ? "text-[#00a3b4] border-b-2 border-[#00a3b4]"
+                      : "text-gray-400 hover:text-gray-600"
+                  }`}
+                >
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                    />
+                  </svg>
+                  Nearby Products
+                </button>
+                <button
+                  onClick={() => {
+                    setActiveTab("all");
+                    setCurrentPage(1);
+                  }}
+                  className={`flex items-center gap-2 pb-4 -mb-[17px] text-[15px] font-bold transition-colors ${
+                    activeTab === "all"
+                      ? "text-[#00a3b4] border-b-2 border-[#00a3b4]"
+                      : "text-[#7da2a9] hover:text-[#007489]"
+                  }`}
+                >
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M4 6h16M4 10h16M4 14h16M4 18h16"
+                    />
+                  </svg>
+                  All Products
+                </button>
+              </div>
+
+              {/* Sort Action absolute right */}
+              <div className="absolute right-0 flex items-center gap-6">
+                <button className="flex items-center gap-2 text-[#7da2a9] text-[14px] font-bold hover:text-[#007489]">
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"
+                    />
+                  </svg>
+                  Sort
+                </button>
+              </div>
+            </div>
+
+            {/* Desktop Card Grid */}
+            <div className="pb-2 flex-1">
+              {currentProducts.length === 0 ? (
+                <div className="flex flex-col items-center justify-center h-64 text-[#7da2a9]">
+                  <svg
+                    className="w-12 h-12 mb-4 opacity-50"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  <p className="text-lg font-bold text-[#002b3d]">
+                    No products found
+                  </p>
+                  <p className="text-sm font-medium mt-1">
+                    Try adjusting your search or filters.
+                  </p>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                  {currentProducts.map((product, index) => (
+                    <div
+                      key={index}
+                      className="bg-white rounded-[24px] p-6 border-2 border-transparent shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:shadow-[0_0_20px_rgba(0,163,180,0.3)] hover:border-[#00a3b4] transition-all duration-300 flex flex-col gap-5 group cursor-pointer"
+                    >
+                      <div className="flex justify-between items-start gap-4">
+                        <div className="flex gap-4">
+                          <div className="w-16 h-16 rounded-[16px] bg-[#f4f7f8] overflow-hidden shrink-0 border border-gray-100 group-hover:border-[#00a3b4]/30 transition-colors">
+                            <img
+                              src={product.image}
+                              alt={product.name}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                          <div>
+                            <h4 className="font-bold text-[#002b3d] text-[18px] group-hover:text-[#00a3b4] transition-colors line-clamp-1">
+                              {product.name}
+                            </h4>
+                            <p className="text-[13px] text-[#7da2a9] font-medium mt-0.5 mb-2">
+                              {product.shopName} • {product.price}
+                            </p>
+                            <span className="inline-block px-3 py-1 rounded-full bg-[#f4f7f8] text-[#00a3b4] text-[11px] font-bold uppercase tracking-wider group-hover:bg-[#00a3b4]/10 transition-colors">
+                              {product.category}
+                            </span>
+                          </div>
+                        </div>
+                        {/* Status */}
+                        <div
+                          className={`flex items-center gap-2 shrink-0 px-3 py-1.5 rounded-full transition-colors ${product.status === "In Stock" ? "bg-green-50" : "bg-gray-50"}`}
+                        >
+                          <div
+                            className={`w-2 h-2 rounded-full ${product.status === "In Stock" ? "bg-[#00c853]" : "bg-[#b0bec5]"}`}
+                          ></div>
+                          <span
+                            className={`text-[12px] font-bold ${product.status === "In Stock" ? "text-[#00c853]" : "text-[#8fa7af]"}`}
+                          >
+                            {product.status}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Divider */}
+                      <div className="h-px w-full bg-gray-100 group-hover:bg-[#00a3b4]/20 transition-colors"></div>
+
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                          <div className="flex items-center gap-1.5">
+                            <svg
+                              className="w-4 h-4 text-[#00a3b4]"
+                              fill="currentColor"
+                              viewBox="0 0 20 20"
+                            >
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <span className="font-bold text-[#002b3d] text-[15px]">
+                              {product.rating}
+                            </span>
+                            <span className="text-[#8fa7af] text-[13px]">
+                              ({product.reviews})
+                            </span>
+                          </div>
+                          <div className="w-1 h-1 rounded-full bg-gray-300"></div>
+                          <div className="text-[#002b3d] text-[14px] font-medium flex items-center gap-1.5">
+                            <svg
+                              className="w-4 h-4 text-[#7da2a9] group-hover:text-[#00a3b4] transition-colors"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                              />
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                              />
+                            </svg>
+                            {product.distance} away
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <button className="w-9 h-9 rounded-xl bg-[#f4f7f8] text-[#00a3b4] flex items-center justify-center hover:bg-[#00a3b4] hover:text-white transition-colors">
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              strokeWidth={2}
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                              />
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                              />
+                            </svg>
+                          </button>
+                          <button className="w-9 h-9 rounded-xl bg-[#f4f7f8] text-[#00a3b4] flex items-center justify-center hover:bg-[#00a3b4] hover:text-white transition-colors group-hover:bg-[#00a3b4] group-hover:text-white">
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              strokeWidth={2}
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Desktop Pagination */}
+            {filteredProducts.length > 0 && (
+              <div className="flex items-center justify-between mt-8 pt-6 shrink-0 border-t border-gray-100">
+                <div className="text-[#00a3b4] text-[14px] font-bold">
+                  Showing {(currentPage - 1) * itemsPerPage + 1}-
+                  {Math.min(
+                    currentPage * itemsPerPage,
+                    filteredProducts.length,
+                  )}{" "}
+                  of {filteredProducts.length} products
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <button
+                    onClick={() =>
+                      handlePageChange(Math.max(1, currentPage - 1))
+                    }
+                    disabled={currentPage === 1}
+                    className="w-8 h-8 flex items-center justify-center rounded-lg text-[#8fa7af] hover:bg-[#f4f7f8] transition-colors disabled:opacity-50"
+                  >
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      strokeWidth={2.5}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15 19l-7-7 7-7"
+                      />
+                    </svg>
+                  </button>
+
+                  {Array.from({ length: totalPages }).map((_, i) => {
+                    const page = i + 1;
+                    const isActive = currentPage === page;
+                    return (
+                      <button
+                        key={page}
+                        onClick={() => handlePageChange(page)}
+                        className={`w-8 h-8 flex items-center justify-center rounded-xl font-bold text-[14px] transition-colors ${
+                          isActive
+                            ? "gradient-blue-pink text-white"
+                            : "text-[#8fa7af] hover:bg-[#f4f7f8]"
+                        }`}
+                      >
+                        {page}
+                      </button>
+                    );
+                  })}
+
+                  <button
+                    onClick={() =>
+                      handlePageChange(Math.min(totalPages, currentPage + 1))
+                    }
+                    disabled={currentPage === totalPages}
+                    className="w-8 h-8 flex items-center justify-center rounded-lg text-[#00a3b4] hover:bg-[#f4f7f8] transition-colors disabled:opacity-50"
+                  >
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      strokeWidth={2.5}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
