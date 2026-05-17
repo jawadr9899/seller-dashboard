@@ -156,7 +156,7 @@ export default function SettingsPage() {
                     </div>
                     <div>
                       <h4 className="font-bold text-[#002b3d] text-lg">
-                        Jawad
+                        Ahmed
                       </h4>
                       <p className="text-[#7da2a9] text-sm font-medium mb-3">
                         Owner & Admin
@@ -185,7 +185,7 @@ export default function SettingsPage() {
                           </label>
                           <input
                             type="text"
-                            defaultValue="Jawad"
+                            defaultValue="Ahmed"
                             className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all"
                           />
                         </div>
@@ -205,7 +205,7 @@ export default function SettingsPage() {
                           </label>
                           <input
                             type="text"
-                            defaultValue="Jawad Khan"
+                            defaultValue="Ahmed Ali"
                             className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all"
                           />
                         </div>
@@ -233,7 +233,7 @@ export default function SettingsPage() {
                           </label>
                           <input
                             type="email"
-                            defaultValue="jawad@example.com"
+                            defaultValue="Ahmed@example.com"
                             className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all"
                           />
                         </div>
@@ -551,7 +551,7 @@ export default function SettingsPage() {
                         </label>
                         <input
                           type="text"
-                          defaultValue="Jawad Khan"
+                          defaultValue="Ahmed Khan"
                           className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all"
                         />
                       </div>
@@ -714,7 +714,7 @@ export default function SettingsPage() {
                         </label>
                         <input
                           type="text"
-                          defaultValue="Jawad Khan"
+                          defaultValue="Ahmed Khan"
                           className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all"
                         />
                       </div>
@@ -783,13 +783,6 @@ export default function SettingsPage() {
                 </div>
               )}
             </div>
-          </div>
-
-          {/* Mobile Action Button Fixed Bottom */}
-          <div className="md:hidden fixed bottom-[80px] left-0 right-0 p-4 bg-white border-t border-gray-100 z-50 shadow-[0_-10px_20px_rgba(0,0,0,0.03)]">
-            <button className="w-full gradient-cyan-purple text-white px-6 py-3.5 rounded-full font-bold shadow-[0_4px_15px_rgba(0,163,180,0.3)]">
-              Save Changes
-            </button>
           </div>
         </div>
       </main>
