@@ -13,6 +13,7 @@ export default function NearbyStores() {
     "All",
   ]);
   const [maxDistance, setMaxDistance] = useState<number>(10);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const itemsPerPage = 6;
 
@@ -92,7 +93,7 @@ export default function NearbyStores() {
   return (
     <div className="w-full flex flex-col font-sans min-h-screen">
       {/* Gradient Header Background (Absolute) */}
-      <div className="absolute top-0 left-0 right-0 h-[280px] gradient-cyan-purple z-0 rounded-b-[60px] opacity-10 pointer-events-none"></div>
+      <div className="hidden md:block absolute top-0 left-0 right-0 h-[280px] gradient-cyan-purple z-0 rounded-b-[60px] opacity-10 pointer-events-none"></div>
 
       {/* ---------------- MOBILE VIEW ---------------- */}
       <div className="md:hidden flex flex-col min-h-screen bg-[#f0f3f6] relative z-10">
@@ -123,74 +124,147 @@ export default function NearbyStores() {
         </div>
 
         {/* Mobile Top Tabs Toggle */}
-        <div className="pb-12 px-4 flex justify-center shrink-0 gradient-cyan-purple rounded-b-[40px] shadow-sm -mb-6 mt-4 relative z-0">
-          <div className="bg-white/20 backdrop-blur-sm rounded-full p-1 flex w-full max-w-[320px] shadow-inner">
+        <div className="pb-6 px-4 flex justify-center shrink-0 mt-4 relative z-0">
+          <div className="w-full max-w-[360px] flex items-center gap-3">
+            <div className="bg-white rounded-full p-1 flex flex-1 shadow-sm border border-gray-200">
+              <button
+                onClick={() => {
+                  setActiveTab("nearby");
+                  setCurrentPage(1);
+                }}
+                className={`flex-1 py-3 px-4 rounded-full text-sm font-bold flex items-center justify-center gap-2 transition-all ${
+                  activeTab === "nearby"
+                    ? "bg-[#00a3b4] text-white shadow-md"
+                    : "text-[#7da2a9] hover:text-[#00a3b4]"
+                }`}
+              >
+                {activeTab === "nearby" && (
+                  <svg
+                    className="w-4 h-4"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                )}
+                Nearby Products
+              </button>
+              <button
+                onClick={() => {
+                  setActiveTab("all");
+                  setCurrentPage(1);
+                }}
+                className={`flex-1 py-3 px-4 rounded-full text-sm font-bold transition-all ${
+                  activeTab === "all"
+                    ? "bg-[#00a3b4] text-white shadow-md"
+                    : "text-[#7da2a9] hover:text-[#00a3b4]"
+                }`}
+              >
+                All Products
+              </button>
+            </div>
             <button
-              onClick={() => {
-                setActiveTab("nearby");
-                setCurrentPage(1);
-              }}
-              className={`flex-1 py-3 px-4 rounded-full text-sm font-bold flex items-center justify-center gap-2 transition-all ${
-                activeTab === "nearby"
-                  ? "bg-white text-[#007489] shadow-md"
-                  : "text-white/80"
-              }`}
+              onClick={() => setIsFilterOpen(true)}
+              className="w-11 h-11 rounded-full bg-white border border-gray-200 shadow-sm flex items-center justify-center text-[#00a3b4] hover:text-[#007489] transition-colors"
+              aria-label="Open filters"
             >
-              {activeTab === "nearby" && (
-                <svg
-                  className="w-4 h-4"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              )}
-              Nearby Products
-            </button>
-            <button
-              onClick={() => {
-                setActiveTab("all");
-                setCurrentPage(1);
-              }}
-              className={`flex-1 py-3 px-4 rounded-full text-sm font-bold transition-all ${
-                activeTab === "all"
-                  ? "bg-white text-[#007489] shadow-md"
-                  : "text-white/80 hover:text-white"
-              }`}
-            >
-              All Products
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 6h18M6 12h12M10 18h4"
+                />
+              </svg>
             </button>
           </div>
         </div>
 
+        {/* Mobile Filters Modal */}
+        {isFilterOpen && (
+          <div className="fixed inset-0 z-50 flex items-end md:hidden">
+            <button
+              className="absolute inset-0 bg-black/30"
+              onClick={() => setIsFilterOpen(false)}
+              aria-label="Close filters"
+            />
+            <div className="relative w-full bg-white rounded-t-[28px] p-6 shadow-[0_-12px_30px_rgba(0,0,0,0.2)]">
+              <div className="flex items-center justify-between mb-5">
+                <h3 className="text-lg font-bold text-[#002b3d]">Filters</h3>
+                <button
+                  onClick={() => setIsFilterOpen(false)}
+                  className="w-8 h-8 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center"
+                  aria-label="Close"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div className="mb-6">
+                <h4 className="font-bold text-gray-400 text-xs uppercase tracking-widest mb-3">
+                  Category
+                </h4>
+                <div className="grid grid-cols-2 gap-3">
+                  {allCategories.map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => handleCategoryToggle(cat)}
+                      className={`px-3 py-2 rounded-full text-xs font-semibold border transition-colors ${
+                        selectedCategories.includes(cat)
+                          ? "bg-[#00a3b4] text-white border-[#00a3b4]"
+                          : "bg-white text-gray-600 border-gray-200"
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mb-6">
+                <div className="flex justify-between items-center mb-3">
+                  <h4 className="font-bold text-gray-400 text-xs uppercase tracking-widest">
+                    Distance
+                  </h4>
+                  <span className="text-[12px] text-[#00a3b4] font-bold">
+                    {maxDistance} km
+                  </span>
+                </div>
+                <input
+                  type="range"
+                  min="0.5"
+                  max="20"
+                  step="0.5"
+                  value={maxDistance}
+                  onChange={(e) => {
+                    setMaxDistance(parseFloat(e.target.value));
+                    setCurrentPage(1);
+                  }}
+                  className="w-full accent-[#00a3b4]"
+                />
+              </div>
+
+              <button
+                onClick={() => setIsFilterOpen(false)}
+                className="w-full gradient-cyan-purple text-white px-6 py-3 rounded-full font-bold shadow-[0_4px_15px_rgba(0,163,180,0.3)]"
+              >
+                Apply Filters
+              </button>
+            </div>
+          </div>
+        )}
+
         {/* Mobile Main Content Area */}
         <div className="bg-[#fcfdfd] rounded-t-[32px] pt-8 px-6 pb-6 shadow-[0_-8px_24px_rgba(0,0,0,0.08)] flex-1 flex flex-col relative z-10">
-          {/* Distance Filter (Mobile) */}
-          <div className="mb-6 px-2">
-            <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-bold text-gray-700">Distance</span>
-              <span className="text-sm text-[#00a3b4] font-bold">
-                Up to {maxDistance}km
-              </span>
-            </div>
-            <input
-              type="range"
-              min="0.5"
-              max="20"
-              step="0.5"
-              value={maxDistance}
-              onChange={(e) => {
-                setMaxDistance(parseFloat(e.target.value));
-                setCurrentPage(1);
-              }}
-              className="w-full accent-[#00a3b4]"
-            />
-          </div>
-
           {/* Header */}
           <div className="flex items-center justify-between mb-6 shrink-0">
             <div className="flex items-center gap-3">
