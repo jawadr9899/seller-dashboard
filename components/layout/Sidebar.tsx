@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 interface SidebarItem {
   label: string;
@@ -27,10 +28,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ items }) => {
 
   return (
     <aside className="hidden lg:flex flex-col w-64 bg-[#f8f8fa] border-r border-[#d9d4e8] sticky top-0 h-screen">
-      <div className="px-4 pt-6 pb-4">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#777681] px-3">
-          Navigation
-        </p>
+      <div className="px-4 pt-6 pb-4 ml-5">
+        <Image src="/logo.png" alt="Logo" width={140} height={100} />
       </div>
 
       <nav className="flex-1 overflow-y-auto px-4 pb-4">
