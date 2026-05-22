@@ -6,7 +6,7 @@ interface Order {
   customerName: string;
   itemCount: number;
   amount: number;
-  status: 'NEW' | 'URGENT' | 'PREPARING';
+  status: 'NEW' | 'URGENT' | 'PREPARING' | "COMPLETED";
   receivedMinsAgo: number;
   distanceKm: number;
 }

@@ -6,7 +6,7 @@ import { BottomTabBar } from "@/components/layout/BottomTabBar";
 import { navigationItems, bottomTabs } from "@/config/navigation";
 
 export default function SettingsPage() {
-  const [activeTab, setActiveTab] = useState("overview");
+  const [activeTab, setActiveTab] = useState("profile");
 
   const settingsCards = [
     {
@@ -75,52 +75,56 @@ export default function SettingsPage() {
         <div className="w-full relative z-10">
           <div className="w-full">
             <div className="w-full p-6 md:p-10">
-              {/* OVERVIEW TAB */}
-              {activeTab === "overview" && (
-                <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                  <div className="mb-6">
-                    <h3 className="text-2xl font-bold text-[#002b3d]">
-                      Settings Overview
-                    </h3>
-                    <p className="text-[#7da2a9] text-sm font-medium mt-2">
-                      Choose a category to manage your account and store.
-                    </p>
-                  </div>
+              <div className="mb-8">
+                <h1 className="text-2xl md:text-3xl font-bold text-[#1f2430]">
+                  Settings
+                </h1>
+                <p className="text-sm text-[#7a7890] mt-2">
+                  Manage account, store, notification, payout, and security
+                  preferences.
+                </p>
+              </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                    {settingsCards.map((card) => (
-                      <button
-                        key={card.id}
-                        onClick={() => setActiveTab(card.id)}
-                        className="group text-left bg-[#fcfdfd] border border-gray-100 rounded-[24px] p-6 shadow-[0_6px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_30px_rgba(0,163,180,0.2)] hover:border-[#00a3b4]/40 transition-all"
-                      >
-                        <div className="w-12 h-12 rounded-[14px] bg-[#e9f6f8] text-[#00a3b4] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
-                          {card.icon}
-                        </div>
-                        <h4 className="text-lg font-bold text-[#002b3d] mb-2">
+              <div className="flex justify-center mb-8">
+                <div className="w-full max-w-5xl overflow-x-auto">
+                  <div className="relative min-w-[760px] flex bg-[#fbf7ff] border border-[#d9d4e8] p-1.5">
+                    <div
+                      className="absolute top-1.5 bottom-1.5 left-1.5 rounded-lg bg-white  border transition-transform duration-300 ease-out"
+                      style={{
+                        width: `calc((100% - 0.75rem) / ${settingsCards.length})`,
+                        transform: `translateX(${settingsCards.findIndex((card) => card.id === activeTab) * 100}%)`,
+                      }}
+                    />
+                    {settingsCards.map((card) => {
+                      const isActive = activeTab === card.id;
+                      return (
+                        <button
+                          key={card.id}
+                          onClick={() => setActiveTab(card.id)}
+                          className={`relative z-10 flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-sm font-semibold transition-colors ${
+                            isActive
+                              ? "text-[#4f46e5]"
+                              : "text-[#4b5563] hover:text-[#4f46e5]"
+                          }`}
+                        >
+                          <span
+                            className={`${isActive ? "text-[#4f46e5]" : "text-[#777681]"}`}
+                          >
+                            {card.icon}
+                          </span>
                           {card.title}
-                        </h4>
-                        <p className="text-sm text-[#7da2a9] font-medium">
-                          {card.description}
-                        </p>
-                      </button>
-                    ))}
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
-              )}
+              </div>
 
               {/* PROFILE TAB */}
               {activeTab === "profile" && (
                 <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                  <div className="flex items-center justify-between mb-6">
-                    <button
-                      onClick={() => setActiveTab("overview")}
-                      className="flex items-center gap-2 text-sm font-bold text-[#00a3b4] hover:text-[#007489] transition-colors"
-                    >
-                      <span className="text-lg">←</span>
-                      Back to Settings
-                    </button>
-                    <button className="gradient-cyan-purple text-white px-6 py-2.5 rounded-full font-bold text-sm shadow-[0_4px_15px_rgba(0,163,180,0.3)] hover:shadow-[0_6px_25px_rgba(0,163,180,0.4)] transition-all">
+                  <div className="flex justify-end mb-6">
+                    <button className="bg-[#3b35d6] hover:bg-[#2f2ab8] text-white px-6 py-2.5 rounded-sm font-bold text-sm shadow-sm transition-all">
                       Save Changes
                     </button>
                   </div>
@@ -131,14 +135,14 @@ export default function SettingsPage() {
                   {/* Avatar */}
                   <div className="flex items-center gap-6 mb-10">
                     <div className="relative">
-                      <div className="w-24 h-24 rounded-[20px] bg-gradient-to-tr from-[#00a3b4] to-[#007489] p-[2px]">
+                      <div className="w-24 h-24 rounded-lg border border-[#d9d4e8] bg-white p-1 shadow-sm">
                         <img
                           src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                           alt="Profile"
-                          className="w-full h-full rounded-[18px] border-2 border-white object-cover"
+                          className="w-full h-full rounded-lg object-cover"
                         />
                       </div>
-                      <button className="absolute -bottom-2 -right-2 w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center border border-gray-100 text-[#00a3b4] hover:bg-gray-50 transition-colors">
+                      <button className="absolute -bottom-2 -right-2 w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center border border-[#d9d4e8] text-[#3b35d6] hover:bg-[#f4f5f8] transition-colors">
                         <svg
                           className="w-4 h-4"
                           fill="none"
@@ -162,7 +166,7 @@ export default function SettingsPage() {
                         Owner & Admin
                       </p>
                       <div className="flex gap-2">
-                        <button className="px-4 py-1.5 rounded-full bg-[#f4f7f8] text-[#00a3b4] text-xs font-bold hover:bg-[#e4ebed] transition-colors">
+                        <button className="px-4 py-1.5 rounded-sm border border-[#d9d4e8] bg-white text-[#3b35d6] text-xs font-bold hover:bg-[#eeeaff] transition-colors">
                           Change Picture
                         </button>
                         <button className="px-4 py-1.5 rounded-full bg-red-50 text-red-500 text-xs font-bold hover:bg-red-100 transition-colors">
@@ -186,7 +190,7 @@ export default function SettingsPage() {
                           <input
                             type="text"
                             defaultValue="Ahmed"
-                            className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all"
+                            className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
                           />
                         </div>
                         <div className="space-y-2">
@@ -196,7 +200,7 @@ export default function SettingsPage() {
                           <input
                             type="text"
                             defaultValue="Khan"
-                            className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all"
+                            className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
                           />
                         </div>
                         <div className="space-y-2">
@@ -206,7 +210,7 @@ export default function SettingsPage() {
                           <input
                             type="text"
                             defaultValue="Ahmed Ali"
-                            className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all"
+                            className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
                           />
                         </div>
                         <div className="space-y-2">
@@ -216,7 +220,7 @@ export default function SettingsPage() {
                           <input
                             type="text"
                             defaultValue="Owner & Admin"
-                            className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all"
+                            className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
                           />
                         </div>
                       </div>
@@ -234,7 +238,7 @@ export default function SettingsPage() {
                           <input
                             type="email"
                             defaultValue="Ahmed@example.com"
-                            className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all"
+                            className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
                           />
                         </div>
                         <div className="space-y-2">
@@ -244,7 +248,7 @@ export default function SettingsPage() {
                           <input
                             type="tel"
                             defaultValue="+92 300 1234567"
-                            className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all"
+                            className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
                           />
                         </div>
                         <div className="space-y-2">
@@ -254,14 +258,14 @@ export default function SettingsPage() {
                           <input
                             type="tel"
                             defaultValue="+92 300 9876543"
-                            className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all"
+                            className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
                           />
                         </div>
                         <div className="space-y-2">
                           <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
                             Time Zone
                           </label>
-                          <select className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all appearance-none">
+                          <select className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all appearance-none">
                             <option>Pakistan Standard Time (PKT)</option>
                             <option>Gulf Standard Time (GST)</option>
                             <option>GMT (UTC +0)</option>
@@ -271,7 +275,7 @@ export default function SettingsPage() {
                           <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
                             Preferred Language
                           </label>
-                          <select className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all appearance-none">
+                          <select className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all appearance-none">
                             <option>English</option>
                             <option>Urdu</option>
                           </select>
@@ -283,7 +287,7 @@ export default function SettingsPage() {
                           <input
                             type="text"
                             defaultValue="Lahore"
-                            className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all"
+                            className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
                           />
                         </div>
                         <div className="space-y-2">
@@ -293,7 +297,7 @@ export default function SettingsPage() {
                           <input
                             type="text"
                             defaultValue="Pakistan"
-                            className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all"
+                            className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
                           />
                         </div>
                       </div>
@@ -306,7 +310,7 @@ export default function SettingsPage() {
                       <textarea
                         rows={3}
                         defaultValue="Block A, Gulberg, Lahore, Punjab"
-                        className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all resize-none"
+                        className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all resize-none"
                       ></textarea>
                     </div>
                   </div>
@@ -316,15 +320,8 @@ export default function SettingsPage() {
               {/* STORE DETAILS TAB */}
               {activeTab === "store" && (
                 <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                  <div className="flex items-center justify-between mb-6">
-                    <button
-                      onClick={() => setActiveTab("overview")}
-                      className="flex items-center gap-2 text-sm font-bold text-[#00a3b4] hover:text-[#007489] transition-colors"
-                    >
-                      <span className="text-lg">←</span>
-                      Back to Settings
-                    </button>
-                    <button className="gradient-cyan-purple text-white px-6 py-2.5 rounded-full font-bold text-sm shadow-[0_4px_15px_rgba(0,163,180,0.3)] hover:shadow-[0_6px_25px_rgba(0,163,180,0.4)] transition-all">
+                  <div className="flex justify-end mb-6">
+                    <button className="bg-[#3b35d6] hover:bg-[#2f2ab8] text-white px-6 py-2.5 rounded-sm font-bold text-sm shadow-sm transition-all">
                       Save Changes
                     </button>
                   </div>
@@ -343,7 +340,7 @@ export default function SettingsPage() {
                       <input
                         type="text"
                         defaultValue="Green Pantry Organic"
-                        className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all"
+                        className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
                       />
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -351,7 +348,7 @@ export default function SettingsPage() {
                         <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
                           Store Platform
                         </label>
-                        <select className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all appearance-none">
+                        <select className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all appearance-none">
                           <option>Shopify</option>
                           <option>WooCommerce</option>
                           <option>Magento</option>
@@ -367,7 +364,7 @@ export default function SettingsPage() {
                         <input
                           type="url"
                           defaultValue="https://greenpantry.pk"
-                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all"
+                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
                         />
                       </div>
                     </div>
@@ -380,14 +377,14 @@ export default function SettingsPage() {
                           type="text"
                           defaultValue="GP-2024-001"
                           disabled
-                          className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-gray-400 font-medium cursor-not-allowed"
+                          className="w-full bg-[#f4f5f8] border border-gray-200 rounded-lg px-4 py-3 text-gray-400 font-medium cursor-not-allowed"
                         />
                       </div>
                       <div className="space-y-2">
                         <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
                           Base Currency
                         </label>
-                        <select className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all appearance-none">
+                        <select className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all appearance-none">
                           <option>PKR (Rs)</option>
                           <option>USD ($)</option>
                           <option>EUR (€)</option>
@@ -402,7 +399,7 @@ export default function SettingsPage() {
                       <input
                         type="text"
                         defaultValue="Organic Groceries"
-                        className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all"
+                        className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
                       />
                     </div>
                     <div className="space-y-2">
@@ -412,7 +409,7 @@ export default function SettingsPage() {
                       <textarea
                         rows={4}
                         defaultValue="An online store offering fresh, organic essentials delivered across Pakistan."
-                        className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all resize-none"
+                        className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all resize-none"
                       ></textarea>
                     </div>
                     <div className="space-y-2">
@@ -422,7 +419,7 @@ export default function SettingsPage() {
                       <textarea
                         rows={3}
                         defaultValue="15-A, Main Boulevard, Gulberg, Lahore"
-                        className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all resize-none"
+                        className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all resize-none"
                       ></textarea>
                     </div>
                   </div>
@@ -432,15 +429,8 @@ export default function SettingsPage() {
               {/* NOTIFICATIONS TAB */}
               {activeTab === "notifications" && (
                 <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                  <div className="flex items-center justify-between mb-6">
-                    <button
-                      onClick={() => setActiveTab("overview")}
-                      className="flex items-center gap-2 text-sm font-bold text-[#00a3b4] hover:text-[#007489] transition-colors"
-                    >
-                      <span className="text-lg">←</span>
-                      Back to Settings
-                    </button>
-                    <button className="gradient-cyan-purple text-white px-6 py-2.5 rounded-full font-bold text-sm shadow-[0_4px_15px_rgba(0,163,180,0.3)] hover:shadow-[0_6px_25px_rgba(0,163,180,0.4)] transition-all">
+                  <div className="flex justify-end mb-6">
+                    <button className="bg-[#3b35d6] hover:bg-[#2f2ab8] text-white px-6 py-2.5 rounded-sm font-bold text-sm shadow-sm transition-all">
                       Save Changes
                     </button>
                   </div>
@@ -479,15 +469,8 @@ export default function SettingsPage() {
               {/* PAYOUTS TAB */}
               {activeTab === "payouts" && (
                 <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                  <div className="flex items-center justify-between mb-6">
-                    <button
-                      onClick={() => setActiveTab("overview")}
-                      className="flex items-center gap-2 text-sm font-bold text-[#00a3b4] hover:text-[#007489] transition-colors"
-                    >
-                      <span className="text-lg">←</span>
-                      Back to Settings
-                    </button>
-                    <button className="gradient-cyan-purple text-white px-6 py-2.5 rounded-full font-bold text-sm shadow-[0_4px_15px_rgba(0,163,180,0.3)] hover:shadow-[0_6px_25px_rgba(0,163,180,0.4)] transition-all">
+                  <div className="flex justify-end mb-6">
+                    <button className="bg-[#3b35d6] hover:bg-[#2f2ab8] text-white px-6 py-2.5 rounded-sm font-bold text-sm shadow-sm transition-all">
                       Save Changes
                     </button>
                   </div>
@@ -500,7 +483,7 @@ export default function SettingsPage() {
                   </p>
 
                   {/* Current Active Bank Card */}
-                  <div className="gradient-cyan-purple rounded-[24px] p-6 text-white mb-8 relative overflow-hidden shadow-lg">
+                  <div className="bg-[#3b35d6] rounded-lg p-6 text-white mb-8 relative overflow-hidden shadow-sm border border-[#d9d4e8]">
                     <div className="absolute top-0 right-0 p-4 opacity-10">
                       <BankIcon width={100} height={100} />
                     </div>
@@ -536,7 +519,7 @@ export default function SettingsPage() {
                         {digitalBanks.map((bank) => (
                           <span
                             key={bank}
-                            className="px-3 py-1 rounded-full bg-[#f4f7f8] text-[#002b3d] text-xs font-semibold"
+                            className="px-3 py-1 rounded-full bg-white border border-[#d9d4e8] text-[#1f2430] text-xs font-semibold"
                           >
                             {bank}
                           </span>
@@ -552,14 +535,14 @@ export default function SettingsPage() {
                         <input
                           type="text"
                           defaultValue="Ahmed Khan"
-                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all"
+                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
                         />
                       </div>
                       <div className="space-y-2">
                         <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
                           Bank / Wallet Provider
                         </label>
-                        <select className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all appearance-none">
+                        <select className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all appearance-none">
                           {digitalBanks.map((bank) => (
                             <option key={bank}>{bank}</option>
                           ))}
@@ -572,7 +555,7 @@ export default function SettingsPage() {
                         <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
                           Card Network
                         </label>
-                        <select className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all appearance-none">
+                        <select className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all appearance-none">
                           <option>VISA</option>
                           <option>Mastercard</option>
                           <option>UnionPay</option>
@@ -585,7 +568,7 @@ export default function SettingsPage() {
                         <input
                           type="text"
                           placeholder="•••• •••• •••• ••••"
-                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all"
+                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
                         />
                       </div>
                     </div>
@@ -595,7 +578,7 @@ export default function SettingsPage() {
                         <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
                           Wallet Provider
                         </label>
-                        <select className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all appearance-none">
+                        <select className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all appearance-none">
                           {walletProviders.map((provider) => (
                             <option key={provider}>{provider}</option>
                           ))}
@@ -608,7 +591,7 @@ export default function SettingsPage() {
                         <input
                           type="tel"
                           placeholder="+92 3xx xxxxxxx"
-                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all"
+                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
                         />
                       </div>
                     </div>
@@ -621,14 +604,14 @@ export default function SettingsPage() {
                         <input
                           type="text"
                           placeholder="PK00 ABPA 0000 0000 0000 0000"
-                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all"
+                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
                         />
                       </div>
                       <div className="space-y-2">
                         <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
                           Payout Schedule
                         </label>
-                        <select className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all appearance-none">
+                        <select className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all appearance-none">
                           <option>Every day</option>
                           <option>Every week (Monday)</option>
                           <option>Every month</option>
@@ -642,15 +625,8 @@ export default function SettingsPage() {
               {/* SECURITY TAB */}
               {activeTab === "security" && (
                 <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                  <div className="flex items-center justify-between mb-6">
-                    <button
-                      onClick={() => setActiveTab("overview")}
-                      className="flex items-center gap-2 text-sm font-bold text-[#00a3b4] hover:text-[#007489] transition-colors"
-                    >
-                      <span className="text-lg">←</span>
-                      Back to Settings
-                    </button>
-                    <button className="gradient-cyan-purple text-white px-6 py-2.5 rounded-full font-bold text-sm shadow-[0_4px_15px_rgba(0,163,180,0.3)] hover:shadow-[0_6px_25px_rgba(0,163,180,0.4)] transition-all">
+                  <div className="flex justify-end mb-6">
+                    <button className="bg-[#3b35d6] hover:bg-[#2f2ab8] text-white px-6 py-2.5 rounded-sm font-bold text-sm shadow-sm transition-all">
                       Save Changes
                     </button>
                   </div>
@@ -666,7 +642,7 @@ export default function SettingsPage() {
                       <input
                         type="password"
                         placeholder="••••••••"
-                        className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all"
+                        className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
                       />
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -677,7 +653,7 @@ export default function SettingsPage() {
                         <input
                           type="password"
                           placeholder="••••••••"
-                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all"
+                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
                         />
                       </div>
                       <div className="space-y-2">
@@ -687,7 +663,7 @@ export default function SettingsPage() {
                         <input
                           type="password"
                           placeholder="••••••••"
-                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all"
+                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
                         />
                       </div>
                     </div>
@@ -715,7 +691,7 @@ export default function SettingsPage() {
                         <input
                           type="text"
                           defaultValue="Ahmed Khan"
-                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all"
+                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
                         />
                       </div>
                       <div className="space-y-2">
@@ -725,7 +701,7 @@ export default function SettingsPage() {
                         <input
                           type="text"
                           placeholder="12345-1234567-1"
-                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all"
+                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
                         />
                       </div>
                     </div>
@@ -736,7 +712,7 @@ export default function SettingsPage() {
                         </label>
                         <input
                           type="date"
-                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all"
+                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
                         />
                       </div>
                       <div className="space-y-2">
@@ -745,7 +721,7 @@ export default function SettingsPage() {
                         </label>
                         <input
                           type="date"
-                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all"
+                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
                         />
                       </div>
                     </div>
@@ -756,7 +732,7 @@ export default function SettingsPage() {
                       <textarea
                         rows={3}
                         placeholder="As per CNIC"
-                        className="w-full bg-[#fcfdfd] border border-gray-200 rounded-xl px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#00a3b4] focus:ring-2 focus:ring-[#00a3b4]/20 transition-all resize-none"
+                        className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all resize-none"
                       ></textarea>
                     </div>
                   </div>
@@ -766,7 +742,7 @@ export default function SettingsPage() {
                   <h4 className="font-bold text-[#002b3d] text-lg mb-4">
                     Two-Factor Authentication
                   </h4>
-                  <div className="flex items-center justify-between p-5 rounded-[20px] border border-[#00a3b4]/30 bg-[#00a3b4]/5">
+                  <div className="flex items-center justify-between p-5 rounded-lg border border-[#d9d4e8] bg-[#fbf7ff]">
                     <div>
                       <p className="font-bold text-[#002b3d]">
                         Protect your account
@@ -776,7 +752,7 @@ export default function SettingsPage() {
                         login.
                       </p>
                     </div>
-                    <button className="gradient-cyan-purple text-white px-5 py-2 rounded-full font-bold text-sm shadow-md hover:shadow-lg transition-all shrink-0">
+                    <button className="bg-[#3b35d6] hover:bg-[#2f2ab8] text-white px-5 py-2 rounded-sm font-bold text-sm shadow-md hover:shadow-lg transition-all shrink-0">
                       Enable 2FA
                     </button>
                   </div>
@@ -814,7 +790,7 @@ function ToggleItem({
       </div>
       <button
         onClick={() => setChecked(!checked)}
-        className={`w-12 h-6 rounded-full relative transition-colors duration-300 shrink-0 ${checked ? "bg-[#00a3b4]" : "bg-gray-300"}`}
+        className={`w-12 h-6 rounded-full relative transition-colors duration-300 shrink-0 ${checked ? "bg-[#3b35d6]" : "bg-gray-300"}`}
       >
         <div
           className={`w-4 h-4 rounded-full bg-white absolute top-1 transition-transform duration-300 ${checked ? "left-7" : "left-1"}`}

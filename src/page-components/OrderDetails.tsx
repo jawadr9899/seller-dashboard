@@ -21,12 +21,12 @@ export const OrderDetails: React.FC<{ id: string }> = ({ id }) => {
   }
 
   return (
-    <div className="flex bg-gray-50 min-h-screen">
+    <div className="flex bg-[#f4f5f8] min-h-screen">
       <Sidebar items={navigationItems} />
 
       <main className="flex-1 pb-20 lg:pb-0">
         <div className="p-4 md:p-6 max-w-4xl mx-auto space-y-6">
-          <Link href="/orders" className="inline-flex items-center text-gray-500 hover:text-cyan-600 text-sm font-medium transition-colors">
+          <Link href="/orders" className="inline-flex items-center text-gray-500 hover:text-[#3b35d6] text-sm font-medium transition-colors">
             <ArrowLeft className="w-4 h-4 mr-1" />
             Back to Orders
           </Link>
@@ -44,18 +44,18 @@ export const OrderDetails: React.FC<{ id: string }> = ({ id }) => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="md:col-span-2 space-y-6">
               {/* Items List */}
-              <Card className="bg-white border-gray-100">
+              <Card className="bg-white border-[#d9d4e8]">
                 <CardContent className="p-6">
-                  <div className="flex items-center justify-between mb-4 pb-4 border-b border-gray-100">
+                  <div className="flex items-center justify-between mb-4 pb-4 border-b border-[#d9d4e8]">
                     <h3 className="font-bold text-gray-900 text-lg flex items-center gap-2">
-                       <Package className="w-5 h-5 text-cyan-600" /> Order Items
+                       <Package className="w-5 h-5 text-[#3b35d6]" /> Order Items
                     </h3>
                     <span className="text-sm text-gray-500 font-semibold">{order.itemCount} Units Total</span>
                   </div>
                   <div className="space-y-4">
                     {/* Dummy items representation */}
                     {[...Array(order.itemCount)].map((_, idx) => (
-                      <div key={idx} className="flex justify-between items-center bg-gray-50 p-3 rounded-xl border border-gray-100">
+                      <div key={idx} className="flex justify-between items-center bg-[#f4f5f8] p-3 rounded-xl border border-[#d9d4e8]">
                         <div className="flex items-center gap-3">
                           <div className="w-12 h-12 rounded-lg bg-white border shadow-sm flex items-center justify-center text-xl">
                             🍔
@@ -69,9 +69,9 @@ export const OrderDetails: React.FC<{ id: string }> = ({ id }) => {
                       </div>
                     ))}
                   </div>
-                  <div className="mt-6 pt-4 border-t border-gray-100 flex justify-between items-center">
+                  <div className="mt-6 pt-4 border-t border-[#d9d4e8] flex justify-between items-center">
                     <p className="font-bold text-gray-500 uppercase tracking-widest text-xs">Total Amount</p>
-                    <p className="text-2xl font-bold text-cyan-600">Rs. {order.amount}</p>
+                    <p className="text-2xl font-bold text-[#3b35d6]">Rs. {order.amount}</p>
                   </div>
                 </CardContent>
               </Card>
@@ -80,7 +80,7 @@ export const OrderDetails: React.FC<{ id: string }> = ({ id }) => {
             {/* Sidebar Details */}
             <div className="space-y-6">
               {/* Customer Info */}
-              <Card className="bg-white border-gray-100">
+              <Card className="bg-white border-[#d9d4e8]">
                 <CardContent className="p-6 space-y-5">
                    <h3 className="font-bold text-cyan-700 text-sm uppercase tracking-wide flex items-center gap-2">
                       <User className="w-4 h-4" /> Customer Info
@@ -100,18 +100,18 @@ export const OrderDetails: React.FC<{ id: string }> = ({ id }) => {
               </Card>
 
               {/* Delivery Info */}
-              <Card className="bg-white border-gray-100 border-t-4 border-t-cyan-500">
+              <Card className="bg-white border-[#d9d4e8] border-t-4 border-t-cyan-500">
                 <CardContent className="p-6 space-y-4">
                    <h3 className="font-bold text-cyan-700 text-sm uppercase tracking-wide flex items-center gap-2">
                       <Store className="w-4 h-4" /> Delivery Logistics
                    </h3>
-                   <div className="bg-cyan-50/50 rounded-xl p-4 border border-cyan-100 space-y-3">
+                   <div className="bg-[#eeeaff]/50 rounded-xl p-4 border border-cyan-100 space-y-3">
                       <div className="flex justify-between items-center text-sm">
-                        <span className="text-gray-500 font-medium flex items-center gap-1.5"><MapPin className="w-4 h-4 text-cyan-600" /> Distance</span>
+                        <span className="text-gray-500 font-medium flex items-center gap-1.5"><MapPin className="w-4 h-4 text-[#3b35d6]" /> Distance</span>
                         <span className="font-bold text-gray-900">{order.distanceKm} km</span>
                       </div>
                       <div className="flex justify-between items-center text-sm">
-                        <span className="text-gray-500 font-medium flex items-center gap-1.5"><Clock className="w-4 h-4 text-cyan-600" /> Time Elapsed</span>
+                        <span className="text-gray-500 font-medium flex items-center gap-1.5"><Clock className="w-4 h-4 text-[#3b35d6]" /> Time Elapsed</span>
                         <span className="font-bold text-gray-900">{order.receivedMinsAgo} mins ago</span>
                       </div>
                    </div>

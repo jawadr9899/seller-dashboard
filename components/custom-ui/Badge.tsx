@@ -1,29 +1,44 @@
-import React from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '@/lib/utils';
+import React from "react";
+import { cn } from "@/lib/utils";
 
-const badgeVariants = cva('inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-bold', {
-  variants: {
-    color: {
-      primary: 'bg-cyan-100 text-cyan-600',
-      secondary: 'bg-pink-100 text-pink-600',
-      success: 'bg-green-100 text-green-600',
-      warning: 'bg-yellow-100 text-yellow-600',
-      danger: 'bg-red-100 text-red-600',
-      gray: 'bg-gray-100 text-gray-600',
-    },
-  },
-  defaultVariants: {
-    color: 'primary',
-  },
-});
+type BadgeColor =
+  | "primary"
+  | "secondary"
+  | "success"
+  | "warning"
+  | "danger"
+  | "gray";
 
-interface BadgeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'color'>, VariantProps<typeof badgeVariants> {}
+const colorClasses: Record<BadgeColor, string> = {
+  primary: "bg-[#e4e1ff] text-[#3b35d6]",
+  secondary: "bg-[#f1e7ff] text-[#7a4bc6]",
+  success: "bg-[#dcf7e9] text-[#1b8f5a] border border-[#a8e8c8]",
+  warning: "bg-[#fff1d6] text-[#b9821c] border border-[#ffdca3]",
+  danger: "bg-[#fde4e4] text-[#cf3c3c] border border-[#f5b5b5]",
+  gray: "bg-[#f2f0ff] text-[#6b668f]",
+};
 
-const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(({ className, color, ...props }, ref) => (
-  <div ref={ref} className={cn(badgeVariants({ color, className }))} {...props} />
-));
+interface BadgeProps extends Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  "color"
+> {
+  color?: BadgeColor;
+}
 
-Badge.displayName = 'Badge';
+const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
+  ({ className, color = "primary", ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn(
+        "inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold",
+        colorClasses[color],
+        className,
+      )}
+      {...props}
+    />
+  ),
+);
 
-export { Badge, badgeVariants };
+Badge.displayName = "Badge";
+
+export { Badge };

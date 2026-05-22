@@ -45,7 +45,7 @@ export const Inventory: React.FC = () => {
   };
 
   return (
-    <div className="flex bg-gray-50">
+    <div className="flex bg-[#f4f5f8]">
       <Sidebar items={navigationItems} />
 
       <main className="flex-1 pb-20 lg:pb-0">
@@ -57,7 +57,7 @@ export const Inventory: React.FC = () => {
           />
 
           {/* Search and Filters */}
-          <div className="bg-white rounded-2xl shadow-sm p-4 md:p-6 mb-6">
+          <div className="bg-white rounded-lg shadow-sm p-4 md:p-6 mb-6">
             <div className="flex flex-col gap-4">
               <Input
                 placeholder="Search by product name, SKU or category..."
@@ -73,7 +73,7 @@ export const Inventory: React.FC = () => {
                     onClick={() => handleCategoryFilter(cat)}
                     className={`px-3 py-1 rounded-full text-xs font-semibold transition-colors ${
                       selectedCategory === cat
-                        ? 'bg-cyan-500 text-white'
+                        ? 'bg-[#eeeaff]0 text-white'
                         : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                     }`}
                   >
@@ -96,11 +96,11 @@ export const Inventory: React.FC = () => {
           </div>
 
           {/* Products Table */}
-          <div className="bg-white rounded-2xl shadow-sm overflow-x-auto">
+          <div className="bg-white rounded-lg shadow-sm overflow-x-auto">
             {displayedProducts.length > 0 ? (
               <>
                 <table className="w-full">
-                  <thead className="border-b border-gray-200 bg-gray-50">
+                  <thead className="border-b border-[#d9d4e8] bg-[#f4f5f8]">
                     <tr>
                       <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">Product Details</th>
                       <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">Category</th>
@@ -117,7 +117,7 @@ export const Inventory: React.FC = () => {
                 </table>
 
                 {/* Pagination */}
-                <div className="px-4 py-4 border-t border-gray-200 flex items-center justify-between">
+                <div className="px-4 py-4 border-t border-[#d9d4e8] flex items-center justify-between">
                   <p className="text-sm text-gray-600">
                     Showing {startIdx + 1} to {Math.min(startIdx + itemsPerPage, filteredProducts.length)} of{' '}
                     {filteredProducts.length}
@@ -137,7 +137,7 @@ export const Inventory: React.FC = () => {
                           key={page}
                           onClick={() => setCurrentPage(page)}
                           className={`px-2 py-1 rounded text-sm font-medium ${
-                            page === currentPage ? 'bg-cyan-500 text-white' : 'bg-gray-100 text-gray-600'
+                            page === currentPage ? 'bg-[#eeeaff]0 text-white' : 'bg-gray-100 text-gray-600'
                           }`}
                         >
                           {page}

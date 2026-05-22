@@ -1,43 +1,52 @@
-import React from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '@/lib/utils';
+import React from "react";
+import { cn } from "@/lib/utils";
 
-const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed',
-  {
-    variants: {
-      variant: {
-        primary: 'gradient-blue-pink text-white hover:opacity-90',
-        secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200 active:bg-gray-300',
-        outline: 'border-2 border-cyan-500 text-cyan-500 hover:bg-cyan-50 active:bg-cyan-100',
-        danger: 'border-2 border-red-500 text-red-500 hover:bg-red-50 active:bg-red-100',
-        ghost: 'text-gray-700 hover:bg-gray-100 active:bg-gray-200',
-      },
-      size: {
-        sm: 'px-3 py-1.5 text-sm',
-        md: 'px-4 py-2 text-base',
-        lg: 'px-6 py-3 text-lg',
-      },
-    },
-    defaultVariants: {
-      variant: 'primary',
-      size: 'md',
-    },
-  }
-);
+type ButtonVariant = "primary" | "secondary" | "outline" | "danger" | "ghost";
+type ButtonSize = "sm" | "md" | "lg";
 
-interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+const variantClasses: Record<ButtonVariant, string> = {
+  primary:
+    "bg-[#3b35d6] text-white shadow-[0_4px_10px_rgba(59,53,214,0.25)] hover:bg-[#2f2ab8]",
+  secondary: "bg-[#eeeaff] text-[#3b35d6] hover:bg-[#e3ddff]",
+  outline: "border border-[#d9d4e8] text-[#3b35d6] bg-white hover:bg-[#f3f0ff]",
+  danger: "border border-[#f2b8b8] text-[#d64545] bg-white hover:bg-[#fff1f1]",
+  ghost: "text-[#3b35d6] hover:bg-[#eeeaff]",
+};
+
+const sizeClasses: Record<ButtonSize, string> = {
+  sm: "px-3 py-1.5 text-sm",
+  md: "px-4 py-2 text-sm",
+  lg: "px-6 py-3 text-base",
+};
+
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
   loading?: boolean;
   icon?: React.ReactNode;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, loading, icon, children, ...props }, ref) => (
+  (
+    {
+      className,
+      variant = "primary",
+      size = "md",
+      loading,
+      icon,
+      children,
+      ...props
+    },
+    ref,
+  ) => (
     <button
       ref={ref}
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={cn(
+        "inline-flex items-center justify-center gap-2 rounded-sm font-semibold transition-colors focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed",
+        variantClasses[variant],
+        sizeClasses[size],
+        className,
+      )}
       disabled={loading || props.disabled}
       {...props}
     >
@@ -45,9 +54,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       {icon && <span>{icon}</span>}
       {children}
     </button>
-  )
+  ),
 );
 
-Button.displayName = 'Button';
+Button.displayName = "Button";
 
-export { Button, buttonVariants };
+export { Button };
