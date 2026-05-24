@@ -1,778 +1,718 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { BottomTabBar } from "@/components/layout/BottomTabBar";
 import { navigationItems, bottomTabs } from "@/config/navigation";
 
 export default function SettingsPage() {
-  const [activeTab, setActiveTab] = useState("profile");
+  const [activeSection, setActiveSection] = useState("account");
+  const [selectedPaymentMethod, setSelectedPaymentMethod] =
+    useState("jazzcash");
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  const settingsCards = [
-    {
-      id: "profile",
-      title: "Profile",
-      description: "Personal info, contact details, and preferences.",
-      icon: <UserIcon />,
-    },
-    {
-      id: "store",
-      title: "Store Details",
-      description: "Platform, storefront, address, and store metadata.",
-      icon: <StoreIcon />,
-    },
-    {
-      id: "notifications",
-      title: "Notifications",
-      description: "Email, SMS, and marketing alerts preferences.",
-      icon: <BellIcon />,
-    },
-    {
-      id: "payouts",
-      title: "Bank & Payouts",
-      description: "Link wallets, cards, and payout schedules.",
-      icon: <BankIcon />,
-    },
-    {
-      id: "security",
-      title: "Security",
-      description: "Passwords, 2FA, and identity verification.",
-      icon: <ShieldIcon />,
-    },
-  ];
+  useEffect(() => {
+    const pathSection = pathname.startsWith("/settings/")
+      ? pathname.split("/")[2]
+      : null;
+    const querySection = searchParams.get("section");
 
-  const digitalBanks = [
-    "JazzCash (Mobilink Microfinance Bank)",
-    "Easypaisa (Telenor Microfinance Bank)",
-    "NayaPay",
-    "SadaPay",
-    "Zindigi (JS Bank)",
-    "UBL Omni",
-    "HBL Konnect",
-    "Upaisa (U Microfinance Bank)",
-    "Keenu",
-    "FINJA",
-  ];
+    const rawSection = pathSection || querySection || "account";
 
-  const walletProviders = [
-    "JazzCash",
-    "Easypaisa",
-    "NayaPay",
-    "SadaPay",
-    "Zindigi",
-    "UBL Omni",
-    "HBL Konnect",
-    "Upaisa",
-    "Keenu",
-    "FINJA",
-  ];
+    const normalizedSection =
+      rawSection === "payments"
+        ? "payouts"
+        : rawSection === "privacy"
+          ? "security"
+          : rawSection;
+
+    const allowedSections = [
+      "account",
+      "store",
+      "notifications",
+      "payouts",
+      "security",
+    ];
+
+    if (allowedSections.includes(normalizedSection)) {
+      setActiveSection(normalizedSection);
+    }
+  }, [pathname, searchParams]);
 
   return (
-    <div className="flex bg-white min-h-screen font-sans relative">
+    <div className="relative flex min-h-screen bg-gray-50 font-sans">
       <Sidebar items={navigationItems} />
 
-      <main className="flex-1 pb-20 lg:pb-0 overflow-y-auto relative z-10">
-        <div className="w-full relative z-10">
-          <div className="w-full">
-            <div className="w-full p-6 md:p-10">
-              <div className="mb-8">
-                <h1 className="text-2xl md:text-3xl font-bold text-ok-heading">
-                  Settings
-                </h1>
-                <p className="text-sm text-ok-text-muted mt-2">
-                  Manage account, store, notification, payout, and security
-                  preferences.
-                </p>
-              </div>
+      <main className="flex-1 overflow-y-auto pb-20 lg:pb-0">
+        <div className="mx-auto w-full max-w-6xl px-4 py-6 md:px-8 md:py-8">
+          <div className="rounded-2xl border border-ok-border-brand bg-linear-to-r from-white via-ok-brand-subtle to-white p-6 shadow-sm backdrop-blur-xl">
+            <h1 className="text-4xl font-bold tracking-tight text-gray-900">
+              Settings
+            </h1>
+            <p className="mt-1 text-sm text-gray-600">
+              Manage your account, store, notifications, payouts, and security.
+            </p>
+          </div>
 
-              <div className="flex justify-center mb-8">
-                <div className="w-full max-w-5xl overflow-x-auto">
-                  <div className="relative min-w-[760px] flex bg-ok-surface border border-ok-border p-1.5">
-                    <div
-                      className="absolute top-1.5 bottom-1.5 left-1.5 rounded-lg bg-white  border transition-transform duration-300 ease-out"
-                      style={{
-                        width: `calc((100% - 0.75rem) / ${settingsCards.length})`,
-                        transform: `translateX(${settingsCards.findIndex((card) => card.id === activeTab) * 100}%)`,
-                      }}
+          <section className="mt-6 space-y-8">
+            {activeSection === "account" && (
+              <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-300">
+                <SettingsSection
+                  title="Profile Photo"
+                  description="Upload a clear profile photo for your account."
+                >
+                  <div className="flex items-center gap-6">
+                    <img
+                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                      alt="Profile"
+                      className="h-20 w-20 rounded-full border-4 border-white object-cover shadow-sm"
                     />
-                    {settingsCards.map((card) => {
-                      const isActive = activeTab === card.id;
+                    <div className="flex gap-3">
+                      <button className="rounded-lg bg-ok-brand px-4 py-2 text-sm font-semibold text-white hover:bg-ok-brand-hover transition-colors">
+                        Change Photo
+                      </button>
+                      <button className="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors">
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </SettingsSection>
+
+                <SettingsSection
+                  title="Personal Information"
+                  description="Keep your personal details up to date."
+                >
+                  <div className="space-y-5">
+                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                      <FormField label="First Name" defaultValue="Ahmed" />
+                      <FormField label="Last Name" defaultValue="Khan" />
+                    </div>
+                    <FormField label="Display Name" defaultValue="Ahmed Ali" />
+                    <FormField
+                      label="Email Address"
+                      type="email"
+                      defaultValue="ahmed@example.com"
+                    />
+                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                      <FormField
+                        label="Phone Number"
+                        type="tel"
+                        defaultValue="+92 300 1234567"
+                      />
+                      <FormField
+                        label="WhatsApp Number"
+                        type="tel"
+                        defaultValue="+92 300 9876543"
+                      />
+                    </div>
+                  </div>
+                </SettingsSection>
+
+                <SettingsSection
+                  title="Location & Preferences"
+                  description="Set regional and language preferences."
+                >
+                  <div className="space-y-5">
+                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                      <FormField label="City" defaultValue="Lahore" />
+                      <FormField label="Country" defaultValue="Pakistan" />
+                    </div>
+                    <FormField
+                      label="Address"
+                      type="textarea"
+                      defaultValue="Block A, Gulberg, Lahore, Punjab"
+                      rows={3}
+                    />
+                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                      <FormSelect
+                        label="Time Zone"
+                        defaultValue="PKT"
+                        options={[
+                          {
+                            value: "PKT",
+                            label: "Pakistan Standard Time (PKT)",
+                          },
+                          { value: "GST", label: "Gulf Standard Time (GST)" },
+                          { value: "GMT", label: "GMT (UTC +0)" },
+                        ]}
+                      />
+                      <FormSelect
+                        label="Language"
+                        defaultValue="en"
+                        options={[
+                          { value: "en", label: "English" },
+                          { value: "ur", label: "Urdu" },
+                        ]}
+                      />
+                    </div>
+                  </div>
+                </SettingsSection>
+
+                <ActionBar buttonText="Save Changes" />
+              </div>
+            )}
+
+            {activeSection === "store" && (
+              <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-300">
+                <SettingsSection
+                  title="Store Information"
+                  description="Manage your storefront details and public profile."
+                >
+                  <div className="space-y-5">
+                    <FormField
+                      label="Store Name"
+                      defaultValue="Green Pantry Organic"
+                    />
+                    <FormField
+                      label="Store Description"
+                      type="textarea"
+                      defaultValue="An online store offering fresh, organic essentials delivered across Pakistan."
+                      rows={4}
+                    />
+                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                      <FormSelect
+                        label="Store Platform"
+                        defaultValue="shopify"
+                        options={[
+                          { value: "shopify", label: "Shopify" },
+                          { value: "woocommerce", label: "WooCommerce" },
+                          { value: "magento", label: "Magento" },
+                          { value: "bigcommerce", label: "BigCommerce" },
+                          { value: "daraz", label: "Daraz" },
+                          { value: "custom", label: "Custom Storefront" },
+                        ]}
+                      />
+                      <FormField
+                        label="Storefront URL"
+                        type="url"
+                        defaultValue="https://greenpantry.pk"
+                      />
+                    </div>
+                    <FormField
+                      label="Primary Category"
+                      defaultValue="Organic Groceries"
+                    />
+                  </div>
+                </SettingsSection>
+
+                <SettingsSection
+                  title="Business Details"
+                  description="Store identifier, currency, and registered address."
+                >
+                  <div className="space-y-5">
+                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                      <FormField
+                        label="Store ID"
+                        defaultValue="GP-2024-001"
+                        disabled
+                        helpText="This is your unique store identifier."
+                      />
+                      <FormSelect
+                        label="Base Currency"
+                        defaultValue="PKR"
+                        options={[
+                          { value: "PKR", label: "PKR (Rs)" },
+                          { value: "USD", label: "USD ($)" },
+                          { value: "EUR", label: "EUR (€)" },
+                          { value: "GBP", label: "GBP (£)" },
+                        ]}
+                      />
+                    </div>
+                    <FormField
+                      label="Store Address"
+                      type="textarea"
+                      defaultValue="15-A, Main Boulevard, Gulberg, Lahore"
+                      rows={3}
+                    />
+                  </div>
+                </SettingsSection>
+
+                <ActionBar buttonText="Save Changes" />
+              </div>
+            )}
+
+            {activeSection === "notifications" && (
+              <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-300">
+                <SettingsSection
+                  title="Email Notifications"
+                  description="Control which email updates you receive."
+                >
+                  <div className="space-y-4">
+                    <ToggleSetting
+                      title="Order Updates"
+                      description="Receive emails for every new order."
+                      defaultChecked
+                    />
+                    <ToggleSetting
+                      title="Payment Confirmations"
+                      description="Get confirmations when payouts are processed."
+                      defaultChecked
+                    />
+                    <ToggleSetting
+                      title="Weekly Reports"
+                      description="Receive a weekly performance summary."
+                      defaultChecked
+                    />
+                    <ToggleSetting
+                      title="Marketing & Promotions"
+                      description="Get product tips, updates, and offers."
+                      defaultChecked={false}
+                    />
+                  </div>
+                </SettingsSection>
+
+                <SettingsSection
+                  title="Push Notifications"
+                  description="Manage in-app and mobile push alerts."
+                >
+                  <div className="space-y-4">
+                    <ToggleSetting
+                      title="Real-time Order Alerts"
+                      description="Instant push for incoming orders."
+                      defaultChecked
+                    />
+                    <ToggleSetting
+                      title="Customer Messages"
+                      description="Notify when customers send chat messages."
+                      defaultChecked
+                    />
+                    <ToggleSetting
+                      title="Inventory Alerts"
+                      description="Notify when stock runs low."
+                      defaultChecked
+                    />
+                  </div>
+                </SettingsSection>
+
+                <SettingsSection
+                  title="SMS Notifications"
+                  description="Use SMS only for urgent operational updates."
+                >
+                  <div className="space-y-4">
+                    <ToggleSetting
+                      title="Critical Alerts"
+                      description="SMS for urgent issues like payment failures."
+                      defaultChecked
+                    />
+                    <ToggleSetting
+                      title="Daily Summary"
+                      description="Receive a daily SMS order recap."
+                      defaultChecked={false}
+                    />
+                  </div>
+                </SettingsSection>
+
+                <ActionBar buttonText="Save Preferences" />
+              </div>
+            )}
+
+            {activeSection === "payouts" && (
+              <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-300">
+                <SettingsSection
+                  title="Active Payout Method"
+                  description="Your currently connected payout account."
+                >
+                  <div className="relative overflow-hidden rounded-xl bg-linear-to-br from-purple-600 to-purple-500 p-6 text-white">
+                    <div className="relative z-10">
+                      <div className="mb-4 flex items-center justify-between">
+                        <p className="text-xs font-medium uppercase tracking-wider text-white/80">
+                          Primary Payout Account
+                        </p>
+                        <span className="rounded-full bg-white/20 px-3 py-1 text-xs font-semibold">
+                          Verified
+                        </span>
+                      </div>
+                      <h4 className="mb-6 text-2xl font-bold">
+                        JazzCash Wallet
+                      </h4>
+                      <div className="flex items-end justify-between">
+                        <div>
+                          <p className="text-xs text-white/70">Linked Mobile</p>
+                          <p className="font-mono text-lg tracking-wide">
+                            +92 300 1234567
+                          </p>
+                        </div>
+                        <button className="text-sm font-semibold text-white underline">
+                          Change
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </SettingsSection>
+
+                <SettingsSection
+                  title="Select a Payment Method"
+                  description="Choose where you want to receive payouts."
+                >
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                    {[
+                      {
+                        id: "jazzcash",
+                        title: "JazzCash",
+                        subtitle: "Pay via JazzCash",
+                        logo: <JazzCashLogo />,
+                      },
+                      {
+                        id: "easypaisa",
+                        title: "EasyPaisa",
+                        subtitle: "Pay via EasyPaisa",
+                        logo: <EasyPaisaLogo />,
+                      },
+                      {
+                        id: "nayapay",
+                        title: "NayaPay",
+                        subtitle: "Pay via NayaPay",
+                        logo: <NayaPayLogo />,
+                      },
+                      {
+                        id: "bank",
+                        title: "Banks",
+                        subtitle: "Pay via Bank Transfer",
+                        logo: <RealBankLogo />,
+                      },
+                    ].map((method) => {
+                      const active = selectedPaymentMethod === method.id;
                       return (
                         <button
-                          key={card.id}
-                          onClick={() => setActiveTab(card.id)}
-                          className={`relative z-10 flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-sm font-semibold transition-colors ${
-                            isActive
-                              ? "text-ok-chart-bar"
-                              : "text-ok-text hover:text-ok-chart-bar"
+                          key={method.id}
+                          onClick={() => setSelectedPaymentMethod(method.id)}
+                          className={`rounded-xl border px-4 py-5 text-left transition-all ${
+                            active
+                              ? "border-ok-brand bg-ok-brand-subtle shadow-sm"
+                              : "border-ok-border bg-white hover:border-ok-border-brand hover:bg-ok-brand-ghost/50"
                           }`}
                         >
-                          <span
-                            className={`${isActive ? "text-ok-chart-bar" : "text-ok-text-muted"}`}
-                          >
-                            {card.icon}
-                          </span>
-                          {card.title}
+                          <div className="mb-4">{method.logo}</div>
+                          <p className="text-sm font-bold text-ok-heading">
+                            {method.title}
+                          </p>
+                          <p className="mt-1 text-xs text-ok-text-muted">
+                            {method.subtitle}
+                          </p>
                         </button>
                       );
                     })}
                   </div>
-                </div>
+                </SettingsSection>
+
+                <SettingsSection
+                  title="Bank Account Details"
+                  description="Add or update your payout account details."
+                >
+                  <div className="space-y-5">
+                    <FormField
+                      label="Account Holder Name"
+                      defaultValue="Ahmed Khan"
+                    />
+                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                      <FormSelect
+                        label="Bank / Wallet Provider"
+                        defaultValue="jazzcash"
+                        options={[
+                          { value: "jazzcash", label: "JazzCash (Mobilink)" },
+                          {
+                            value: "easypaisa",
+                            label: "Easypaisa (Telenor)",
+                          },
+                          { value: "nayapay", label: "NayaPay" },
+                          { value: "sadapay", label: "SadaPay" },
+                          { value: "zindigi", label: "Zindigi (JS Bank)" },
+                          { value: "ublomni", label: "UBL Omni" },
+                          { value: "hblkonnect", label: "HBL Konnect" },
+                        ]}
+                      />
+                      <FormField
+                        label="Linked Mobile Number"
+                        type="tel"
+                        defaultValue="+92 300 1234567"
+                      />
+                    </div>
+                    <FormField
+                      label="IBAN / Account Number"
+                      placeholder="PK00 ABPA 0000 0000 0000 0000"
+                    />
+                  </div>
+                </SettingsSection>
+
+                <SettingsSection
+                  title="Card Details (Optional)"
+                  description="Link a VISA, Mastercard, or UnionPay card."
+                >
+                  <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                    <FormSelect
+                      label="Card Network"
+                      defaultValue=""
+                      options={[
+                        { value: "", label: "Select card type" },
+                        { value: "visa", label: "VISA" },
+                        { value: "mastercard", label: "Mastercard" },
+                        { value: "unionpay", label: "UnionPay" },
+                      ]}
+                    />
+                    <FormField
+                      label="Card Number"
+                      placeholder="•••• •••• •••• ••••"
+                    />
+                  </div>
+                </SettingsSection>
+
+                <SettingsSection
+                  title="Payout Schedule"
+                  description="Choose when funds are transferred to you."
+                >
+                  <FormSelect
+                    label="Payout Frequency"
+                    defaultValue="daily"
+                    options={[
+                      { value: "daily", label: "Every day" },
+                      { value: "weekly", label: "Every week (Monday)" },
+                      { value: "biweekly", label: "Every 2 weeks" },
+                      { value: "monthly", label: "Every month" },
+                    ]}
+                  />
+                </SettingsSection>
+
+                <ActionBar buttonText="Save Payment Details" />
               </div>
+            )}
 
-              {/* PROFILE TAB */}
-              {activeTab === "profile" && (
-                <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                  <div className="flex justify-end mb-6">
-                    <button className="bg-ok-brand hover:bg-ok-brand-hover text-white px-6 py-2.5 rounded-sm font-bold text-sm shadow-sm transition-all">
-                      Save Changes
-                    </button>
-                  </div>
-                  <h3 className="text-xl font-bold text-ok-settings-dark mb-6">
-                    Profile Information
-                  </h3>
-
-                  {/* Avatar */}
-                  <div className="flex items-center gap-6 mb-10">
-                    <div className="relative">
-                      <div className="w-24 h-24 rounded-lg border border-ok-border bg-white p-1 shadow-sm">
-                        <img
-                          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                          alt="Profile"
-                          className="w-full h-full rounded-lg object-cover"
-                        />
-                      </div>
-                      <button className="absolute -bottom-2 -right-2 w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center border border-ok-border text-ok-brand hover:bg-ok-surface-alt transition-colors">
-                        <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-ok-settings-dark text-lg">
-                        Ahmed
-                      </h4>
-                      <p className="text-ok-settings-muted text-sm font-medium mb-3">
-                        Owner & Admin
-                      </p>
-                      <div className="flex gap-2">
-                        <button className="px-4 py-1.5 rounded-sm border border-ok-border bg-white text-ok-brand text-xs font-bold hover:bg-ok-brand-subtle transition-colors">
-                          Change Picture
-                        </button>
-                        <button className="px-4 py-1.5 rounded-full bg-red-50 text-red-500 text-xs font-bold hover:bg-red-100 transition-colors">
-                          Remove
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Form */}
-                  <div className="space-y-8">
-                    <div>
-                      <h4 className="text-sm font-bold text-ok-settings-dark mb-4">
-                        Basic Details
-                      </h4>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                          <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                            First Name
-                          </label>
-                          <input
-                            type="text"
-                            defaultValue="Ahmed"
-                            className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                            Last Name
-                          </label>
-                          <input
-                            type="text"
-                            defaultValue="Khan"
-                            className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                            Display Name
-                          </label>
-                          <input
-                            type="text"
-                            defaultValue="Ahmed Ali"
-                            className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                            Designation
-                          </label>
-                          <input
-                            type="text"
-                            defaultValue="Owner & Admin"
-                            className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <h4 className="text-sm font-bold text-ok-settings-dark mb-4">
-                        Contact & Preferences
-                      </h4>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                          <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                            Email Address
-                          </label>
-                          <input
-                            type="email"
-                            defaultValue="Ahmed@example.com"
-                            className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                            Phone Number
-                          </label>
-                          <input
-                            type="tel"
-                            defaultValue="+92 300 1234567"
-                            className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                            WhatsApp Number
-                          </label>
-                          <input
-                            type="tel"
-                            defaultValue="+92 300 9876543"
-                            className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                            Time Zone
-                          </label>
-                          <select className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all appearance-none">
-                            <option>Pakistan Standard Time (PKT)</option>
-                            <option>Gulf Standard Time (GST)</option>
-                            <option>GMT (UTC +0)</option>
-                          </select>
-                        </div>
-                        <div className="space-y-2">
-                          <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                            Preferred Language
-                          </label>
-                          <select className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all appearance-none">
-                            <option>English</option>
-                            <option>Urdu</option>
-                          </select>
-                        </div>
-                        <div className="space-y-2">
-                          <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                            City
-                          </label>
-                          <input
-                            type="text"
-                            defaultValue="Lahore"
-                            className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                            Country
-                          </label>
-                          <input
-                            type="text"
-                            defaultValue="Pakistan"
-                            className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                        Address
-                      </label>
-                      <textarea
-                        rows={3}
-                        defaultValue="Block A, Gulberg, Lahore, Punjab"
-                        className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all resize-none"
-                      ></textarea>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* STORE DETAILS TAB */}
-              {activeTab === "store" && (
-                <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                  <div className="flex justify-end mb-6">
-                    <button className="bg-ok-brand hover:bg-ok-brand-hover text-white px-6 py-2.5 rounded-sm font-bold text-sm shadow-sm transition-all">
-                      Save Changes
-                    </button>
-                  </div>
-                  <h3 className="text-xl font-bold text-ok-settings-dark mb-2">
-                    Store Details
-                  </h3>
-                  <p className="text-ok-settings-muted text-sm font-medium mb-6">
-                    Keep your storefront info up to date, including your
-                    platform (Shopify, WooCommerce, etc.) and public URL.
-                  </p>
-                  <div className="grid grid-cols-1 gap-6">
-                    <div className="space-y-2">
-                      <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                        Store Name
-                      </label>
-                      <input
-                        type="text"
-                        defaultValue="Green Pantry Organic"
-                        className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
-                      />
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                          Store Platform
-                        </label>
-                        <select className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all appearance-none">
-                          <option>Shopify</option>
-                          <option>WooCommerce</option>
-                          <option>Magento</option>
-                          <option>BigCommerce</option>
-                          <option>Daraz</option>
-                          <option>Custom Storefront</option>
-                        </select>
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                          Storefront URL
-                        </label>
-                        <input
-                          type="url"
-                          defaultValue="https://greenpantry.pk"
-                          className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
-                        />
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                          Store ID
-                        </label>
-                        <input
-                          type="text"
-                          defaultValue="GP-2024-001"
-                          disabled
-                          className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-gray-400 font-medium cursor-not-allowed"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                          Base Currency
-                        </label>
-                        <select className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all appearance-none">
-                          <option>PKR (Rs)</option>
-                          <option>USD ($)</option>
-                          <option>EUR (€)</option>
-                          <option>GBP (£)</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                        Primary Category
-                      </label>
-                      <input
-                        type="text"
-                        defaultValue="Organic Groceries"
-                        className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                        Store Description
-                      </label>
-                      <textarea
-                        rows={4}
-                        defaultValue="An online store offering fresh, organic essentials delivered across Pakistan."
-                        className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all resize-none"
-                      ></textarea>
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                        Store Address
-                      </label>
-                      <textarea
-                        rows={3}
-                        defaultValue="15-A, Main Boulevard, Gulberg, Lahore"
-                        className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all resize-none"
-                      ></textarea>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* NOTIFICATIONS TAB */}
-              {activeTab === "notifications" && (
-                <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                  <div className="flex justify-end mb-6">
-                    <button className="bg-ok-brand hover:bg-ok-brand-hover text-white px-6 py-2.5 rounded-sm font-bold text-sm shadow-sm transition-all">
-                      Save Changes
-                    </button>
-                  </div>
-                  <h3 className="text-xl font-bold text-ok-settings-dark mb-6">
-                    Notification Preferences
-                  </h3>
-
-                  <div className="space-y-6">
-                    <ToggleItem
-                      title="Order Updates"
-                      description="Receive notifications when a new order is placed."
-                      defaultChecked={true}
+            {activeSection === "security" && (
+              <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-300">
+                <SettingsSection
+                  title="Change Password"
+                  description="Update your login password regularly."
+                >
+                  <div className="space-y-5">
+                    <FormField
+                      label="Current Password"
+                      type="password"
+                      placeholder="Enter current password"
                     />
-                    <div className="h-px w-full bg-gray-100"></div>
-                    <ToggleItem
-                      title="Inventory Alerts"
-                      description="Get notified when products are running low on stock."
-                      defaultChecked={true}
-                    />
-                    <div className="h-px w-full bg-gray-100"></div>
-                    <ToggleItem
-                      title="Marketing & Promos"
-                      description="Receive tips, feature updates, and offers."
-                      defaultChecked={false}
-                    />
-                    <div className="h-px w-full bg-gray-100"></div>
-                    <ToggleItem
-                      title="SMS Notifications"
-                      description="Receive urgent alerts directly to your phone."
-                      defaultChecked={true}
-                    />
-                  </div>
-                </div>
-              )}
-
-              {/* PAYOUTS TAB */}
-              {activeTab === "payouts" && (
-                <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                  <div className="flex justify-end mb-6">
-                    <button className="bg-ok-brand hover:bg-ok-brand-hover text-white px-6 py-2.5 rounded-sm font-bold text-sm shadow-sm transition-all">
-                      Save Changes
-                    </button>
-                  </div>
-                  <h3 className="text-xl font-bold text-ok-settings-dark mb-2">
-                    Bank & Payouts
-                  </h3>
-                  <p className="text-ok-settings-muted text-sm font-medium mb-6">
-                    Add a Pakistani digital bank or wallet for payouts, or link
-                    a VISA/Mastercard/UnionPay card.
-                  </p>
-
-                  {/* Current Active Bank Card */}
-                  <div className="bg-ok-brand rounded-lg p-6 text-white mb-8 relative overflow-hidden shadow-sm border border-ok-border">
-                    <div className="absolute top-0 right-0 p-4 opacity-10">
-                      <BankIcon width={100} height={100} />
-                    </div>
-                    <div className="relative z-10">
-                      <p className="text-white/60 text-sm font-bold tracking-wider uppercase mb-1">
-                        Active Payout Account
-                      </p>
-                      <h4 className="text-2xl font-bold mb-6">
-                        JazzCash (Mobile Wallet)
-                      </h4>
-                      <div className="flex justify-between items-end">
-                        <div>
-                          <p className="text-white/60 text-xs font-medium mb-1">
-                            Linked Mobile
-                          </p>
-                          <p className="font-mono text-lg tracking-widest">
-                            +92 300 1234567
-                          </p>
-                        </div>
-                        <span className="bg-white/20 text-white px-3 py-1 rounded-full text-xs font-bold">
-                          Verified
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-6">
-                    <div>
-                      <h4 className="font-bold text-ok-settings-dark text-sm mb-3">
-                        Supported Digital Banks & Wallets
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {digitalBanks.map((bank) => (
-                          <span
-                            key={bank}
-                            className="px-3 py-1 rounded-full bg-white border border-ok-border text-ok-heading text-xs font-semibold"
-                          >
-                            {bank}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                          Account Holder Name
-                        </label>
-                        <input
-                          type="text"
-                          defaultValue="Ahmed Khan"
-                          className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                          Bank / Wallet Provider
-                        </label>
-                        <select className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all appearance-none">
-                          {digitalBanks.map((bank) => (
-                            <option key={bank}>{bank}</option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                          Card Network
-                        </label>
-                        <select className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all appearance-none">
-                          <option>VISA</option>
-                          <option>Mastercard</option>
-                          <option>UnionPay</option>
-                        </select>
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                          Card Number
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="•••• •••• •••• ••••"
-                          className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                          Wallet Provider
-                        </label>
-                        <select className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all appearance-none">
-                          {walletProviders.map((provider) => (
-                            <option key={provider}>{provider}</option>
-                          ))}
-                        </select>
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                          Linked Mobile Number
-                        </label>
-                        <input
-                          type="tel"
-                          placeholder="+92 3xx xxxxxxx"
-                          className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                          IBAN / Account Number
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="PK00 ABPA 0000 0000 0000 0000"
-                          className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                          Payout Schedule
-                        </label>
-                        <select className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all appearance-none">
-                          <option>Every day</option>
-                          <option>Every week (Monday)</option>
-                          <option>Every month</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* SECURITY TAB */}
-              {activeTab === "security" && (
-                <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
-                  <div className="flex justify-end mb-6">
-                    <button className="bg-ok-brand hover:bg-ok-brand-hover text-white px-6 py-2.5 rounded-sm font-bold text-sm shadow-sm transition-all">
-                      Save Changes
-                    </button>
-                  </div>
-                  <h3 className="text-xl font-bold text-ok-settings-dark mb-6">
-                    Security & Login
-                  </h3>
-
-                  <div className="grid grid-cols-1 gap-6 mb-10">
-                    <div className="space-y-2">
-                      <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                        Current Password
-                      </label>
-                      <input
+                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                      <FormField
+                        label="New Password"
                         type="password"
-                        placeholder="••••••••"
-                        className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
+                        placeholder="Enter new password"
+                      />
+                      <FormField
+                        label="Confirm New Password"
+                        type="password"
+                        placeholder="Re-enter new password"
                       />
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                          New Password
-                        </label>
-                        <input
-                          type="password"
-                          placeholder="••••••••"
-                          className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                          Confirm New Password
-                        </label>
-                        <input
-                          type="password"
-                          placeholder="••••••••"
-                          className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <button className="bg-gray-100 text-ok-settings-dark px-6 py-2.5 rounded-full font-bold text-sm hover:bg-gray-200 transition-colors">
-                        Update Password
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="space-y-6 mb-10">
-                    <div>
-                      <h4 className="font-bold text-ok-settings-dark text-lg">
-                        CNIC & Identity Details
-                      </h4>
-                      <p className="text-sm text-ok-settings-muted font-medium mt-1">
-                        Add your CNIC information for compliance and payouts.
-                      </p>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                          Full Name (as per CNIC)
-                        </label>
-                        <input
-                          type="text"
-                          defaultValue="Ahmed Khan"
-                          className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                          CNIC Number
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="12345-1234567-1"
-                          className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
-                        />
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-2">
-                        <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                          Date of Birth
-                        </label>
-                        <input
-                          type="date"
-                          className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                          CNIC Expiry Date
-                        </label>
-                        <input
-                          type="date"
-                          className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
-                        />
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
-                        CNIC Address
-                      </label>
-                      <textarea
-                        rows={3}
-                        placeholder="As per CNIC"
-                        className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all resize-none"
-                      ></textarea>
-                    </div>
-                  </div>
-
-                  <div className="h-px w-full bg-gray-100 mb-8"></div>
-
-                  <h4 className="font-bold text-ok-settings-dark text-lg mb-4">
-                    Two-Factor Authentication
-                  </h4>
-                  <div className="flex items-center justify-between p-5 rounded-lg border border-ok-border bg-ok-surface">
-                    <div>
-                      <p className="font-bold text-ok-settings-dark">
-                        Protect your account
-                      </p>
-                      <p className="text-sm text-ok-settings-muted font-medium mt-1">
-                        Add an extra layer of security requiring a code at
-                        login.
-                      </p>
-                    </div>
-                    <button className="bg-ok-brand hover:bg-ok-brand-hover text-white px-5 py-2 rounded-sm font-bold text-sm shadow-md hover:shadow-lg transition-all shrink-0">
-                      Enable 2FA
+                    <button className="rounded-lg bg-ok-brand px-5 py-2 text-sm font-semibold text-white hover:bg-ok-brand-hover transition-colors">
+                      Update Password
                     </button>
                   </div>
-                </div>
-              )}
-            </div>
-          </div>
+                </SettingsSection>
+
+                <SettingsSection
+                  title="Two-Factor Authentication"
+                  description="Add a verification step for better security."
+                >
+                  <div className="rounded-xl border border-gray-200 bg-gray-50 p-6">
+                    <div className="flex items-start gap-4">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-ok-brand-subtle text-ok-brand shrink-0">
+                        <ShieldIcon className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <h4 className="text-base font-semibold text-gray-900">
+                          Protect Your Account
+                        </h4>
+                        <p className="mt-1 text-sm text-gray-600">
+                          Require a one-time code at sign-in to prevent
+                          unauthorized access.
+                        </p>
+                        <button className="mt-4 rounded-lg bg-ok-brand px-5 py-2 text-sm font-semibold text-white hover:bg-ok-brand-hover transition-colors">
+                          Enable 2FA
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </SettingsSection>
+
+                <SettingsSection
+                  title="Identity Verification"
+                  description="CNIC details are required for compliance and payouts."
+                >
+                  <div className="space-y-5">
+                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                      <FormField
+                        label="Full Name (as per CNIC)"
+                        defaultValue="Ahmed Khan"
+                      />
+                      <FormField
+                        label="CNIC Number"
+                        placeholder="12345-1234567-1"
+                      />
+                    </div>
+                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                      <FormField label="Date of Birth" type="date" />
+                      <FormField label="CNIC Expiry Date" type="date" />
+                    </div>
+                    <FormField
+                      label="CNIC Address"
+                      type="textarea"
+                      placeholder="Address as per CNIC"
+                      rows={3}
+                    />
+                  </div>
+                </SettingsSection>
+
+                <SettingsSection
+                  title="Active Sessions"
+                  description="Review devices currently logged into your account."
+                >
+                  <div className="space-y-3">
+                    <SessionItem
+                      device="Windows PC • Chrome"
+                      location="Lahore, Pakistan"
+                      lastActive="Active now"
+                      current
+                    />
+                    <SessionItem
+                      device="iPhone 14 • Safari"
+                      location="Lahore, Pakistan"
+                      lastActive="2 hours ago"
+                    />
+                    <SessionItem
+                      device="iPad • Safari"
+                      location="Karachi, Pakistan"
+                      lastActive="1 day ago"
+                    />
+                  </div>
+                  <button className="mt-4 text-sm font-semibold text-red-600 hover:text-red-700">
+                    Log out of all other sessions
+                  </button>
+                </SettingsSection>
+
+                <ActionBar buttonText="Save Security Settings" />
+              </div>
+            )}
+          </section>
         </div>
       </main>
 
-      <div className="z-50 relative">
+      <div className="relative z-50">
         <BottomTabBar items={bottomTabs} />
       </div>
     </div>
   );
 }
 
-// ---------------- UI Components ----------------
+function SettingsSection({
+  title,
+  description,
+  children,
+}: {
+  title: string;
+  description: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+      <div className="mb-6">
+        <h3 className="text-lg font-bold text-gray-900">{title}</h3>
+        <p className="mt-1 text-sm text-gray-600">{description}</p>
+      </div>
+      {children}
+    </div>
+  );
+}
 
-function ToggleItem({
+function ActionBar({ buttonText }: { buttonText: string }) {
+  return (
+    <div className="flex justify-end border-t border-gray-200 pt-4">
+      <button className="rounded-lg bg-ok-brand px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-ok-brand-hover">
+        {buttonText}
+      </button>
+    </div>
+  );
+}
+
+function FormField({
+  label,
+  type = "text",
+  defaultValue = "",
+  placeholder = "",
+  disabled = false,
+  rows,
+  helpText,
+}: {
+  label: string;
+  type?: string;
+  defaultValue?: string;
+  placeholder?: string;
+  disabled?: boolean;
+  rows?: number;
+  helpText?: string;
+}) {
+  const baseClasses = `w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm transition-all focus:border-transparent focus:ring-2 focus:ring-ok-brand ${
+    disabled
+      ? "cursor-not-allowed bg-gray-50 text-gray-500"
+      : "bg-white text-gray-900"
+  }`;
+
+  return (
+    <div>
+      <label className="mb-2 block text-sm font-semibold text-gray-700">
+        {label}
+      </label>
+      {type === "textarea" ? (
+        <textarea
+          rows={rows || 3}
+          defaultValue={defaultValue}
+          placeholder={placeholder}
+          disabled={disabled}
+          className={`${baseClasses} resize-none`}
+        />
+      ) : (
+        <input
+          type={type}
+          defaultValue={defaultValue}
+          placeholder={placeholder}
+          disabled={disabled}
+          className={baseClasses}
+        />
+      )}
+      {helpText ? (
+        <p className="mt-1.5 text-xs text-gray-500">{helpText}</p>
+      ) : null}
+    </div>
+  );
+}
+
+function FormSelect({
+  label,
+  defaultValue,
+  options,
+}: {
+  label: string;
+  defaultValue: string;
+  options: Array<{ value: string; label: string }>;
+}) {
+  return (
+    <div>
+      <label className="mb-2 block text-sm font-semibold text-gray-700">
+        {label}
+      </label>
+      <select
+        defaultValue={defaultValue}
+        className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 transition-all focus:border-transparent focus:ring-2 focus:ring-ok-brand"
+      >
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
+function ToggleSetting({
   title,
   description,
   defaultChecked,
@@ -782,110 +722,136 @@ function ToggleItem({
   defaultChecked: boolean;
 }) {
   const [checked, setChecked] = useState(defaultChecked);
+
   return (
-    <div className="flex items-center justify-between gap-4">
+    <div className="flex items-center justify-between gap-4 rounded-lg border border-gray-200 p-4">
       <div>
-        <h4 className="font-bold text-ok-settings-dark">{title}</h4>
-        <p className="text-sm text-ok-settings-muted font-medium mt-1">{description}</p>
+        <p className="text-sm font-semibold text-gray-900">{title}</p>
+        <p className="mt-1 text-sm text-gray-600">{description}</p>
       </div>
       <button
-        onClick={() => setChecked(!checked)}
-        className={`w-12 h-6 rounded-full relative transition-colors duration-300 shrink-0 ${checked ? "bg-ok-brand" : "bg-gray-300"}`}
+        onClick={() => setChecked((prev) => !prev)}
+        className={`relative h-6 w-11 shrink-0 rounded-full transition-colors ${
+          checked ? "bg-ok-brand" : "bg-gray-300"
+        }`}
       >
-        <div
-          className={`w-4 h-4 rounded-full bg-white absolute top-1 transition-transform duration-300 ${checked ? "left-7" : "left-1"}`}
-        ></div>
+        <span
+          className={`absolute top-1 h-4 w-4 rounded-full bg-white transition-transform ${
+            checked ? "left-6" : "left-1"
+          }`}
+        />
       </button>
     </div>
   );
 }
 
-// ---------------- Icons ----------------
-
-const UserIcon = () => (
-  <svg
-    className="w-5 h-5"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-    />
-  </svg>
-);
-
-const StoreIcon = () => (
-  <svg
-    className="w-5 h-5"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-    />
-  </svg>
-);
-
-const BellIcon = () => (
-  <svg
-    className="w-5 h-5"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-    />
-  </svg>
-);
-
-const BankIcon = ({
-  width = 20,
-  height = 20,
+function SessionItem({
+  device,
+  location,
+  lastActive,
+  current = false,
 }: {
-  width?: number;
-  height?: number;
-}) => (
-  <svg
-    width={width}
-    height={height}
-    className="w-5 h-5"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
-    />
-  </svg>
-);
+  device: string;
+  location: string;
+  lastActive: string;
+  current?: boolean;
+}) {
+  return (
+    <div className="flex items-center justify-between rounded-lg border border-gray-200 p-4">
+      <div>
+        <p className="text-sm font-semibold text-gray-900">{device}</p>
+        <p className="mt-1 text-sm text-gray-600">{location}</p>
+      </div>
+      <div className="text-right">
+        <p className="text-sm text-gray-700">{lastActive}</p>
+        {current ? (
+          <span className="mt-1 inline-block rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-semibold text-green-700">
+            This device
+          </span>
+        ) : null}
+      </div>
+    </div>
+  );
+}
 
-const ShieldIcon = () => (
-  <svg
-    className="w-5 h-5"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-    />
-  </svg>
-);
+function JazzCashLogo() {
+  return (
+    <div className="inline-flex items-center gap-2">
+      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-pink-100 text-pink-600 text-xs font-bold">
+        J
+      </span>
+      <span className="text-lg font-extrabold tracking-tight text-pink-600">
+        JazzCash
+      </span>
+    </div>
+  );
+}
+
+function EasyPaisaLogo() {
+  return (
+    <div className="inline-flex items-center gap-2">
+      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-green-100 text-green-700 text-xs font-bold">
+        E
+      </span>
+      <span className="text-lg font-extrabold tracking-tight text-green-700">
+        EasyPaisa
+      </span>
+    </div>
+  );
+}
+
+function NayaPayLogo() {
+  return (
+    <div className="inline-flex items-center gap-2">
+      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-sky-100 text-sky-700 text-xs font-bold">
+        N
+      </span>
+      <span className="text-lg font-extrabold tracking-tight text-sky-700">
+        NayaPay
+      </span>
+    </div>
+  );
+}
+
+function RealBankLogo() {
+  return (
+    <div className="inline-flex items-center gap-2 text-ok-brand">
+      <svg
+        className="h-7 w-7"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M3 10h18" />
+        <path d="M5 10v8" />
+        <path d="M9 10v8" />
+        <path d="M15 10v8" />
+        <path d="M19 10v8" />
+        <path d="M2 20h20" />
+        <path d="M12 4l9 4H3l9-4z" />
+      </svg>
+      <span className="text-lg font-extrabold tracking-tight">Bank</span>
+    </div>
+  );
+}
+
+function ShieldIcon({ className = "h-5 w-5" }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M9 12l2 2 4-4m5.6-4A12 12 0 0112 3a12 12 0 01-8.6 3A12 12 0 003 9c0 5.6 3.8 10.3 9 11.6 5.2-1.3 9-6 9-11.6 0-1-.1-2-.4-3z"
+      />
+    </svg>
+  );
+}

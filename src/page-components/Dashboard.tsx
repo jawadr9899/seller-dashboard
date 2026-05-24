@@ -85,9 +85,11 @@ export const Dashboard: React.FC = () => {
   const visibleRows = tableRows.slice(startIdx, startIdx + itemsPerPage);
 
   const statusStyles: Record<string, string> = {
-    Delivery: "bg-ok-success-bg text-ok-success border border-ok-success-border",
+    Delivery:
+      "bg-ok-success-bg text-ok-success border border-ok-success-border",
     Pending: "bg-ok-gray-badge text-ok-text-muted border border-ok-border",
-    Complete: "bg-ok-brand-ghost text-ok-chart-bar border border-ok-border-brand",
+    Complete:
+      "bg-ok-brand-ghost text-ok-chart-bar border border-ok-border-brand",
   };
 
   const stats = [
@@ -100,7 +102,16 @@ export const Dashboard: React.FC = () => {
       iconBg: "bg-ok-icon-blue-bg",
       iconColor: "text-ok-icon-blue",
       icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-5 h-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
           <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
           <circle cx="9" cy="7" r="4" />
           <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
@@ -117,7 +128,16 @@ export const Dashboard: React.FC = () => {
       iconBg: "bg-ok-icon-green-bg",
       iconColor: "text-ok-success",
       icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-5 h-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
           <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
           <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
           <line x1="12" y1="22.08" x2="12" y2="12" />
@@ -133,7 +153,16 @@ export const Dashboard: React.FC = () => {
       iconBg: "bg-ok-icon-green-bg",
       iconColor: "text-ok-success",
       icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-5 h-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
           <line x1="12" y1="1" x2="12" y2="23" />
           <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
         </svg>
@@ -148,7 +177,16 @@ export const Dashboard: React.FC = () => {
       iconBg: "bg-ok-icon-pink-bg",
       iconColor: "text-ok-icon-pink",
       icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-5 h-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
           <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
         </svg>
       ),
@@ -179,33 +217,55 @@ export const Dashboard: React.FC = () => {
               >
                 <div className="flex items-start justify-between">
                   <div className="flex flex-col">
-                    <span className="text-[13px] font-medium text-ok-text-faint tracking-wide">
+                    <span className="text-xs font-medium text-ok-text-faint tracking-wide">
                       {item.title}
                     </span>
-                    <p className="text-[28px] font-bold text-ok-heading mt-1.5 leading-tight">
+                    <p className="text-2xl font-bold text-ok-heading mt-1.5 leading-tight">
                       {item.value}
                     </p>
                   </div>
-                  <div className={`w-11 h-11 rounded-xl ${item.iconBg} ${item.iconColor} flex items-center justify-center flex-shrink-0`}>
+                  <div
+                    className={`w-11 h-11 rounded-xl ${item.iconBg} ${item.iconColor} flex items-center justify-center flex-shrink-0`}
+                  >
                     {item.icon}
                   </div>
                 </div>
                 <div className="flex items-center gap-1.5 mt-3">
                   {item.trendUp ? (
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5 text-ok-success" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-3.5 h-3.5 text-ok-success"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
                       <line x1="7" y1="17" x2="17" y2="7" />
                       <polyline points="7 7 17 7 17 17" />
                     </svg>
                   ) : (
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5 text-ok-danger" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-3.5 h-3.5 text-ok-danger"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
                       <line x1="7" y1="7" x2="17" y2="17" />
                       <polyline points="17 7 17 17 7 17" />
                     </svg>
                   )}
-                  <span className={`text-xs font-semibold ${item.trendUp ? "text-ok-success" : "text-ok-danger"}`}>
+                  <span
+                    className={`text-[11px] font-semibold ${item.trendUp ? "text-ok-success" : "text-ok-danger"}`}
+                  >
                     {item.change}
                   </span>
-                  <span className="text-xs text-ok-text-faint">
+                  <span className="text-[11px] text-ok-text-faint">
                     {item.changeLabel}
                   </span>
                 </div>
@@ -414,7 +474,10 @@ export const Dashboard: React.FC = () => {
                 </thead>
                 <tbody className="divide-y divide-ok-border">
                   {visibleRows.map((row, index) => (
-                    <tr key={`${row.id}-${index}`} className="transition-colors hover:bg-ok-brand/5">
+                    <tr
+                      key={`${row.id}-${index}`}
+                      className="transition-colors hover:bg-ok-brand/5"
+                    >
                       <td className="px-6 py-4 text-sm font-semibold text-ok-heading">
                         {row.product}
                       </td>
