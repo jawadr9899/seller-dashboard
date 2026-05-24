@@ -38,7 +38,7 @@ export const Orders: React.FC = () => {
   );
 
   return (
-    <div className="flex bg-[#f4f5f8] min-h-screen">
+    <div className="flex bg-ok-surface-alt min-h-screen">
       <Sidebar items={navigationItems} />
 
       <main className="flex-1 pb-20 lg:pb-0">
@@ -46,7 +46,7 @@ export const Orders: React.FC = () => {
           <PageHeader title="All Orders" label="ORDER MANAGEMENT" />
 
           {/* Controls */}
-          <div className="flex flex-col md:flex-row gap-4 justify-between items-center bg-white p-4 rounded-lg border border-[#d9d4e8] shadow-sm">
+          <div className="flex flex-col md:flex-row gap-4 justify-between items-center bg-white p-4 rounded-lg border border-ok-border shadow-sm">
             <div className="flex items-center gap-2 w-full md:w-96 relative">
               <Search className="w-5 h-5 text-gray-400 absolute left-3" />
               <Input
@@ -64,28 +64,28 @@ export const Orders: React.FC = () => {
           </div>
 
           {/* Orders Table */}
-          <Card className="overflow-hidden border-[#d9d4e8] shadow-sm bg-white">
+          <Card className="overflow-hidden border-ok-border shadow-sm bg-white">
             <CardContent className="p-0">
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[860px]">
-                  <thead className="bg-[#f7f3ff]">
-                    <tr className="border-[#d9d4e8] hover:bg-transparent">
-                      <th className="font-semibold text-[#6b668f] py-4 pl-6 text-left text-xs uppercase tracking-widest">
+                  <thead className="bg-ok-orders-header-bg">
+                    <tr className="border-ok-border hover:bg-transparent">
+                      <th className="font-semibold text-ok-text-muted py-4 pl-6 text-left text-xs uppercase tracking-widest">
                         Order Details
                       </th>
-                      <th className="font-semibold text-[#6b668f] py-4 text-left text-xs uppercase tracking-widest">
+                      <th className="font-semibold text-ok-text-muted py-4 text-left text-xs uppercase tracking-widest">
                         Status
                       </th>
-                      <th className="font-semibold text-[#6b668f] py-4 text-left text-xs uppercase tracking-widest">
+                      <th className="font-semibold text-ok-text-muted py-4 text-left text-xs uppercase tracking-widest">
                         Items
                       </th>
-                      <th className="font-semibold text-[#6b668f] py-4 text-left text-xs uppercase tracking-widest">
+                      <th className="font-semibold text-ok-text-muted py-4 text-left text-xs uppercase tracking-widest">
                         Amount
                       </th>
-                      <th className="font-semibold text-[#6b668f] py-4 text-left text-xs uppercase tracking-widest">
+                      <th className="font-semibold text-ok-text-muted py-4 text-left text-xs uppercase tracking-widest">
                         Timeline / Dist
                       </th>
-                      <th className="font-semibold text-[#6b668f] py-4 text-right pr-6 text-xs uppercase tracking-widest">
+                      <th className="font-semibold text-ok-text-muted py-4 text-right pr-6 text-xs uppercase tracking-widest">
                         Action
                       </th>
                     </tr>
@@ -101,15 +101,15 @@ export const Orders: React.FC = () => {
                         return (
                           <tr
                             key={order.id}
-                            className="group hover:bg-[#eeeaff]/30 transition-colors border-b border-[#d9d4e8]"
+                            className="group hover:bg-ok-brand/5 transition-colors border-b border-ok-border"
                           >
                             <td className="pl-6 py-4">
                               <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-full bg-[#e9e4ff] flex items-center justify-center text-[#3b35d6] font-bold shadow-sm">
+                                <div className="w-10 h-10 rounded-full bg-ok-brand-ghost flex items-center justify-center text-ok-brand font-bold shadow-sm">
                                   {order.customerName.charAt(0)}
                                 </div>
                                 <div>
-                                  <p className="text-sm font-bold text-[#111827] leading-none mb-1">
+                                  <p className="text-sm font-bold text-ok-heading leading-none mb-1">
                                     {order.customerName}
                                   </p>
                                   <p className="text-xs text-gray-500 font-mono tracking-tight">
@@ -127,14 +127,14 @@ export const Orders: React.FC = () => {
                               </Badge>
                             </td>
                             <td className="py-4">
-                              <div className="flex items-center gap-1.5 text-sm font-medium text-[#111827]">
+                              <div className="flex items-center gap-1.5 text-sm font-medium text-ok-heading">
                                 <Package className="w-4 h-4 text-gray-400" />
                                 {order.itemCount} unit
                                 {order.itemCount > 1 ? "s" : ""}
                               </div>
                             </td>
                             <td className="py-4">
-                              <span className="text-sm font-bold text-[#111827]">
+                              <span className="text-sm font-bold text-ok-heading">
                                 Rs. {order.amount.toLocaleString()}
                               </span>
                             </td>
@@ -155,7 +155,7 @@ export const Orders: React.FC = () => {
                                 <Button
                                   variant="ghost"
                                   size="sm"
-                                  className="text-[#3b35d6] hover:text-[#2f2ab8] hover:bg-[#eeeaff] font-bold text-xs"
+                                  className="text-ok-brand hover:text-ok-brand-hover hover:bg-ok-brand-subtle font-bold text-xs"
                                 >
                                   View <ChevronRight className="w-4 h-4 ml-1" />
                                 </Button>

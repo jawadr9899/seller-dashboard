@@ -96,45 +96,45 @@ export const Stores: React.FC = () => {
   if (!store) return null;
 
   const statusStyles: Record<string, string> = {
-    Delivered: "bg-[#dcf7e9] text-[#1b8f5a] border border-[#a8e8c8]",
-    Processing: "bg-[#fff1d6] text-[#b9821c] border border-[#ffdca3]",
-    Cancelled: "bg-[#fde4e4] text-[#cf3c3c] border border-[#f5b5b5]",
-    Settled: "bg-[#dcf7e9] text-[#1b8f5a] border border-[#a8e8c8]",
-    Pending: "bg-[#f2f0ff] text-[#6b668f] border border-[#d9d4e8]",
+    Delivered: "bg-ok-success-bg text-ok-success border border-ok-success-border",
+    Processing: "bg-ok-warning-bg text-ok-warning border border-ok-warning-border",
+    Cancelled: "bg-ok-danger-bg text-ok-danger border border-ok-danger-border",
+    Settled: "bg-ok-success-bg text-ok-success border border-ok-success-border",
+    Pending: "bg-ok-gray-badge text-ok-text-muted border border-ok-border",
   };
 
   return (
-    <div className="flex min-h-screen bg-[#f6f4ff]">
+    <div className="flex min-h-screen bg-ok-surface-page">
       <Sidebar items={navigationItems} />
 
       <main className="flex-1 pb-20 lg:pb-0">
         <div className="max-w-[1320px] mx-auto px-4 md:px-6 py-6 space-y-6">
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-[#1f2430]">
+            <h1 className="text-2xl md:text-3xl font-bold text-ok-heading">
               Store Management
             </h1>
-            <p className="text-sm text-[#777681] mt-2">
+            <p className="text-sm text-ok-text-muted mt-2">
               Monitor your main storefront, inventory footprint, category mix,
               and order activity.
             </p>
           </div>
 
-          <div className="bg-[#fbf7ff] border border-[#d9d4e8] rounded-lg p-5 md:p-6 shadow-sm">
+          <div className="bg-ok-surface border border-ok-border rounded-lg p-5 md:p-6 shadow-sm">
             <div className="flex items-center gap-4">
               <img
                 src={store.logo}
                 alt={store.name}
-                className="w-16 h-16 rounded-lg border border-[#d9d4e8] object-cover"
+                className="w-16 h-16 rounded-lg border border-ok-border object-cover"
               />
               <div>
-                <h2 className="text-2xl font-bold text-[#1f2430]">
+                <h2 className="text-2xl font-bold text-ok-heading">
                   {store.name}
                 </h2>
-                <p className="text-sm text-[#777681] mt-1">
+                <p className="text-sm text-ok-text-muted mt-1">
                   organic.valley@example.com · +1 (555) 019-8234
                 </p>
-                <div className="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#dcf7e9] text-[#1b8f5a] border border-[#a8e8c8] text-xs font-semibold">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#1b8f5a]" />
+                <div className="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-ok-success-bg text-ok-success border border-ok-success-border text-xs font-semibold">
+                  <span className="w-1.5 h-1.5 rounded-full bg-ok-success" />
                   Active Store
                 </div>
               </div>
@@ -150,20 +150,20 @@ export const Stores: React.FC = () => {
             ].map(([label, value]) => (
               <div
                 key={label}
-                className="bg-[#fbf7ff] border border-[#d9d4e8] rounded-lg p-5 shadow-sm"
+                className="bg-ok-surface border border-ok-border rounded-lg p-5 shadow-sm"
               >
-                <p className="text-[11px] uppercase tracking-widest text-[#777681] font-semibold">
+                <p className="text-[11px] uppercase tracking-widest text-ok-text-muted font-semibold">
                   {label}
                 </p>
-                <p className="text-2xl font-bold mt-3 text-[#111827]">
+                <p className="text-2xl font-bold mt-3 text-ok-heading">
                   {value}
                 </p>
               </div>
             ))}
           </div>
 
-          <div className="bg-[#fbf7ff] border border-[#d9d4e8] rounded-lg shadow-sm overflow-hidden">
-            <div className="px-4 md:px-6 pt-4 border-b border-[#d9d4e8] flex items-center gap-6">
+          <div className="bg-ok-surface border border-ok-border rounded-lg shadow-sm overflow-hidden">
+            <div className="px-4 md:px-6 pt-4 border-b border-ok-border flex items-center gap-6">
               <button
                 onClick={() => {
                   setActiveTab("orders");
@@ -171,8 +171,8 @@ export const Stores: React.FC = () => {
                 }}
                 className={`pb-3 text-sm font-semibold border-b-2 transition-colors ${
                   activeTab === "orders"
-                    ? "text-[#4f46e5] border-[#4f46e5]"
-                    : "text-[#777681] border-transparent"
+                    ? "text-ok-chart-bar border-ok-chart-bar"
+                    : "text-ok-text-muted border-transparent"
                 }`}
               >
                 Order History
@@ -184,8 +184,8 @@ export const Stores: React.FC = () => {
                 }}
                 className={`pb-3 text-sm font-semibold border-b-2 transition-colors ${
                   activeTab === "commission"
-                    ? "text-[#4f46e5] border-[#4f46e5]"
-                    : "text-[#777681] border-transparent"
+                    ? "text-ok-chart-bar border-ok-chart-bar"
+                    : "text-ok-text-muted border-transparent"
                 }`}
               >
                 Commission History
@@ -194,38 +194,38 @@ export const Stores: React.FC = () => {
 
             <div className="overflow-x-auto">
               <table className="w-full min-w-[780px]">
-                <thead className="bg-[#f8f8fa] border-b border-[#d9d4e8]">
+                <thead className="bg-ok-surface-alt border-b border-ok-border">
                   <tr>
-                    <th className="px-6 py-4 text-left text-[11px] font-semibold uppercase tracking-widest text-[#777681]">
+                    <th className="px-6 py-4 text-left text-[11px] font-semibold uppercase tracking-widest text-ok-text-muted">
                       {activeTab === "orders" ? "Order ID" : "Record ID"}
                     </th>
-                    <th className="px-6 py-4 text-left text-[11px] font-semibold uppercase tracking-widest text-[#777681]">
+                    <th className="px-6 py-4 text-left text-[11px] font-semibold uppercase tracking-widest text-ok-text-muted">
                       Date
                     </th>
-                    <th className="px-6 py-4 text-left text-[11px] font-semibold uppercase tracking-widest text-[#777681]">
+                    <th className="px-6 py-4 text-left text-[11px] font-semibold uppercase tracking-widest text-ok-text-muted">
                       {activeTab === "orders" ? "Customer" : "Entity"}
                     </th>
-                    <th className="px-6 py-4 text-left text-[11px] font-semibold uppercase tracking-widest text-[#777681]">
+                    <th className="px-6 py-4 text-left text-[11px] font-semibold uppercase tracking-widest text-ok-text-muted">
                       Amount
                     </th>
-                    <th className="px-6 py-4 text-left text-[11px] font-semibold uppercase tracking-widest text-[#777681]">
+                    <th className="px-6 py-4 text-left text-[11px] font-semibold uppercase tracking-widest text-ok-text-muted">
                       Status
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#d9d4e8]">
+                <tbody className="divide-y divide-ok-border">
                   {visibleRows.map((row) => (
-                    <tr key={row.id}>
-                      <td className="px-6 py-4 text-sm font-semibold text-[#4f46e5]">
+                    <tr key={row.id} className="transition-colors hover:bg-ok-brand/5">
+                      <td className="px-6 py-4 text-sm font-semibold text-ok-chart-bar">
                         {row.id}
                       </td>
-                      <td className="px-6 py-4 text-sm text-[#4b5563]">
+                      <td className="px-6 py-4 text-sm text-ok-text">
                         {row.date}
                       </td>
-                      <td className="px-6 py-4 text-sm text-[#111827]">
+                      <td className="px-6 py-4 text-sm text-ok-heading">
                         {row.customer}
                       </td>
-                      <td className="px-6 py-4 text-sm text-[#111827] font-medium">
+                      <td className="px-6 py-4 text-sm text-ok-heading font-medium">
                         {row.amount}
                       </td>
                       <td className="px-6 py-4">
@@ -241,8 +241,8 @@ export const Stores: React.FC = () => {
               </table>
             </div>
 
-            <div className="px-6 py-4 border-t border-[#d9d4e8] flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-              <p className="text-sm text-[#777681]">
+            <div className="px-6 py-4 border-t border-ok-border flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+              <p className="text-sm text-ok-text-muted">
                 Showing {rows.length === 0 ? 0 : startIdx + 1} to{" "}
                 {Math.min(startIdx + itemsPerPage, rows.length)} of{" "}
                 {rows.length} entries
@@ -251,7 +251,7 @@ export const Stores: React.FC = () => {
                 <button
                   onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                   disabled={currentPage === 1}
-                  className="px-3 py-1.5 rounded-sm border border-[#d9d4e8] bg-white text-sm font-semibold text-[#6b668f] disabled:opacity-50"
+                  className="px-3 py-1.5 rounded-sm border border-ok-border bg-white text-sm font-semibold text-ok-text-muted disabled:opacity-50"
                 >
                   Previous
                 </button>
@@ -260,7 +260,7 @@ export const Stores: React.FC = () => {
                     setCurrentPage(Math.min(totalPages, currentPage + 1))
                   }
                   disabled={currentPage === totalPages}
-                  className="px-3 py-1.5 rounded-sm border border-[#d9d4e8] bg-white text-sm font-semibold text-[#6b668f] disabled:opacity-50"
+                  className="px-3 py-1.5 rounded-sm border border-ok-border bg-white text-sm font-semibold text-ok-text-muted disabled:opacity-50"
                 >
                   Next
                 </button>

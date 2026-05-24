@@ -55,25 +55,25 @@ export const StoreDetails: React.FC<{ id: string }> = ({ id }) => {
   ];
 
   return (
-    <div className="flex bg-[#f4f5f8]">
+    <div className="flex bg-ok-surface-alt">
       <Sidebar items={navigationItems} />
 
       <main className="flex-1 pb-20 lg:pb-0">
         <div className="p-4 md:p-6 max-w-7xl mx-auto">
           <Link
             href="/stores"
-            className="inline-flex items-center text-gray-500 hover:text-[#3b35d6] text-sm font-medium mb-4 transition-colors"
+            className="inline-flex items-center text-gray-500 hover:text-ok-brand text-sm font-medium mb-4 transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-1" />
             Back to Stores
           </Link>
 
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 bg-white p-6 rounded-lg border border-[#d9d4e8] shadow-sm">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 bg-white p-6 rounded-lg border border-ok-border shadow-sm">
             <div className="flex items-center gap-4">
               <img
                 src={store.logo}
                 alt={store.name}
-                className="w-20 h-20 rounded-xl border border-[#d9d4e8] shadow-sm object-cover"
+                className="w-20 h-20 rounded-xl border border-ok-border shadow-sm object-cover"
               />
               <div>
                 <h1 className="text-2xl font-bold text-gray-900">
@@ -111,23 +111,23 @@ export const StoreDetails: React.FC<{ id: string }> = ({ id }) => {
           {isEditModalOpen && (
             <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
               <button
-                className="absolute inset-0 bg-[#1f2430]/40"
+                className="absolute inset-0 bg-ok-heading/40"
                 onClick={() => setIsEditModalOpen(false)}
                 aria-label="Close edit store modal"
               />
-              <div className="relative w-full max-w-md bg-[#fbf7ff] border border-[#d9d4e8] rounded-lg shadow-xl p-6">
+              <div className="relative w-full max-w-md bg-ok-surface border border-ok-border rounded-lg shadow-xl p-6">
                 <div className="flex items-center justify-between mb-5">
                   <div>
-                    <h3 className="text-lg font-bold text-[#111827]">
+                    <h3 className="text-lg font-bold text-ok-heading">
                       Edit Store Details
                     </h3>
-                    <p className="text-sm text-[#7a7890] mt-1">
+                    <p className="text-sm text-ok-text-muted mt-1">
                       Update your store information and branding.
                     </p>
                   </div>
                   <button
                     onClick={() => setIsEditModalOpen(false)}
-                    className="w-9 h-9 rounded-sm border border-[#d9d4e8] bg-white text-[#6b668f] hover:text-[#3b35d6]"
+                    className="w-9 h-9 rounded-sm border border-ok-border bg-white text-ok-text-muted hover:text-ok-brand"
                   >
                     ✕
                   </button>
@@ -141,7 +141,7 @@ export const StoreDetails: React.FC<{ id: string }> = ({ id }) => {
                       <img
                         src={formData.logo}
                         alt="Preview"
-                        className="w-16 h-16 rounded-lg object-cover border border-[#d9d4e8]"
+                        className="w-16 h-16 rounded-lg object-cover border border-ok-border"
                       />
                       <Input
                         value={formData.logo}
@@ -213,7 +213,7 @@ export const StoreDetails: React.FC<{ id: string }> = ({ id }) => {
           </div>
 
           {/* Chart Section */}
-          <div className="bg-white rounded-lg shadow-sm border border-[#d9d4e8] p-4 md:p-6 mb-6 transition-all duration-300 hover:shadow-md">
+          <div className="bg-white rounded-lg shadow-sm border border-ok-border p-4 md:p-6 mb-6 transition-all duration-300 hover:shadow-md">
             <h3 className="text-lg font-bold text-gray-900 mb-4">
               Revenue Trend
             </h3>
@@ -232,12 +232,12 @@ export const StoreDetails: React.FC<{ id: string }> = ({ id }) => {
                 />
                 <XAxis
                   dataKey="date"
-                  stroke="#9ca3af"
+                  stroke="var(--ok-text-faint)"
                   axisLine={false}
                   tickLine={false}
                 />
                 <YAxis
-                  stroke="#9ca3af"
+                  stroke="var(--ok-text-faint)"
                   axisLine={false}
                   tickLine={false}
                   tickFormatter={(val) => `Rs. ${val}`}

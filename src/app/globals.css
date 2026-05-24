@@ -37,6 +37,62 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* OrderKro Central Color Scheme Custom Variables */
+  --ok-brand: #3b35d6;
+  --ok-brand-hover: #2f2ab8;
+  --ok-brand-light: #7b75f0;
+  --ok-brand-muted: #c8c7ff;
+  --ok-brand-subtle: #eeeaff;
+  --ok-brand-ghost: #e9e4ff;
+  --ok-brand-surface: #f3f0ff;
+  --ok-brand-secondary-bg: #f1e7ff;
+  --ok-brand-secondary-text: #7a4bc6;
+  --ok-danger-ghost: #fff5f5;
+  --ok-danger-ghost-alt: #fff1f1;
+  --ok-gray-badge: #f2f0ff;
+  --ok-settings-dark: #002b3d;
+  --ok-settings-muted: #7da2a9;
+  --ok-bg-alt: #f0f3f6;
+  --ok-ns-brand: #00a3b4;
+  --ok-ns-brand-hover: #007489;
+  --ok-ns-pink: #ff5298;
+  --ok-ns-light-bg: #f4f7f8;
+  --ok-ns-subtle-bg: #e4ebed;
+  --ok-ns-success: #00c853;
+  --ok-ns-muted: #cbd5db;
+  --ok-ns-steel: #b0bec5;
+  --ok-earnings-bg: #f4f6fb;
+  --ok-orders-header-bg: #f7f3ff;
+  --ok-surface: #fbf7ff;
+  --ok-surface-alt: #f4f5f8;
+  --ok-surface-page: #f6f4ff;
+  --ok-border: #d9d4e8;
+  --ok-border-light: #f0eef5;
+  --ok-border-brand: #cfc7f5;
+  --ok-border-inner: #e6ddf5;
+  --ok-heading: #1b1f2a;
+  --ok-text: #4b5563;
+  --ok-text-muted: #6b668f;
+  --ok-text-faint: #9ca3af;
+  --ok-text-placeholder: #b3aacb;
+  --ok-success: #1b8f5a;
+  --ok-success-bg: #dcf7e9;
+  --ok-success-border: #a8e8c8;
+  --ok-danger: #cf3c3c;
+  --ok-danger-bg: #fde4e4;
+  --ok-danger-border: #f5b5b5;
+  --ok-warning: #b9821c;
+  --ok-warning-bg: #fff1d6;
+  --ok-warning-border: #ffdca3;
+  --ok-icon-blue: #6366f1;
+  --ok-icon-blue-bg: #eef2ff;
+  --ok-icon-green: #10b981;
+  --ok-icon-green-bg: #ecfdf5;
+  --ok-icon-pink: #ec4899;
+  --ok-icon-pink-bg: #fdf2f8;
+  --ok-chart-bar: #4f46e5;
+  --ok-chart-grid: #e7e2f3;
 }
 
 .dark {
@@ -113,9 +169,68 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Central Colors Registered for Tailwind CSS */
+  --color-ok-brand: var(--ok-brand);
+  --color-ok-brand-hover: var(--ok-brand-hover);
+  --color-ok-brand-light: var(--ok-brand-light);
+  --color-ok-brand-muted: var(--ok-brand-muted);
+  --color-ok-brand-subtle: var(--ok-brand-subtle);
+  --color-ok-brand-ghost: var(--ok-brand-ghost);
+  --color-ok-brand-surface: var(--ok-brand-surface);
+  --color-ok-brand-secondary-bg: var(--ok-brand-secondary-bg);
+  --color-ok-brand-secondary-text: var(--ok-brand-secondary-text);
+  --color-ok-danger-ghost: var(--ok-danger-ghost);
+  --color-ok-danger-ghost-alt: var(--ok-danger-ghost-alt);
+  --color-ok-gray-badge: var(--ok-gray-badge);
+  --color-ok-settings-dark: var(--ok-settings-dark);
+  --color-ok-settings-muted: var(--ok-settings-muted);
+  --color-ok-bg-alt: var(--ok-bg-alt);
+  --color-ok-ns-brand: var(--ok-ns-brand);
+  --color-ok-ns-brand-hover: var(--ok-ns-brand-hover);
+  --color-ok-ns-pink: var(--ok-ns-pink);
+  --color-ok-ns-light-bg: var(--ok-ns-light-bg);
+  --color-ok-ns-subtle-bg: var(--ok-ns-subtle-bg);
+  --color-ok-ns-success: var(--ok-ns-success);
+  --color-ok-ns-muted: var(--ok-ns-muted);
+  --color-ok-ns-steel: var(--ok-ns-steel);
+  --color-ok-earnings-bg: var(--ok-earnings-bg);
+  --color-ok-orders-header-bg: var(--ok-orders-header-bg);
+  --color-ok-surface: var(--ok-surface);
+  --color-ok-surface-alt: var(--ok-surface-alt);
+  --color-ok-surface-page: var(--ok-surface-page);
+  --color-ok-border: var(--ok-border);
+  --color-ok-border-light: var(--ok-border-light);
+  --color-ok-border-brand: var(--ok-border-brand);
+  --color-ok-border-inner: var(--ok-border-inner);
+  --color-ok-heading: var(--ok-heading);
+  --color-ok-text: var(--ok-text);
+  --color-ok-text-muted: var(--ok-text-muted);
+  --color-ok-text-faint: var(--ok-text-faint);
+  --color-ok-text-placeholder: var(--ok-text-placeholder);
+  --color-ok-success: var(--ok-success);
+  --color-ok-success-bg: var(--ok-success-bg);
+  --color-ok-success-border: var(--ok-success-border);
+  --color-ok-danger: var(--ok-danger);
+  --color-ok-danger-bg: var(--ok-danger-bg);
+  --color-ok-danger-border: var(--ok-danger-border);
+  --color-ok-warning: var(--ok-warning);
+  --color-ok-warning-bg: var(--ok-warning-bg);
+  --color-ok-warning-border: var(--ok-warning-border);
+  --color-ok-icon-blue: var(--ok-icon-blue);
+  --color-ok-icon-blue-bg: var(--ok-icon-blue-bg);
+  --color-ok-icon-green: var(--ok-icon-green);
+  --color-ok-icon-green-bg: var(--ok-icon-green-bg);
+  --color-ok-icon-pink: var(--ok-icon-pink);
+  --color-ok-icon-pink-bg: var(--ok-icon-pink-bg);
+  --color-ok-chart-bar: var(--ok-chart-bar);
+  --color-ok-chart-grid: var(--ok-chart-grid);
 }
 
 @layer base {
+  html {
+    font-size: 14px;
+  }
   * {
     @apply border-border outline-ring/50;
   }
@@ -131,5 +246,31 @@
   }
   .gradient-blue-pink {
     background: linear-gradient(135deg, rgba(33,150,243,0.95) 0%, rgba(236,64,122,0.95) 100%);
+  }
+
+  .gradient-border-hover {
+    position: relative;
+    border-color: transparent !important;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .gradient-border-hover::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: linear-gradient(135deg, var(--ok-icon-blue), var(--ok-brand), var(--ok-icon-pink));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 10;
+  }
+  
+  .gradient-border-hover:hover::before {
+    opacity: 1;
   }
 }

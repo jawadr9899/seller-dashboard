@@ -19,7 +19,7 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({ items }) => {
   const pathname = usePathname();
 
   return (
-    <div className="fixed z-50 bottom-0 left-0 right-0 lg:hidden bg-white border-t border-[#d9d4e8] flex overflow-x-auto overflow-y-hidden hide-scrollbar pb-safe">
+    <div className="fixed z-50 bottom-0 left-0 right-0 lg:hidden bg-white border-t border-ok-border flex overflow-x-auto overflow-y-hidden hide-scrollbar pb-safe">
       {items.map((item) => {
         const isActive =
           pathname === item.href || pathname.startsWith(item.href + "/");
@@ -30,12 +30,12 @@ export const BottomTabBar: React.FC<BottomTabBarProps> = ({ items }) => {
             className={cn(
               "flex-1 min-w-[64px] flex flex-col items-center justify-center py-3 px-2 text-center transition-colors relative",
               isActive
-                ? "text-[#3b35d6]"
-                : "text-gray-500 hover:text-[#3b35d6]",
+                ? "text-ok-brand"
+                : "text-gray-500 hover:text-ok-brand",
             )}
           >
             {isActive && (
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-1 rounded-b-full bg-[#3b35d6]" />
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-1 rounded-b-full bg-ok-brand" />
             )}
             <span
               className={cn(

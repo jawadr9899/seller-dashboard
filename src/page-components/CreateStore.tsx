@@ -12,7 +12,7 @@ import { UploadCloud } from 'lucide-react';
 
 export const CreateStore: React.FC = () => {
   return (
-    <div className="flex bg-[#f4f5f8] min-h-screen">
+    <div className="flex bg-ok-surface-alt min-h-screen">
       <Sidebar items={navigationItems} />
 
       <main className="flex-1 pb-20 lg:pb-0">
@@ -40,16 +40,16 @@ export const CreateStore: React.FC = () => {
                     <div className="space-y-2">
                       <label className="text-sm font-medium text-gray-700">Store Handle/URL</label>
                       <div className="flex">
-                        <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-[#f4f5f8] text-gray-500 text-sm">
+                        <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-ok-surface-alt text-gray-500 text-sm">
                           shop.com/
                         </span>
-                        <input type="text" className="flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 focus:ring-[#3b35d6] focus:border-cyan-500" placeholder="acme-clothing" />
+                        <input type="text" className="flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 focus:ring-ok-brand focus:border-cyan-500" placeholder="acme-clothing" />
                       </div>
                     </div>
                     <div className="space-y-2">
                       <label className="text-sm font-medium text-gray-700">Description</label>
                       <textarea 
-                        className="w-full h-32 p-3 border border-[#d9d4e8] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3b35d6] text-sm"
+                        className="w-full h-32 p-3 border border-ok-border rounded-lg focus:outline-none focus:ring-2 focus:ring-ok-brand text-sm"
                         placeholder="Tell your customers about this store..."
                       />
                     </div>
@@ -63,14 +63,14 @@ export const CreateStore: React.FC = () => {
                   <div className="space-y-6">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">Store Logo (1:1 aspect ratio recommended)</label>
-                      <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center text-gray-500 bg-[#f4f5f8]">
+                      <div className="border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center text-gray-500 bg-ok-surface-alt">
                         <UploadCloud size={32} className="text-gray-400 mb-2" />
                         <p className="text-sm font-medium text-gray-900">Upload logo</p>
                       </div>
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">Cover Image (16:9 aspect ratio recommended)</label>
-                      <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 flex flex-col items-center justify-center text-gray-500 bg-[#f4f5f8] h-32">
+                      <div className="border-2 border-dashed border-gray-300 rounded-xl p-8 flex flex-col items-center justify-center text-gray-500 bg-ok-surface-alt h-32">
                         <UploadCloud size={32} className="text-gray-400 mb-2" />
                         <p className="text-sm font-medium text-gray-900">Upload cover image</p>
                       </div>
@@ -101,7 +101,7 @@ export const CreateStore: React.FC = () => {
               <Card>
                 <CardContent className="p-6 space-y-4">
                   <h3 className="text-base font-bold text-gray-900">Store Status</h3>
-                  <select className="w-full p-2 border border-[#d9d4e8] rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#3b35d6]">
+                  <select className="w-full p-2 border border-ok-border rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-ok-brand">
                     <option value="active">Active (Visible to public)</option>
                     <option value="inactive">Inactive (Hidden)</option>
                     <option value="setup">Maintenance Mode / Setup</option>
@@ -136,7 +136,7 @@ export const CreateStore: React.FC = () => {
             
           </div>
           
-          <div className="mt-8 flex justify-end gap-3 border-t pt-6 border-[#d9d4e8]">
+          <div className="mt-8 flex justify-end gap-3 border-t pt-6 border-ok-border">
             <Link href="/stores">
               <Button variant="outline">Cancel</Button>
             </Link>

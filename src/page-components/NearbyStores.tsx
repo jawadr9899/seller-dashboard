@@ -96,7 +96,7 @@ export default function NearbyStores() {
       <div className="hidden md:block absolute top-0 left-0 right-0 h-[280px] gradient-cyan-purple z-0 rounded-b-[60px] opacity-10 pointer-events-none"></div>
 
       {/* ---------------- MOBILE VIEW ---------------- */}
-      <div className="md:hidden flex flex-col min-h-screen bg-[#f4f5f8] relative z-10">
+      <div className="md:hidden flex flex-col min-h-screen bg-ok-surface-alt relative z-10">
         {/* Mobile Search Bar */}
         <div className="px-4 pt-6 pb-2">
           <div className="relative w-full">
@@ -118,7 +118,7 @@ export default function NearbyStores() {
               placeholder="Search products..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-11 pr-4 py-3 rounded-full border border-transparent focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 shadow-sm text-sm outline-none transition-all"
+              className="w-full pl-11 pr-4 py-3 rounded-full border border-transparent focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 shadow-sm text-sm outline-none transition-all"
             />
           </div>
         </div>
@@ -126,7 +126,7 @@ export default function NearbyStores() {
         {/* Mobile Top Tabs Toggle */}
         <div className="pb-6 px-4 flex justify-center shrink-0 mt-4 relative z-0">
           <div className="w-full max-w-[360px] flex items-center gap-3">
-            <div className="bg-white rounded-full p-1 flex flex-1 shadow-sm border border-[#d9d4e8]">
+            <div className="bg-white rounded-full p-1 flex flex-1 shadow-sm border border-ok-border">
               <button
                 onClick={() => {
                   setActiveTab("nearby");
@@ -134,8 +134,8 @@ export default function NearbyStores() {
                 }}
                 className={`flex-1 py-3 px-4 rounded-full text-sm font-bold flex items-center justify-center gap-2 transition-all ${
                   activeTab === "nearby"
-                    ? "bg-[#3b35d6] text-white shadow-md"
-                    : "text-[#7da2a9] hover:text-[#3b35d6]"
+                    ? "bg-ok-brand text-white shadow-md"
+                    : "text-ok-settings-muted hover:text-ok-brand"
                 }`}
               >
                 Nearby
@@ -147,8 +147,8 @@ export default function NearbyStores() {
                 }}
                 className={`flex-1 py-3 px-4 rounded-full text-sm font-bold transition-all ${
                   activeTab === "all"
-                    ? "bg-[#3b35d6] text-white shadow-md"
-                    : "text-[#7da2a9] hover:text-[#3b35d6]"
+                    ? "bg-ok-brand text-white shadow-md"
+                    : "text-ok-settings-muted hover:text-ok-brand"
                 }`}
               >
                 All Products
@@ -156,7 +156,7 @@ export default function NearbyStores() {
             </div>
             <button
               onClick={() => setIsFilterOpen(true)}
-              className="w-11 h-11 rounded-full bg-white border border-[#d9d4e8] shadow-sm flex items-center justify-center text-[#3b35d6] hover:text-[#007489] transition-colors"
+              className="w-11 h-11 rounded-full bg-white border border-ok-border shadow-sm flex items-center justify-center text-ok-brand hover:text-ok-ns-brand-hover transition-colors"
               aria-label="Open filters"
             >
               <svg
@@ -186,7 +186,7 @@ export default function NearbyStores() {
             />
             <div className="relative w-full bg-white rounded-t-[28px] p-6 shadow-[0_-12px_30px_rgba(0,0,0,0.2)]">
               <div className="flex items-center justify-between mb-5">
-                <h3 className="text-lg font-bold text-[#002b3d]">Filters</h3>
+                <h3 className="text-lg font-bold text-ok-settings-dark">Filters</h3>
                 <button
                   onClick={() => setIsFilterOpen(false)}
                   className="w-8 h-8 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center"
@@ -207,8 +207,8 @@ export default function NearbyStores() {
                       onClick={() => handleCategoryToggle(cat)}
                       className={`px-3 py-2 rounded-full text-xs font-semibold border transition-colors ${
                         selectedCategories.includes(cat)
-                          ? "bg-[#3b35d6] text-white border-[#3b35d6]"
-                          : "bg-white text-gray-600 border-[#d9d4e8]"
+                          ? "bg-ok-brand text-white border-ok-brand"
+                          : "bg-white text-gray-600 border-ok-border"
                       }`}
                     >
                       {cat}
@@ -222,7 +222,7 @@ export default function NearbyStores() {
                   <h4 className="font-bold text-gray-400 text-xs uppercase tracking-widest">
                     Distance
                   </h4>
-                  <span className="text-[12px] text-[#3b35d6] font-bold">
+                  <span className="text-[12px] text-ok-brand font-bold">
                     {maxDistance} km
                   </span>
                 </div>
@@ -236,13 +236,13 @@ export default function NearbyStores() {
                     setMaxDistance(parseFloat(e.target.value));
                     setCurrentPage(1);
                   }}
-                  className="w-full accent-[#3b35d6]"
+                  className="w-full accent-ok-brand"
                 />
               </div>
 
               <button
                 onClick={() => setIsFilterOpen(false)}
-                className="w-full bg-[#3b35d6] hover:bg-[#2f2ab8] text-white px-6 py-3 rounded-sm font-bold shadow-[0_4px_15px_rgba(0,163,180,0.3)]"
+                className="w-full bg-ok-brand hover:bg-ok-brand-hover text-white px-6 py-3 rounded-sm font-bold shadow-[0_4px_15px_rgba(0,163,180,0.3)]"
               >
                 Apply Filters
               </button>
@@ -251,12 +251,12 @@ export default function NearbyStores() {
         )}
 
         {/* Mobile Main Content Area */}
-        <div className="bg-[#fbf7ff] rounded-t-lg pt-8 px-6 pb-6 shadow-[0_-8px_24px_rgba(0,0,0,0.08)] flex-1 flex flex-col relative z-10">
+        <div className="bg-ok-surface rounded-t-lg pt-8 px-6 pb-6 shadow-[0_-8px_24px_rgba(0,0,0,0.08)] flex-1 flex flex-col relative z-10">
           {/* Header */}
           <div className="flex items-center justify-between mb-6 shrink-0">
             <div className="flex items-center gap-3">
-              <div className="w-[5px] h-[20px] bg-[#00a3b4] rounded-full"></div>
-              <h3 className="text-[19px] font-bold text-[#002b3d]">
+              <div className="w-[5px] h-[20px] bg-ok-ns-brand rounded-full"></div>
+              <h3 className="text-[19px] font-bold text-ok-settings-dark">
                 {activeTab === "nearby" ? "Trending Nearby" : "All Products"}
               </h3>
             </div>
@@ -267,11 +267,11 @@ export default function NearbyStores() {
             {currentProducts.slice(0, 4).map((product, index) => (
               <div
                 key={index}
-                className="bg-[#fbf7ff] rounded-lg p-4 flex items-center gap-4 shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_20px_rgba(59,53,214,0.15)] border border-transparent hover:border-[#3b35d6] transition-all duration-300 shrink-0 group"
+                className="bg-ok-surface rounded-lg p-4 flex items-center gap-4 shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_20px_rgba(59,53,214,0.15)] border border-transparent hover:border-ok-brand transition-all duration-300 shrink-0 group"
               >
                 {/* Image */}
                 <div className="relative shrink-0">
-                  <div className="w-[72px] h-[72px] rounded-full p-[2px] bg-gradient-to-tr from-[#00a3b4] to-[#007489]">
+                  <div className="w-[72px] h-[72px] rounded-full p-[2px] bg-gradient-to-tr from-ok-ns-brand to-ok-ns-brand-hover">
                     <img
                       src={product.image}
                       alt={product.mobileName}
@@ -279,7 +279,7 @@ export default function NearbyStores() {
                     />
                   </div>
                   {product.isNew && (
-                    <span className="absolute -bottom-1 -right-2 bg-[#ff5298] text-white text-[10px] font-bold px-2 py-[2px] rounded-md uppercase tracking-wider border-2 border-white">
+                    <span className="absolute -bottom-1 -right-2 bg-ok-ns-pink text-white text-[10px] font-bold px-2 py-[2px] rounded-md uppercase tracking-wider border-2 border-white">
                       NEW
                     </span>
                   )}
@@ -288,10 +288,10 @@ export default function NearbyStores() {
                 {/* Details */}
                 <div className="flex-1 min-w-0 py-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <h4 className="font-bold text-[#002b3d] text-[17px] truncate group-hover:text-[#3b35d6] transition-colors">
+                    <h4 className="font-bold text-ok-settings-dark text-[17px] truncate group-hover:text-ok-brand transition-colors">
                       {product.mobileName}
                     </h4>
-                    <span className="flex items-center text-[#ff5298] text-[13px] font-bold shrink-0">
+                    <span className="flex items-center text-ok-ns-pink text-[13px] font-bold shrink-0">
                       <svg
                         className="w-3.5 h-3.5 mr-0.5"
                         fill="currentColor"
@@ -307,7 +307,7 @@ export default function NearbyStores() {
                       {product.shopName}
                     </span>
                     <div className="flex items-center gap-3">
-                      <span className="text-[#3b35d6] text-[13px] font-bold tracking-wide uppercase">
+                      <span className="text-ok-brand text-[13px] font-bold tracking-wide uppercase">
                         {product.price}
                       </span>
                       <span className="text-gray-400 text-[12px] font-medium">
@@ -318,7 +318,7 @@ export default function NearbyStores() {
                 </div>
 
                 {/* Arrow Button */}
-                <button className="w-11 h-11 shrink-0 bg-[#f4f7f8] rounded-lg flex items-center justify-center text-[#002b3d] group-hover:bg-[#00a3b4] group-hover:text-white transition-colors">
+                <button className="w-11 h-11 shrink-0 bg-ok-ns-light-bg rounded-lg flex items-center justify-center text-ok-settings-dark group-hover:bg-ok-ns-brand group-hover:text-white transition-colors">
                   <svg
                     className="w-5 h-5"
                     fill="none"
@@ -337,7 +337,7 @@ export default function NearbyStores() {
             ))}
 
             {currentProducts.length === 0 && (
-              <div className="flex items-center justify-center h-32 text-[#7da2a9] font-medium">
+              <div className="flex items-center justify-center h-32 text-ok-settings-muted font-medium">
                 No products found. Try adjusting filters.
               </div>
             )}
@@ -349,7 +349,7 @@ export default function NearbyStores() {
               <button
                 onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
                 disabled={currentPage === 1}
-                className="w-10 h-10 flex items-center justify-center rounded-lg bg-[#f4f7f8] text-[#cbd5db] disabled:opacity-50 transition-opacity"
+                className="w-10 h-10 flex items-center justify-center rounded-lg bg-ok-ns-light-bg text-ok-ns-muted disabled:opacity-50 transition-opacity"
               >
                 <svg
                   className="w-5 h-5"
@@ -376,7 +376,7 @@ export default function NearbyStores() {
                     className={`w-10 h-10 flex items-center justify-center rounded-lg font-bold text-[15px] ${
                       isActive
                         ? "gradient-blue-pink text-white"
-                        : "text-[#007489]"
+                        : "text-ok-ns-brand-hover"
                     }`}
                   >
                     {page}
@@ -389,7 +389,7 @@ export default function NearbyStores() {
                   handlePageChange(Math.min(totalPages, currentPage + 1))
                 }
                 disabled={currentPage === totalPages}
-                className="w-10 h-10 flex items-center justify-center rounded-lg bg-[#f4f7f8] text-[#002b3d] disabled:opacity-50 transition-opacity"
+                className="w-10 h-10 flex items-center justify-center rounded-lg bg-ok-ns-light-bg text-ok-settings-dark disabled:opacity-50 transition-opacity"
               >
                 <svg
                   className="w-5 h-5"
@@ -415,7 +415,7 @@ export default function NearbyStores() {
         {/* Centered Search Bar */}
         <div className="w-full max-w-2xl mx-auto mb-8 relative z-20">
           <svg
-            className="w-6 h-6 text-[#7da2a9] absolute left-5 top-4"
+            className="w-6 h-6 text-ok-settings-muted absolute left-5 top-4"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -435,17 +435,17 @@ export default function NearbyStores() {
               setSearchQuery(e.target.value);
               setCurrentPage(1);
             }}
-            className="w-full pl-14 pr-6 py-4 rounded-full border-2 border-white shadow-[0_8px_30px_rgba(0,0,0,0.06)] bg-white/90 backdrop-blur-md focus:border-[#3b35d6] focus:outline-none focus:ring-4 focus:ring-[#3b35d6]/20 text-[#002b3d] font-medium text-lg transition-all"
+            className="w-full pl-14 pr-6 py-4 rounded-full border-2 border-white shadow-[0_8px_30px_rgba(0,0,0,0.06)] bg-white/90 backdrop-blur-md focus:border-ok-brand focus:outline-none focus:ring-4 focus:ring-ok-brand/20 text-ok-settings-dark font-medium text-lg transition-all"
           />
         </div>
 
         <div className="flex items-start gap-8 w-full">
           {/* Mini Sidebar Filters */}
-          <aside className="w-72 shrink-0 bg-[#fbf7ff] rounded-lg p-6 shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-[#d9d4e8] sticky top-8 z-10 flex flex-col gap-8">
+          <aside className="w-72 shrink-0 bg-ok-surface rounded-lg p-6 shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-ok-border sticky top-8 z-10 flex flex-col gap-8">
             <div>
-              <h3 className="text-xl font-bold text-[#002b3d] mb-6 flex items-center gap-2">
+              <h3 className="text-xl font-bold text-ok-settings-dark mb-6 flex items-center gap-2">
                 <svg
-                  className="w-5 h-5 text-[#3b35d6]"
+                  className="w-5 h-5 text-ok-brand"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -476,7 +476,7 @@ export default function NearbyStores() {
                           type="checkbox"
                           checked={selectedCategories.includes(cat)}
                           onChange={() => handleCategoryToggle(cat)}
-                          className="peer appearance-none w-5 h-5 border-2 border-gray-300 rounded-[6px] checked:bg-[#00a3b4] checked:border-[#3b35d6] hover:border-[#3b35d6] transition-colors cursor-pointer"
+                          className="peer appearance-none w-5 h-5 border-2 border-gray-300 rounded-[6px] checked:bg-ok-ns-brand checked:border-ok-brand hover:border-ok-brand transition-colors cursor-pointer"
                         />
                         <svg
                           className="w-3 h-3 text-white absolute pointer-events-none opacity-0 peer-checked:opacity-100"
@@ -493,7 +493,7 @@ export default function NearbyStores() {
                         </svg>
                       </div>
                       <span
-                        className={`text-[15px] font-medium transition-colors ${selectedCategories.includes(cat) ? "text-[#002b3d]" : "text-gray-500 group-hover:text-[#3b35d6]"}`}
+                        className={`text-[15px] font-medium transition-colors ${selectedCategories.includes(cat) ? "text-ok-settings-dark" : "text-gray-500 group-hover:text-ok-brand"}`}
                       >
                         {cat}
                       </span>
@@ -508,7 +508,7 @@ export default function NearbyStores() {
                   <h4 className="font-bold text-gray-400 text-xs uppercase tracking-widest">
                     Distance
                   </h4>
-                  <span className="text-[13px] text-[#3b35d6] font-bold bg-[#e4ebed] px-2 py-0.5 rounded-md">
+                  <span className="text-[13px] text-ok-brand font-bold bg-ok-ns-subtle-bg px-2 py-0.5 rounded-md">
                     {maxDistance} km
                   </span>
                 </div>
@@ -522,7 +522,7 @@ export default function NearbyStores() {
                     setMaxDistance(parseFloat(e.target.value));
                     setCurrentPage(1);
                   }}
-                  className="w-full h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#3b35d6]"
+                  className="w-full h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-ok-brand"
                 />
                 <div className="flex justify-between text-xs font-bold text-gray-400 mt-2">
                   <span>0km</span>
@@ -539,16 +539,16 @@ export default function NearbyStores() {
                 setMaxDistance(10);
                 setCurrentPage(1);
               }}
-              className="w-full py-3 rounded-lg bg-[#f4f5f8] text-gray-500 font-bold text-sm hover:bg-gray-100 hover:text-[#002b3d] transition-colors mt-auto"
+              className="w-full py-3 rounded-lg bg-ok-surface-alt text-gray-500 font-bold text-sm hover:bg-gray-100 hover:text-ok-settings-dark transition-colors mt-auto"
             >
               Reset Filters
             </button>
           </aside>
 
           {/* Desktop Main Card */}
-          <div className="bg-[#fbf7ff] rounded-lg p-8 shadow-[0_8px_30px_rgba(0,0,0,0.04)] flex flex-col relative z-10 flex-1 min-h-[600px]">
+          <div className="bg-ok-surface rounded-lg p-8 shadow-[0_8px_30px_rgba(0,0,0,0.04)] flex flex-col relative z-10 flex-1 min-h-[600px]">
             {/* Top Bar inside card - CENTERED TABS */}
-            <div className="relative flex items-center justify-center border-b border-[#d9d4e8] pb-4 mb-6 shrink-0">
+            <div className="relative flex items-center justify-center border-b border-ok-border pb-4 mb-6 shrink-0">
               {/* Centered Tabs */}
               <div className="flex gap-8">
                 <button
@@ -558,7 +558,7 @@ export default function NearbyStores() {
                   }}
                   className={`flex items-center gap-2 pb-4 -mb-[17px] text-[15px] font-bold transition-colors ${
                     activeTab === "nearby"
-                      ? "text-[#3b35d6] border-b-2 border-[#3b35d6]"
+                      ? "text-ok-brand border-b-2 border-ok-brand"
                       : "text-gray-400 hover:text-gray-600"
                   }`}
                 >
@@ -584,8 +584,8 @@ export default function NearbyStores() {
                   }}
                   className={`flex items-center gap-2 pb-4 -mb-[17px] text-[15px] font-bold transition-colors ${
                     activeTab === "all"
-                      ? "text-[#3b35d6] border-b-2 border-[#3b35d6]"
-                      : "text-[#7da2a9] hover:text-[#007489]"
+                      ? "text-ok-brand border-b-2 border-ok-brand"
+                      : "text-ok-settings-muted hover:text-ok-ns-brand-hover"
                   }`}
                 >
                   <svg
@@ -607,7 +607,7 @@ export default function NearbyStores() {
 
               {/* Sort Action absolute right */}
               <div className="absolute right-0 flex items-center gap-6">
-                <button className="flex items-center gap-2 text-[#7da2a9] text-[14px] font-bold hover:text-[#007489]">
+                <button className="flex items-center gap-2 text-ok-settings-muted text-[14px] font-bold hover:text-ok-ns-brand-hover">
                   <svg
                     className="w-4 h-4"
                     fill="none"
@@ -629,7 +629,7 @@ export default function NearbyStores() {
             {/* Desktop Card Grid */}
             <div className="pb-2 flex-1">
               {currentProducts.length === 0 ? (
-                <div className="flex flex-col items-center justify-center h-64 text-[#7da2a9]">
+                <div className="flex flex-col items-center justify-center h-64 text-ok-settings-muted">
                   <svg
                     className="w-12 h-12 mb-4 opacity-50"
                     fill="none"
@@ -643,7 +643,7 @@ export default function NearbyStores() {
                       d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                     />
                   </svg>
-                  <p className="text-lg font-bold text-[#002b3d]">
+                  <p className="text-lg font-bold text-ok-settings-dark">
                     No products found
                   </p>
                   <p className="text-sm font-medium mt-1">
@@ -655,11 +655,11 @@ export default function NearbyStores() {
                   {currentProducts.map((product, index) => (
                     <div
                       key={index}
-                      className="bg-[#fbf7ff] rounded-lg p-6 border-2 border-transparent shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_20px_rgba(59,53,214,0.15)] hover:border-[#3b35d6] transition-all duration-300 flex flex-col gap-5 group cursor-pointer"
+                      className="bg-ok-surface rounded-lg p-6 border-2 border-transparent shadow-[0_4px_20px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_20px_rgba(59,53,214,0.15)] hover:border-ok-brand transition-all duration-300 flex flex-col gap-5 group cursor-pointer"
                     >
                       <div className="flex justify-between items-start gap-4">
                         <div className="flex gap-4">
-                          <div className="w-16 h-16 rounded-[16px] bg-[#f4f7f8] overflow-hidden shrink-0 border border-[#d9d4e8] group-hover:border-[#3b35d6]/30 transition-colors">
+                          <div className="w-16 h-16 rounded-[16px] bg-ok-ns-light-bg overflow-hidden shrink-0 border border-ok-border group-hover:border-ok-brand/30 transition-colors">
                             <img
                               src={product.image}
                               alt={product.name}
@@ -667,26 +667,26 @@ export default function NearbyStores() {
                             />
                           </div>
                           <div>
-                            <h4 className="font-bold text-[#002b3d] text-[18px] group-hover:text-[#3b35d6] transition-colors line-clamp-1">
+                            <h4 className="font-bold text-ok-settings-dark text-[18px] group-hover:text-ok-brand transition-colors line-clamp-1">
                               {product.name}
                             </h4>
-                            <p className="text-[13px] text-[#7da2a9] font-medium mt-0.5 mb-2">
+                            <p className="text-[13px] text-ok-settings-muted font-medium mt-0.5 mb-2">
                               {product.shopName} • {product.price}
                             </p>
-                            <span className="inline-block px-3 py-1 rounded-full bg-[#f4f7f8] text-[#3b35d6] text-[11px] font-bold uppercase tracking-wider group-hover:bg-[#00a3b4]/10 transition-colors">
+                            <span className="inline-block px-3 py-1 rounded-full bg-ok-ns-light-bg text-ok-brand text-[11px] font-bold uppercase tracking-wider group-hover:bg-ok-ns-brand/10 transition-colors">
                               {product.category}
                             </span>
                           </div>
                         </div>
                         {/* Status */}
                         <div
-                          className={`flex items-center gap-2 shrink-0 px-3 py-1.5 rounded-full transition-colors ${product.status === "In Stock" ? "bg-green-50" : "bg-[#f4f5f8]"}`}
+                          className={`flex items-center gap-2 shrink-0 px-3 py-1.5 rounded-full transition-colors ${product.status === "In Stock" ? "bg-green-50" : "bg-ok-surface-alt"}`}
                         >
                           <div
-                            className={`w-2 h-2 rounded-full ${product.status === "In Stock" ? "bg-[#00c853]" : "bg-[#b0bec5]"}`}
+                            className={`w-2 h-2 rounded-full ${product.status === "In Stock" ? "bg-ok-ns-success" : "bg-ok-ns-steel"}`}
                           ></div>
                           <span
-                            className={`text-[12px] font-bold ${product.status === "In Stock" ? "text-[#00c853]" : "text-[#8fa7af]"}`}
+                            className={`text-[12px] font-bold ${product.status === "In Stock" ? "text-ok-ns-success" : "text-ok-text-faint"}`}
                           >
                             {product.status}
                           </span>
@@ -694,29 +694,29 @@ export default function NearbyStores() {
                       </div>
 
                       {/* Divider */}
-                      <div className="h-px w-full bg-gray-100 group-hover:bg-[#00a3b4]/20 transition-colors"></div>
+                      <div className="h-px w-full bg-gray-100 group-hover:bg-ok-ns-brand/20 transition-colors"></div>
 
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
                           <div className="flex items-center gap-1.5">
                             <svg
-                              className="w-4 h-4 text-[#3b35d6]"
+                              className="w-4 h-4 text-ok-brand"
                               fill="currentColor"
                               viewBox="0 0 20 20"
                             >
                               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                             </svg>
-                            <span className="font-bold text-[#002b3d] text-[15px]">
+                            <span className="font-bold text-ok-settings-dark text-[15px]">
                               {product.rating}
                             </span>
-                            <span className="text-[#8fa7af] text-[13px]">
+                            <span className="text-ok-text-faint text-[13px]">
                               ({product.reviews})
                             </span>
                           </div>
                           <div className="w-1 h-1 rounded-full bg-gray-300"></div>
-                          <div className="text-[#002b3d] text-[14px] font-medium flex items-center gap-1.5">
+                          <div className="text-ok-settings-dark text-[14px] font-medium flex items-center gap-1.5">
                             <svg
-                              className="w-4 h-4 text-[#7da2a9] group-hover:text-[#3b35d6] transition-colors"
+                              className="w-4 h-4 text-ok-settings-muted group-hover:text-ok-brand transition-colors"
                               fill="none"
                               stroke="currentColor"
                               viewBox="0 0 24 24"
@@ -739,7 +739,7 @@ export default function NearbyStores() {
                         </div>
 
                         <div className="flex items-center gap-2">
-                          <button className="w-9 h-9 rounded-lg bg-[#f4f7f8] text-[#3b35d6] flex items-center justify-center hover:bg-[#00a3b4] hover:text-white transition-colors">
+                          <button className="w-9 h-9 rounded-lg bg-ok-ns-light-bg text-ok-brand flex items-center justify-center hover:bg-ok-ns-brand hover:text-white transition-colors">
                             <svg
                               className="w-4 h-4"
                               fill="none"
@@ -759,7 +759,7 @@ export default function NearbyStores() {
                               />
                             </svg>
                           </button>
-                          <button className="w-9 h-9 rounded-lg bg-[#f4f7f8] text-[#3b35d6] flex items-center justify-center hover:bg-[#00a3b4] hover:text-white transition-colors group-hover:bg-[#00a3b4] group-hover:text-white">
+                          <button className="w-9 h-9 rounded-lg bg-ok-ns-light-bg text-ok-brand flex items-center justify-center hover:bg-ok-ns-brand hover:text-white transition-colors group-hover:bg-ok-ns-brand group-hover:text-white">
                             <svg
                               className="w-4 h-4"
                               fill="none"
@@ -784,8 +784,8 @@ export default function NearbyStores() {
 
             {/* Desktop Pagination */}
             {filteredProducts.length > 0 && (
-              <div className="flex items-center justify-between mt-8 pt-6 shrink-0 border-t border-[#d9d4e8]">
-                <div className="text-[#3b35d6] text-[14px] font-bold">
+              <div className="flex items-center justify-between mt-8 pt-6 shrink-0 border-t border-ok-border">
+                <div className="text-ok-brand text-[14px] font-bold">
                   Showing {(currentPage - 1) * itemsPerPage + 1}-
                   {Math.min(
                     currentPage * itemsPerPage,
@@ -799,7 +799,7 @@ export default function NearbyStores() {
                       handlePageChange(Math.max(1, currentPage - 1))
                     }
                     disabled={currentPage === 1}
-                    className="w-8 h-8 flex items-center justify-center rounded-lg text-[#8fa7af] hover:bg-[#f4f7f8] transition-colors disabled:opacity-50"
+                    className="w-8 h-8 flex items-center justify-center rounded-lg text-ok-text-faint hover:bg-ok-ns-light-bg transition-colors disabled:opacity-50"
                   >
                     <svg
                       className="w-5 h-5"
@@ -826,7 +826,7 @@ export default function NearbyStores() {
                         className={`w-8 h-8 flex items-center justify-center rounded-lg font-bold text-[14px] transition-colors ${
                           isActive
                             ? "gradient-blue-pink text-white"
-                            : "text-[#8fa7af] hover:bg-[#f4f7f8]"
+                            : "text-ok-text-faint hover:bg-ok-ns-light-bg"
                         }`}
                       >
                         {page}
@@ -839,7 +839,7 @@ export default function NearbyStores() {
                       handlePageChange(Math.min(totalPages, currentPage + 1))
                     }
                     disabled={currentPage === totalPages}
-                    className="w-8 h-8 flex items-center justify-center rounded-lg text-[#3b35d6] hover:bg-[#f4f7f8] transition-colors disabled:opacity-50"
+                    className="w-8 h-8 flex items-center justify-center rounded-lg text-ok-brand hover:bg-ok-ns-light-bg transition-colors disabled:opacity-50"
                   >
                     <svg
                       className="w-5 h-5"

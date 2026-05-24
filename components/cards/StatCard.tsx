@@ -23,7 +23,7 @@ export const StatCard: React.FC<StatCardProps> = ({
 }) => (
   <Card
     className={
-      featured ? "bg-[#3b35d6] text-white border border-[#3b35d6]" : ""
+      featured ? "bg-ok-brand text-white border border-ok-brand" : ""
     }
   >
     <CardContent className="flex flex-col gap-2">
@@ -32,7 +32,7 @@ export const StatCard: React.FC<StatCardProps> = ({
           className={
             featured
               ? "text-white/80 text-xs font-semibold uppercase"
-              : "text-[#6b668f] text-xs font-semibold uppercase"
+              : "text-ok-text-muted text-xs font-semibold uppercase"
           }
         >
           {label}
@@ -44,7 +44,7 @@ export const StatCard: React.FC<StatCardProps> = ({
           className={
             featured
               ? "text-2xl font-bold"
-              : "text-2xl font-bold text-[#1b1f2a]"
+              : "text-2xl font-bold text-ok-heading"
           }
         >
           {value}

@@ -41,19 +41,19 @@ export const OrderCard: React.FC<OrderCardProps> = ({
   const config = statusConfig[status] || statusConfig.NEW;
 
   return (
-    <Card className="mb-4 group hover:shadow-[0_10px_22px_rgba(76,61,150,0.18)] transition-all duration-300 border-l-4 border-l-transparent hover:border-l-[#3b35d6] overflow-hidden relative">
+    <Card className="mb-4 group hover:shadow-[0_10px_22px_rgba(76,61,150,0.18)] transition-all duration-300 border-l-4 border-l-transparent hover:border-l-ok-brand overflow-hidden relative">
       <CardContent className="flex flex-col gap-4 p-5">
         {/* Header */}
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#e9e4ff] flex items-center justify-center text-[#3b35d6] font-bold shadow-sm">
+            <div className="w-10 h-10 rounded-full bg-ok-brand-ghost flex items-center justify-center text-ok-brand font-bold shadow-sm">
               {customerName.charAt(0)}
             </div>
             <div>
-              <p className="text-sm font-bold text-[#1b1f2a] leading-none mb-1">
+              <p className="text-sm font-bold text-ok-heading leading-none mb-1">
                 {customerName}
               </p>
-              <p className="text-xs text-[#6b668f] font-mono tracking-tight cursor-pointer hover:text-[#3b35d6] transition-colors">
+              <p className="text-xs text-ok-text-muted font-mono tracking-tight cursor-pointer hover:text-ok-brand transition-colors">
                 <Link href={`/orders/${id}`}>{id}</Link>
               </p>
             </div>
@@ -65,39 +65,39 @@ export const OrderCard: React.FC<OrderCardProps> = ({
             >
               {config.label}
             </Badge>
-            <span className="text-[11px] font-semibold text-[#6b668f] flex items-center gap-1">
-              <Clock className="w-3 h-3 text-[#b3aacb]" />
+            <span className="text-[11px] font-semibold text-ok-text-muted flex items-center gap-1">
+              <Clock className="w-3 h-3 text-ok-text-placeholder" />
               {receivedMinsAgo}m ago
             </span>
           </div>
         </div>
 
         {/* Info Grid */}
-        <div className="grid grid-cols-3 gap-3 py-3 border-y border-[#e6ddf5]">
+        <div className="grid grid-cols-3 gap-3 py-3 border-y border-ok-border-inner">
           <div className="space-y-1">
-            <p className="text-[#6b668f] text-[10px] uppercase font-semibold flex items-center gap-1">
+            <p className="text-ok-text-muted text-[10px] uppercase font-semibold flex items-center gap-1">
               <Package className="w-3 h-3" /> Items
             </p>
-            <p className="font-bold text-[#1b1f2a] text-sm">
+            <p className="font-bold text-ok-heading text-sm">
               {itemCount}{" "}
-              <span className="font-normal text-xs text-[#6b668f]">units</span>
+              <span className="font-normal text-xs text-ok-text-muted">units</span>
             </p>
           </div>
           <div className="space-y-1">
-            <p className="text-[#6b668f] text-[10px] uppercase font-semibold">
+            <p className="text-ok-text-muted text-[10px] uppercase font-semibold">
               Total
             </p>
-            <p className="font-bold text-[#1b1f2a] text-sm">
+            <p className="font-bold text-ok-heading text-sm">
               Rs. {amount.toLocaleString()}
             </p>
           </div>
           <div className="space-y-1 text-right">
-            <p className="text-[#6b668f] text-[10px] uppercase font-semibold flex items-center justify-end gap-1">
+            <p className="text-ok-text-muted text-[10px] uppercase font-semibold flex items-center justify-end gap-1">
               Distance <MapPin className="w-3 h-3" />
             </p>
-            <p className="font-bold text-[#1b1f2a] text-sm">
+            <p className="font-bold text-ok-heading text-sm">
               {distanceKm}{" "}
-              <span className="font-normal text-xs text-[#6b668f]">km</span>
+              <span className="font-normal text-xs text-ok-text-muted">km</span>
             </p>
           </div>
         </div>
@@ -106,7 +106,7 @@ export const OrderCard: React.FC<OrderCardProps> = ({
         <div className="flex gap-2 pt-1 items-center justify-between">
           <Link
             href={`/orders/${id}`}
-            className="text-[11px] font-bold text-[#3b35d6] hover:text-[#2f2ab8] flex items-center gap-0.5 group-hover:gap-1 transition-all uppercase tracking-wide"
+            className="text-[11px] font-bold text-ok-brand hover:text-ok-brand-hover flex items-center gap-0.5 group-hover:gap-1 transition-all uppercase tracking-wide"
           >
             View Details <ChevronRight className="w-3.5 h-3.5" />
           </Link>

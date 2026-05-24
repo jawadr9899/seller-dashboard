@@ -27,7 +27,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ items }) => {
   }, []);
 
   return (
-    <aside className="hidden lg:flex flex-col w-64 bg-[#f8f8fa] border-r border-[#d9d4e8] sticky top-0 h-screen">
+    <aside className="hidden lg:flex flex-col w-64 bg-ok-surface-alt border-r border-ok-border sticky top-0 h-screen">
       <div className="px-4 pt-6 pb-4 ml-5">
         <Image src="/logo.png" alt="Logo" width={140} height={100} />
       </div>
@@ -46,8 +46,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ items }) => {
                 className={cn(
                   "flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all border",
                   isActive
-                    ? "bg-[#ece8ff] text-[#4f46e5] border-[#cfc7f5]"
-                    : "text-[#4b5563] border-transparent hover:bg-white hover:border-[#d9d4e8]",
+                    ? "bg-ok-brand-subtle text-ok-chart-bar border-ok-border-brand"
+                    : "text-ok-text border-transparent hover:bg-white hover:border-ok-border",
                 )}
               >
                 {item.icon && <span className="text-lg">{item.icon}</span>}
@@ -58,8 +58,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ items }) => {
         </div>
       </nav>
 
-      <div className="p-4 border-t border-[#d9d4e8]">
-        <button className="w-full px-4 py-2.5 text-sm font-semibold text-[#d64545] border border-[#f0c6c6] bg-white hover:bg-[#fff5f5] rounded-sm transition-colors">
+      <div className="p-4 border-t border-ok-border">
+        <button className="w-full px-4 py-2.5 text-sm font-semibold text-ok-danger border border-ok-danger-border bg-white hover:bg-ok-danger-ghost rounded-sm transition-colors">
           Logout
         </button>
       </div>

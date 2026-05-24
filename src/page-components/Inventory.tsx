@@ -45,7 +45,7 @@ export const Inventory: React.FC = () => {
   };
 
   return (
-    <div className="flex bg-[#f4f5f8]">
+    <div className="flex bg-ok-surface-alt">
       <Sidebar items={navigationItems} />
 
       <main className="flex-1 pb-20 lg:pb-0">
@@ -73,7 +73,7 @@ export const Inventory: React.FC = () => {
                     onClick={() => handleCategoryFilter(cat)}
                     className={`px-3 py-1 rounded-full text-xs font-semibold transition-colors ${
                       selectedCategory === cat
-                        ? 'bg-[#eeeaff]0 text-white'
+                        ? 'bg-ok-brand-subtle0 text-white'
                         : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                     }`}
                   >
@@ -100,7 +100,7 @@ export const Inventory: React.FC = () => {
             {displayedProducts.length > 0 ? (
               <>
                 <table className="w-full">
-                  <thead className="border-b border-[#d9d4e8] bg-[#f4f5f8]">
+                  <thead className="border-b border-ok-border bg-ok-surface-alt">
                     <tr>
                       <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">Product Details</th>
                       <th className="px-4 py-3 text-left text-sm font-semibold text-gray-900">Category</th>
@@ -117,7 +117,7 @@ export const Inventory: React.FC = () => {
                 </table>
 
                 {/* Pagination */}
-                <div className="px-4 py-4 border-t border-[#d9d4e8] flex items-center justify-between">
+                <div className="px-4 py-4 border-t border-ok-border flex items-center justify-between">
                   <p className="text-sm text-gray-600">
                     Showing {startIdx + 1} to {Math.min(startIdx + itemsPerPage, filteredProducts.length)} of{' '}
                     {filteredProducts.length}
@@ -137,7 +137,7 @@ export const Inventory: React.FC = () => {
                           key={page}
                           onClick={() => setCurrentPage(page)}
                           className={`px-2 py-1 rounded text-sm font-medium ${
-                            page === currentPage ? 'bg-[#eeeaff]0 text-white' : 'bg-gray-100 text-gray-600'
+                            page === currentPage ? 'bg-ok-brand-subtle0 text-white' : 'bg-gray-100 text-gray-600'
                           }`}
                         >
                           {page}

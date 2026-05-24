@@ -76,10 +76,10 @@ export default function SettingsPage() {
           <div className="w-full">
             <div className="w-full p-6 md:p-10">
               <div className="mb-8">
-                <h1 className="text-2xl md:text-3xl font-bold text-[#1f2430]">
+                <h1 className="text-2xl md:text-3xl font-bold text-ok-heading">
                   Settings
                 </h1>
-                <p className="text-sm text-[#7a7890] mt-2">
+                <p className="text-sm text-ok-text-muted mt-2">
                   Manage account, store, notification, payout, and security
                   preferences.
                 </p>
@@ -87,7 +87,7 @@ export default function SettingsPage() {
 
               <div className="flex justify-center mb-8">
                 <div className="w-full max-w-5xl overflow-x-auto">
-                  <div className="relative min-w-[760px] flex bg-[#fbf7ff] border border-[#d9d4e8] p-1.5">
+                  <div className="relative min-w-[760px] flex bg-ok-surface border border-ok-border p-1.5">
                     <div
                       className="absolute top-1.5 bottom-1.5 left-1.5 rounded-lg bg-white  border transition-transform duration-300 ease-out"
                       style={{
@@ -103,12 +103,12 @@ export default function SettingsPage() {
                           onClick={() => setActiveTab(card.id)}
                           className={`relative z-10 flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-sm font-semibold transition-colors ${
                             isActive
-                              ? "text-[#4f46e5]"
-                              : "text-[#4b5563] hover:text-[#4f46e5]"
+                              ? "text-ok-chart-bar"
+                              : "text-ok-text hover:text-ok-chart-bar"
                           }`}
                         >
                           <span
-                            className={`${isActive ? "text-[#4f46e5]" : "text-[#777681]"}`}
+                            className={`${isActive ? "text-ok-chart-bar" : "text-ok-text-muted"}`}
                           >
                             {card.icon}
                           </span>
@@ -124,25 +124,25 @@ export default function SettingsPage() {
               {activeTab === "profile" && (
                 <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                   <div className="flex justify-end mb-6">
-                    <button className="bg-[#3b35d6] hover:bg-[#2f2ab8] text-white px-6 py-2.5 rounded-sm font-bold text-sm shadow-sm transition-all">
+                    <button className="bg-ok-brand hover:bg-ok-brand-hover text-white px-6 py-2.5 rounded-sm font-bold text-sm shadow-sm transition-all">
                       Save Changes
                     </button>
                   </div>
-                  <h3 className="text-xl font-bold text-[#002b3d] mb-6">
+                  <h3 className="text-xl font-bold text-ok-settings-dark mb-6">
                     Profile Information
                   </h3>
 
                   {/* Avatar */}
                   <div className="flex items-center gap-6 mb-10">
                     <div className="relative">
-                      <div className="w-24 h-24 rounded-lg border border-[#d9d4e8] bg-white p-1 shadow-sm">
+                      <div className="w-24 h-24 rounded-lg border border-ok-border bg-white p-1 shadow-sm">
                         <img
                           src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                           alt="Profile"
                           className="w-full h-full rounded-lg object-cover"
                         />
                       </div>
-                      <button className="absolute -bottom-2 -right-2 w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center border border-[#d9d4e8] text-[#3b35d6] hover:bg-[#f4f5f8] transition-colors">
+                      <button className="absolute -bottom-2 -right-2 w-8 h-8 bg-white rounded-full shadow-md flex items-center justify-center border border-ok-border text-ok-brand hover:bg-ok-surface-alt transition-colors">
                         <svg
                           className="w-4 h-4"
                           fill="none"
@@ -159,14 +159,14 @@ export default function SettingsPage() {
                       </button>
                     </div>
                     <div>
-                      <h4 className="font-bold text-[#002b3d] text-lg">
+                      <h4 className="font-bold text-ok-settings-dark text-lg">
                         Ahmed
                       </h4>
-                      <p className="text-[#7da2a9] text-sm font-medium mb-3">
+                      <p className="text-ok-settings-muted text-sm font-medium mb-3">
                         Owner & Admin
                       </p>
                       <div className="flex gap-2">
-                        <button className="px-4 py-1.5 rounded-sm border border-[#d9d4e8] bg-white text-[#3b35d6] text-xs font-bold hover:bg-[#eeeaff] transition-colors">
+                        <button className="px-4 py-1.5 rounded-sm border border-ok-border bg-white text-ok-brand text-xs font-bold hover:bg-ok-brand-subtle transition-colors">
                           Change Picture
                         </button>
                         <button className="px-4 py-1.5 rounded-full bg-red-50 text-red-500 text-xs font-bold hover:bg-red-100 transition-colors">
@@ -179,7 +179,7 @@ export default function SettingsPage() {
                   {/* Form */}
                   <div className="space-y-8">
                     <div>
-                      <h4 className="text-sm font-bold text-[#002b3d] mb-4">
+                      <h4 className="text-sm font-bold text-ok-settings-dark mb-4">
                         Basic Details
                       </h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -190,7 +190,7 @@ export default function SettingsPage() {
                           <input
                             type="text"
                             defaultValue="Ahmed"
-                            className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
+                            className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
                           />
                         </div>
                         <div className="space-y-2">
@@ -200,7 +200,7 @@ export default function SettingsPage() {
                           <input
                             type="text"
                             defaultValue="Khan"
-                            className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
+                            className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
                           />
                         </div>
                         <div className="space-y-2">
@@ -210,7 +210,7 @@ export default function SettingsPage() {
                           <input
                             type="text"
                             defaultValue="Ahmed Ali"
-                            className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
+                            className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
                           />
                         </div>
                         <div className="space-y-2">
@@ -220,14 +220,14 @@ export default function SettingsPage() {
                           <input
                             type="text"
                             defaultValue="Owner & Admin"
-                            className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
+                            className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
                           />
                         </div>
                       </div>
                     </div>
 
                     <div>
-                      <h4 className="text-sm font-bold text-[#002b3d] mb-4">
+                      <h4 className="text-sm font-bold text-ok-settings-dark mb-4">
                         Contact & Preferences
                       </h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -238,7 +238,7 @@ export default function SettingsPage() {
                           <input
                             type="email"
                             defaultValue="Ahmed@example.com"
-                            className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
+                            className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
                           />
                         </div>
                         <div className="space-y-2">
@@ -248,7 +248,7 @@ export default function SettingsPage() {
                           <input
                             type="tel"
                             defaultValue="+92 300 1234567"
-                            className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
+                            className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
                           />
                         </div>
                         <div className="space-y-2">
@@ -258,14 +258,14 @@ export default function SettingsPage() {
                           <input
                             type="tel"
                             defaultValue="+92 300 9876543"
-                            className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
+                            className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
                           />
                         </div>
                         <div className="space-y-2">
                           <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
                             Time Zone
                           </label>
-                          <select className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all appearance-none">
+                          <select className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all appearance-none">
                             <option>Pakistan Standard Time (PKT)</option>
                             <option>Gulf Standard Time (GST)</option>
                             <option>GMT (UTC +0)</option>
@@ -275,7 +275,7 @@ export default function SettingsPage() {
                           <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
                             Preferred Language
                           </label>
-                          <select className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all appearance-none">
+                          <select className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all appearance-none">
                             <option>English</option>
                             <option>Urdu</option>
                           </select>
@@ -287,7 +287,7 @@ export default function SettingsPage() {
                           <input
                             type="text"
                             defaultValue="Lahore"
-                            className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
+                            className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
                           />
                         </div>
                         <div className="space-y-2">
@@ -297,7 +297,7 @@ export default function SettingsPage() {
                           <input
                             type="text"
                             defaultValue="Pakistan"
-                            className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
+                            className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
                           />
                         </div>
                       </div>
@@ -310,7 +310,7 @@ export default function SettingsPage() {
                       <textarea
                         rows={3}
                         defaultValue="Block A, Gulberg, Lahore, Punjab"
-                        className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all resize-none"
+                        className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all resize-none"
                       ></textarea>
                     </div>
                   </div>
@@ -321,14 +321,14 @@ export default function SettingsPage() {
               {activeTab === "store" && (
                 <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                   <div className="flex justify-end mb-6">
-                    <button className="bg-[#3b35d6] hover:bg-[#2f2ab8] text-white px-6 py-2.5 rounded-sm font-bold text-sm shadow-sm transition-all">
+                    <button className="bg-ok-brand hover:bg-ok-brand-hover text-white px-6 py-2.5 rounded-sm font-bold text-sm shadow-sm transition-all">
                       Save Changes
                     </button>
                   </div>
-                  <h3 className="text-xl font-bold text-[#002b3d] mb-2">
+                  <h3 className="text-xl font-bold text-ok-settings-dark mb-2">
                     Store Details
                   </h3>
-                  <p className="text-[#7da2a9] text-sm font-medium mb-6">
+                  <p className="text-ok-settings-muted text-sm font-medium mb-6">
                     Keep your storefront info up to date, including your
                     platform (Shopify, WooCommerce, etc.) and public URL.
                   </p>
@@ -340,7 +340,7 @@ export default function SettingsPage() {
                       <input
                         type="text"
                         defaultValue="Green Pantry Organic"
-                        className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
+                        className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
                       />
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -348,7 +348,7 @@ export default function SettingsPage() {
                         <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
                           Store Platform
                         </label>
-                        <select className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all appearance-none">
+                        <select className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all appearance-none">
                           <option>Shopify</option>
                           <option>WooCommerce</option>
                           <option>Magento</option>
@@ -364,7 +364,7 @@ export default function SettingsPage() {
                         <input
                           type="url"
                           defaultValue="https://greenpantry.pk"
-                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
+                          className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
                         />
                       </div>
                     </div>
@@ -377,14 +377,14 @@ export default function SettingsPage() {
                           type="text"
                           defaultValue="GP-2024-001"
                           disabled
-                          className="w-full bg-[#f4f5f8] border border-gray-200 rounded-lg px-4 py-3 text-gray-400 font-medium cursor-not-allowed"
+                          className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-gray-400 font-medium cursor-not-allowed"
                         />
                       </div>
                       <div className="space-y-2">
                         <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
                           Base Currency
                         </label>
-                        <select className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all appearance-none">
+                        <select className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all appearance-none">
                           <option>PKR (Rs)</option>
                           <option>USD ($)</option>
                           <option>EUR (€)</option>
@@ -399,7 +399,7 @@ export default function SettingsPage() {
                       <input
                         type="text"
                         defaultValue="Organic Groceries"
-                        className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
+                        className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
                       />
                     </div>
                     <div className="space-y-2">
@@ -409,7 +409,7 @@ export default function SettingsPage() {
                       <textarea
                         rows={4}
                         defaultValue="An online store offering fresh, organic essentials delivered across Pakistan."
-                        className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all resize-none"
+                        className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all resize-none"
                       ></textarea>
                     </div>
                     <div className="space-y-2">
@@ -419,7 +419,7 @@ export default function SettingsPage() {
                       <textarea
                         rows={3}
                         defaultValue="15-A, Main Boulevard, Gulberg, Lahore"
-                        className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all resize-none"
+                        className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all resize-none"
                       ></textarea>
                     </div>
                   </div>
@@ -430,11 +430,11 @@ export default function SettingsPage() {
               {activeTab === "notifications" && (
                 <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                   <div className="flex justify-end mb-6">
-                    <button className="bg-[#3b35d6] hover:bg-[#2f2ab8] text-white px-6 py-2.5 rounded-sm font-bold text-sm shadow-sm transition-all">
+                    <button className="bg-ok-brand hover:bg-ok-brand-hover text-white px-6 py-2.5 rounded-sm font-bold text-sm shadow-sm transition-all">
                       Save Changes
                     </button>
                   </div>
-                  <h3 className="text-xl font-bold text-[#002b3d] mb-6">
+                  <h3 className="text-xl font-bold text-ok-settings-dark mb-6">
                     Notification Preferences
                   </h3>
 
@@ -470,20 +470,20 @@ export default function SettingsPage() {
               {activeTab === "payouts" && (
                 <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                   <div className="flex justify-end mb-6">
-                    <button className="bg-[#3b35d6] hover:bg-[#2f2ab8] text-white px-6 py-2.5 rounded-sm font-bold text-sm shadow-sm transition-all">
+                    <button className="bg-ok-brand hover:bg-ok-brand-hover text-white px-6 py-2.5 rounded-sm font-bold text-sm shadow-sm transition-all">
                       Save Changes
                     </button>
                   </div>
-                  <h3 className="text-xl font-bold text-[#002b3d] mb-2">
+                  <h3 className="text-xl font-bold text-ok-settings-dark mb-2">
                     Bank & Payouts
                   </h3>
-                  <p className="text-[#7da2a9] text-sm font-medium mb-6">
+                  <p className="text-ok-settings-muted text-sm font-medium mb-6">
                     Add a Pakistani digital bank or wallet for payouts, or link
                     a VISA/Mastercard/UnionPay card.
                   </p>
 
                   {/* Current Active Bank Card */}
-                  <div className="bg-[#3b35d6] rounded-lg p-6 text-white mb-8 relative overflow-hidden shadow-sm border border-[#d9d4e8]">
+                  <div className="bg-ok-brand rounded-lg p-6 text-white mb-8 relative overflow-hidden shadow-sm border border-ok-border">
                     <div className="absolute top-0 right-0 p-4 opacity-10">
                       <BankIcon width={100} height={100} />
                     </div>
@@ -512,14 +512,14 @@ export default function SettingsPage() {
 
                   <div className="space-y-6">
                     <div>
-                      <h4 className="font-bold text-[#002b3d] text-sm mb-3">
+                      <h4 className="font-bold text-ok-settings-dark text-sm mb-3">
                         Supported Digital Banks & Wallets
                       </h4>
                       <div className="flex flex-wrap gap-2">
                         {digitalBanks.map((bank) => (
                           <span
                             key={bank}
-                            className="px-3 py-1 rounded-full bg-white border border-[#d9d4e8] text-[#1f2430] text-xs font-semibold"
+                            className="px-3 py-1 rounded-full bg-white border border-ok-border text-ok-heading text-xs font-semibold"
                           >
                             {bank}
                           </span>
@@ -535,14 +535,14 @@ export default function SettingsPage() {
                         <input
                           type="text"
                           defaultValue="Ahmed Khan"
-                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
+                          className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
                         />
                       </div>
                       <div className="space-y-2">
                         <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
                           Bank / Wallet Provider
                         </label>
-                        <select className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all appearance-none">
+                        <select className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all appearance-none">
                           {digitalBanks.map((bank) => (
                             <option key={bank}>{bank}</option>
                           ))}
@@ -555,7 +555,7 @@ export default function SettingsPage() {
                         <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
                           Card Network
                         </label>
-                        <select className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all appearance-none">
+                        <select className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all appearance-none">
                           <option>VISA</option>
                           <option>Mastercard</option>
                           <option>UnionPay</option>
@@ -568,7 +568,7 @@ export default function SettingsPage() {
                         <input
                           type="text"
                           placeholder="•••• •••• •••• ••••"
-                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
+                          className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
                         />
                       </div>
                     </div>
@@ -578,7 +578,7 @@ export default function SettingsPage() {
                         <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
                           Wallet Provider
                         </label>
-                        <select className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all appearance-none">
+                        <select className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all appearance-none">
                           {walletProviders.map((provider) => (
                             <option key={provider}>{provider}</option>
                           ))}
@@ -591,7 +591,7 @@ export default function SettingsPage() {
                         <input
                           type="tel"
                           placeholder="+92 3xx xxxxxxx"
-                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
+                          className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
                         />
                       </div>
                     </div>
@@ -604,14 +604,14 @@ export default function SettingsPage() {
                         <input
                           type="text"
                           placeholder="PK00 ABPA 0000 0000 0000 0000"
-                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
+                          className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
                         />
                       </div>
                       <div className="space-y-2">
                         <label className="text-[13px] font-bold text-gray-500 uppercase tracking-wider">
                           Payout Schedule
                         </label>
-                        <select className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all appearance-none">
+                        <select className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all appearance-none">
                           <option>Every day</option>
                           <option>Every week (Monday)</option>
                           <option>Every month</option>
@@ -626,11 +626,11 @@ export default function SettingsPage() {
               {activeTab === "security" && (
                 <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                   <div className="flex justify-end mb-6">
-                    <button className="bg-[#3b35d6] hover:bg-[#2f2ab8] text-white px-6 py-2.5 rounded-sm font-bold text-sm shadow-sm transition-all">
+                    <button className="bg-ok-brand hover:bg-ok-brand-hover text-white px-6 py-2.5 rounded-sm font-bold text-sm shadow-sm transition-all">
                       Save Changes
                     </button>
                   </div>
-                  <h3 className="text-xl font-bold text-[#002b3d] mb-6">
+                  <h3 className="text-xl font-bold text-ok-settings-dark mb-6">
                     Security & Login
                   </h3>
 
@@ -642,7 +642,7 @@ export default function SettingsPage() {
                       <input
                         type="password"
                         placeholder="••••••••"
-                        className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
+                        className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
                       />
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -653,7 +653,7 @@ export default function SettingsPage() {
                         <input
                           type="password"
                           placeholder="••••••••"
-                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
+                          className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
                         />
                       </div>
                       <div className="space-y-2">
@@ -663,12 +663,12 @@ export default function SettingsPage() {
                         <input
                           type="password"
                           placeholder="••••••••"
-                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
+                          className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
                         />
                       </div>
                     </div>
                     <div>
-                      <button className="bg-gray-100 text-[#002b3d] px-6 py-2.5 rounded-full font-bold text-sm hover:bg-gray-200 transition-colors">
+                      <button className="bg-gray-100 text-ok-settings-dark px-6 py-2.5 rounded-full font-bold text-sm hover:bg-gray-200 transition-colors">
                         Update Password
                       </button>
                     </div>
@@ -676,10 +676,10 @@ export default function SettingsPage() {
 
                   <div className="space-y-6 mb-10">
                     <div>
-                      <h4 className="font-bold text-[#002b3d] text-lg">
+                      <h4 className="font-bold text-ok-settings-dark text-lg">
                         CNIC & Identity Details
                       </h4>
-                      <p className="text-sm text-[#7da2a9] font-medium mt-1">
+                      <p className="text-sm text-ok-settings-muted font-medium mt-1">
                         Add your CNIC information for compliance and payouts.
                       </p>
                     </div>
@@ -691,7 +691,7 @@ export default function SettingsPage() {
                         <input
                           type="text"
                           defaultValue="Ahmed Khan"
-                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
+                          className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
                         />
                       </div>
                       <div className="space-y-2">
@@ -701,7 +701,7 @@ export default function SettingsPage() {
                         <input
                           type="text"
                           placeholder="12345-1234567-1"
-                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
+                          className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
                         />
                       </div>
                     </div>
@@ -712,7 +712,7 @@ export default function SettingsPage() {
                         </label>
                         <input
                           type="date"
-                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
+                          className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
                         />
                       </div>
                       <div className="space-y-2">
@@ -721,7 +721,7 @@ export default function SettingsPage() {
                         </label>
                         <input
                           type="date"
-                          className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all"
+                          className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all"
                         />
                       </div>
                     </div>
@@ -732,27 +732,27 @@ export default function SettingsPage() {
                       <textarea
                         rows={3}
                         placeholder="As per CNIC"
-                        className="w-full bg-[#fcfdfd] border border-gray-200 rounded-lg px-4 py-3 text-[#002b3d] font-medium focus:outline-none focus:border-[#3b35d6] focus:ring-2 focus:ring-[#3b35d6]/20 transition-all resize-none"
+                        className="w-full bg-ok-surface-alt border border-gray-200 rounded-lg px-4 py-3 text-ok-settings-dark font-medium focus:outline-none focus:border-ok-brand focus:ring-2 focus:ring-ok-brand/20 transition-all resize-none"
                       ></textarea>
                     </div>
                   </div>
 
                   <div className="h-px w-full bg-gray-100 mb-8"></div>
 
-                  <h4 className="font-bold text-[#002b3d] text-lg mb-4">
+                  <h4 className="font-bold text-ok-settings-dark text-lg mb-4">
                     Two-Factor Authentication
                   </h4>
-                  <div className="flex items-center justify-between p-5 rounded-lg border border-[#d9d4e8] bg-[#fbf7ff]">
+                  <div className="flex items-center justify-between p-5 rounded-lg border border-ok-border bg-ok-surface">
                     <div>
-                      <p className="font-bold text-[#002b3d]">
+                      <p className="font-bold text-ok-settings-dark">
                         Protect your account
                       </p>
-                      <p className="text-sm text-[#7da2a9] font-medium mt-1">
+                      <p className="text-sm text-ok-settings-muted font-medium mt-1">
                         Add an extra layer of security requiring a code at
                         login.
                       </p>
                     </div>
-                    <button className="bg-[#3b35d6] hover:bg-[#2f2ab8] text-white px-5 py-2 rounded-sm font-bold text-sm shadow-md hover:shadow-lg transition-all shrink-0">
+                    <button className="bg-ok-brand hover:bg-ok-brand-hover text-white px-5 py-2 rounded-sm font-bold text-sm shadow-md hover:shadow-lg transition-all shrink-0">
                       Enable 2FA
                     </button>
                   </div>
@@ -785,12 +785,12 @@ function ToggleItem({
   return (
     <div className="flex items-center justify-between gap-4">
       <div>
-        <h4 className="font-bold text-[#002b3d]">{title}</h4>
-        <p className="text-sm text-[#7da2a9] font-medium mt-1">{description}</p>
+        <h4 className="font-bold text-ok-settings-dark">{title}</h4>
+        <p className="text-sm text-ok-settings-muted font-medium mt-1">{description}</p>
       </div>
       <button
         onClick={() => setChecked(!checked)}
-        className={`w-12 h-6 rounded-full relative transition-colors duration-300 shrink-0 ${checked ? "bg-[#3b35d6]" : "bg-gray-300"}`}
+        className={`w-12 h-6 rounded-full relative transition-colors duration-300 shrink-0 ${checked ? "bg-ok-brand" : "bg-gray-300"}`}
       >
         <div
           className={`w-4 h-4 rounded-full bg-white absolute top-1 transition-transform duration-300 ${checked ? "left-7" : "left-1"}`}

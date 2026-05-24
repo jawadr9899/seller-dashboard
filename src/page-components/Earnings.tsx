@@ -7,18 +7,18 @@ import { BottomTabBar } from "@/components/layout/BottomTabBar";
 import { navigationItems, bottomTabs } from "@/config/navigation";
 
 const chartBars = [
-  { month: "Jan", height: "h-16", tone: "bg-[#c8c7ff]" },
-  { month: "Feb", height: "h-24", tone: "bg-[#c8c7ff]" },
-  { month: "Mar", height: "h-20", tone: "bg-[#c8c7ff]" },
-  { month: "Apr", height: "h-32", tone: "bg-[#c8c7ff]" },
-  { month: "May", height: "h-36", tone: "bg-[#3b35d6]" },
-  { month: "Jun", height: "h-28", tone: "bg-[#3b35d6]" },
-  { month: "Jul", height: "h-40", tone: "bg-[#3b35d6]" },
-  { month: "Aug", height: "h-32", tone: "bg-[#3b35d6]" },
-  { month: "Sep", height: "h-20", tone: "bg-[#3b35d6]" },
-  { month: "Oct", height: "h-16", tone: "bg-[#c8c7ff]" },
-  { month: "Nov", height: "h-24", tone: "bg-[#c8c7ff]" },
-  { month: "Dec", height: "h-28", tone: "bg-[#c8c7ff]" },
+  { month: "Jan", height: "h-16", tone: "bg-ok-brand-muted" },
+  { month: "Feb", height: "h-24", tone: "bg-ok-brand-muted" },
+  { month: "Mar", height: "h-20", tone: "bg-ok-brand-muted" },
+  { month: "Apr", height: "h-32", tone: "bg-ok-brand-muted" },
+  { month: "May", height: "h-36", tone: "bg-ok-brand" },
+  { month: "Jun", height: "h-28", tone: "bg-ok-brand" },
+  { month: "Jul", height: "h-40", tone: "bg-ok-brand" },
+  { month: "Aug", height: "h-32", tone: "bg-ok-brand" },
+  { month: "Sep", height: "h-20", tone: "bg-ok-brand" },
+  { month: "Oct", height: "h-16", tone: "bg-ok-brand-muted" },
+  { month: "Nov", height: "h-24", tone: "bg-ok-brand-muted" },
+  { month: "Dec", height: "h-28", tone: "bg-ok-brand-muted" },
 ];
 
 const entityNames = [
@@ -116,14 +116,14 @@ export const Earnings: React.FC = () => {
   );
 
   return (
-    <div className="flex min-h-screen bg-[#f4f6fb]">
+    <div className="flex min-h-screen bg-ok-earnings-bg">
       <Sidebar items={navigationItems} />
       <main className="flex-1 pb-20 lg:pb-0">
         <div className="max-w-[1400px] mx-auto px-4 md:px-6 py-6 space-y-6">
           {/* Header */}
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-[#1b1f2a]">
+              <h1 className="text-2xl md:text-3xl font-bold text-ok-heading">
                 Earnings Overview
               </h1>
               <p className="text-sm text-gray-500 mt-1">
@@ -132,7 +132,7 @@ export const Earnings: React.FC = () => {
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-3">
-              <button className="flex items-center gap-2 px-4 py-2 rounded-lg border border-[#d9d4e8] bg-white text-sm font-semibold text-gray-700">
+              <button className="flex items-center gap-2 px-4 py-2 rounded-lg border border-ok-border bg-white text-sm font-semibold text-gray-700">
                 <svg
                   className="w-4 h-4 text-gray-500"
                   fill="none"
@@ -148,7 +148,7 @@ export const Earnings: React.FC = () => {
                 </svg>
                 Last 30 Days
               </button>
-              <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#3b35d6] text-white text-sm font-semibold shadow-sm">
+              <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-ok-brand text-white text-sm font-semibold shadow-sm">
                 <svg
                   className="w-4 h-4"
                   fill="none"
@@ -172,7 +172,7 @@ export const Earnings: React.FC = () => {
             {statCards.map((card) => (
               <div
                 key={card.title}
-                className="bg-[#fbf7ff] rounded-lg border border-[#d9d4e8] p-5 shadow-sm relative"
+                className="bg-ok-surface rounded-lg border border-ok-border p-5 shadow-sm relative gradient-border-hover transition-all duration-300"
               >
                 <span
                   className={`absolute top-4 right-4 px-2.5 py-1 rounded-full text-xs font-bold ${card.changeTone}`}
@@ -187,7 +187,7 @@ export const Earnings: React.FC = () => {
                 <p className="text-xs uppercase tracking-widest text-gray-400 font-semibold mt-4">
                   {card.title}
                 </p>
-                <p className="text-2xl font-bold text-[#1b1f2a] mt-2">
+                <p className="text-2xl font-bold text-ok-heading mt-2">
                   {card.value}
                 </p>
               </div>
@@ -196,18 +196,18 @@ export const Earnings: React.FC = () => {
 
           {/* Middle Section */}
           <div className="grid grid-cols-1 xl:grid-cols-[2fr_1fr] gap-6">
-            <div className="bg-[#fbf7ff] rounded-lg border border-[#d9d4e8] shadow-sm p-6">
+            <div className="bg-ok-surface rounded-lg border border-ok-border shadow-sm p-6">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-bold text-[#1b1f2a]">
+                <h3 className="text-lg font-bold text-ok-heading">
                   Revenue Growth
                 </h3>
                 <div className="flex items-center gap-4 text-xs text-gray-500 font-semibold">
                   <span className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#3b35d6]" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-ok-brand" />
                     This Year
                   </span>
                   <span className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#c8c7ff]" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-ok-brand-muted" />
                     Last Year
                   </span>
                 </div>
@@ -229,17 +229,17 @@ export const Earnings: React.FC = () => {
               </div>
             </div>
 
-            <div className="bg-[#fbf7ff] rounded-lg border border-[#d9d4e8] shadow-sm p-6">
-              <h3 className="text-lg font-bold text-[#1b1f2a] mb-6">
+            <div className="bg-ok-surface rounded-lg border border-ok-border shadow-sm p-6">
+              <h3 className="text-lg font-bold text-ok-heading mb-6">
                 Source Breakdown
               </h3>
               <div className="space-y-5">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full border-[6px] border-blue-100 border-t-[#3b35d6] flex items-center justify-center text-sm font-bold text-[#3b35d6]">
+                  <div className="w-12 h-12 rounded-full border-[6px] border-blue-100 border-t-ok-brand flex items-center justify-center text-sm font-bold text-ok-brand">
                     64%
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-[#1b1f2a]">
+                    <p className="text-sm font-semibold text-ok-heading">
                       Platform Sales
                     </p>
                     <p className="text-sm text-gray-500">Rs. 82,195.00</p>
@@ -250,7 +250,7 @@ export const Earnings: React.FC = () => {
                     22%
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-[#1b1f2a]">
+                    <p className="text-sm font-semibold text-ok-heading">
                       Vendor Fees
                     </p>
                     <p className="text-sm text-gray-500">Rs. 28,254.00</p>
@@ -261,7 +261,7 @@ export const Earnings: React.FC = () => {
                     14%
                   </div>
                   <div>
-                    <p className="text-sm font-semibold text-[#1b1f2a]">
+                    <p className="text-sm font-semibold text-ok-heading">
                       Ad Revenue
                     </p>
                     <p className="text-sm text-gray-500">Rs. 17,981.50</p>
@@ -269,7 +269,7 @@ export const Earnings: React.FC = () => {
                 </div>
               </div>
 
-              <div className="border-t border-[#d9d4e8] mt-6 pt-6">
+              <div className="border-t border-ok-border mt-6 pt-6">
                 <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
                   Platform Performance
                 </h4>
@@ -280,7 +280,7 @@ export const Earnings: React.FC = () => {
                       <span>92%</span>
                     </div>
                     <div className="w-full h-2 rounded-full bg-gray-100 overflow-hidden">
-                      <div className="h-full w-[92%] bg-[#3b35d6] rounded-full" />
+                      <div className="h-full w-[92%] bg-ok-brand rounded-full" />
                     </div>
                   </div>
                   <div>
@@ -298,9 +298,9 @@ export const Earnings: React.FC = () => {
           </div>
 
           {/* Recent Transactions */}
-          <div className="bg-[#fbf7ff] rounded-lg border border-[#d9d4e8] shadow-sm">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 px-6 py-5 border-b border-[#d9d4e8]">
-              <h3 className="text-lg font-bold text-[#1b1f2a]">
+          <div className="bg-ok-surface rounded-lg border border-ok-border shadow-sm">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 px-6 py-5 border-b border-ok-border">
+              <h3 className="text-lg font-bold text-ok-heading">
                 Recent Transactions
               </h3>
               <div className="flex items-center gap-3 w-full md:w-auto">
@@ -326,10 +326,10 @@ export const Earnings: React.FC = () => {
                       setSearchTerm(e.target.value);
                       setCurrentPage(1);
                     }}
-                    className="w-full pl-9 pr-3 py-2.5 rounded-lg border border-[#d9d4e8] text-sm text-gray-700 focus:outline-none focus:border-[#3b35d6]"
+                    className="w-full pl-9 pr-3 py-2.5 rounded-lg border border-ok-border text-sm text-gray-700 focus:outline-none focus:border-ok-brand"
                   />
                 </div>
-                <button className="w-10 h-10 rounded-lg border border-[#d9d4e8] flex items-center justify-center text-gray-500">
+                <button className="w-10 h-10 rounded-lg border border-ok-border flex items-center justify-center text-gray-500">
                   <svg
                     className="w-5 h-5"
                     fill="none"
@@ -349,7 +349,7 @@ export const Earnings: React.FC = () => {
 
             <div className="overflow-x-auto">
               <table className="min-w-[900px] w-full">
-                <thead className="bg-[#f4f5f8]">
+                <thead className="bg-ok-surface-alt">
                   <tr className="text-xs font-bold text-gray-400 uppercase tracking-widest">
                     <th className="px-6 py-4 text-left">Transaction ID</th>
                     <th className="px-6 py-4 text-left">Date</th>
@@ -377,8 +377,8 @@ export const Earnings: React.FC = () => {
                           : "text-emerald-600";
 
                       return (
-                        <tr key={txn.id} className="text-sm text-gray-700">
-                          <td className="px-6 py-4 font-semibold text-[#1b1f2a]">
+                        <tr key={txn.id} className="text-sm text-gray-700 transition-colors hover:bg-ok-brand/5">
+                          <td className="px-6 py-4 font-semibold text-ok-heading">
                             #{txn.id}
                           </td>
                           <td className="px-6 py-4 text-gray-500">
@@ -387,7 +387,7 @@ export const Earnings: React.FC = () => {
                           <td className="px-6 py-4">
                             <div className="flex items-center gap-3">
                               <div className="w-8 h-8 rounded-full bg-gray-200" />
-                              <span className="font-semibold text-[#1b1f2a]">
+                              <span className="font-semibold text-ok-heading">
                                 {entity}
                               </span>
                             </div>
@@ -422,7 +422,7 @@ export const Earnings: React.FC = () => {
                             </span>
                           </td>
                           <td className="px-6 py-4 text-right">
-                            <button className="w-9 h-9 rounded-full border border-[#d9d4e8] text-gray-500 hover:text-[#3b35d6]">
+                            <button className="w-9 h-9 rounded-full border border-ok-border text-gray-500 hover:text-ok-brand">
                               <svg
                                 className="w-5 h-5"
                                 fill="currentColor"
@@ -450,7 +450,7 @@ export const Earnings: React.FC = () => {
             </div>
 
             {/* Pagination */}
-            <div className="px-6 py-4 border-t border-[#d9d4e8] flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            <div className="px-6 py-4 border-t border-ok-border flex flex-col md:flex-row md:items-center md:justify-between gap-3">
               <p className="text-sm text-gray-600">
                 Showing {filteredTransactions.length === 0 ? 0 : startIdx + 1}{" "}
                 to{" "}
@@ -461,7 +461,7 @@ export const Earnings: React.FC = () => {
                 <button
                   onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                   disabled={currentPage === 1}
-                  className="px-3 py-1.5 rounded-lg border border-[#d9d4e8] text-sm font-semibold text-gray-600 disabled:opacity-50"
+                  className="px-3 py-1.5 rounded-lg border border-ok-border text-sm font-semibold text-gray-600 disabled:opacity-50"
                 >
                   Prev
                 </button>
@@ -473,7 +473,7 @@ export const Earnings: React.FC = () => {
                         onClick={() => setCurrentPage(page)}
                         className={`px-3 py-1.5 rounded-lg text-sm font-semibold ${
                           page === currentPage
-                            ? "bg-[#3b35d6] text-white"
+                            ? "bg-ok-brand text-white"
                             : "bg-gray-100 text-gray-600"
                         }`}
                       >
@@ -487,7 +487,7 @@ export const Earnings: React.FC = () => {
                     setCurrentPage(Math.min(totalPages, currentPage + 1))
                   }
                   disabled={currentPage === totalPages}
-                  className="px-3 py-1.5 rounded-lg border border-[#d9d4e8] text-sm font-semibold text-gray-600 disabled:opacity-50"
+                  className="px-3 py-1.5 rounded-lg border border-ok-border text-sm font-semibold text-gray-600 disabled:opacity-50"
                 >
                   Next
                 </button>

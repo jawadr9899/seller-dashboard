@@ -25,7 +25,7 @@ export const ProductRow: React.FC<ProductRowProps> = ({
   stockStatus,
   price,
 }) => (
-  <tr className="border-b border-gray-200 hover:bg-gray-50">
+  <tr className="border-b border-gray-200 transition-colors hover:bg-ok-brand/5">
     <td className="px-4 py-4">
       <div className="flex items-center gap-3">
         <img src={image} alt={name} className="w-10 h-10 rounded object-cover" />

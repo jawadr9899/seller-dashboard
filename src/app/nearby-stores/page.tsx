@@ -2,7 +2,7 @@ import NearbyStores from "@/page-components/NearbyStores";
 
 export default function NearbyStoresPage() {
   return (
-    <main className="min-h-screen bg-[#f0f3f6]">
+    <main className="min-h-screen bg-ok-bg-alt">
       <NearbyStores />
     </main>
   );

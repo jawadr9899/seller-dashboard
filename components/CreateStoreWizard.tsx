@@ -30,17 +30,17 @@ export function CreateStoreWizard() {
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <button
-            className="absolute inset-0 bg-[#1f2430]/40"
+            className="absolute inset-0 bg-ok-heading/40"
             onClick={() => setOpen(false)}
             aria-label="Close store wizard"
           />
-          <div className="relative w-full max-w-lg bg-[#fbf7ff] border border-[#d9d4e8] rounded-lg shadow-xl p-6">
+          <div className="relative w-full max-w-lg bg-ok-surface border border-ok-border rounded-lg shadow-xl p-6">
             <div className="flex items-start justify-between mb-5">
               <div>
-                <h3 className="text-lg font-bold text-[#111827]">
+                <h3 className="text-lg font-bold text-ok-heading">
                   Create your Store
                 </h3>
-                <p className="text-sm text-[#7a7890] mt-1">
+                <p className="text-sm text-ok-text-muted mt-1">
                   {step === 1
                     ? "Start by branding your store. You can change these details later."
                     : "Add a brief description for your storefront."}
@@ -48,7 +48,7 @@ export function CreateStoreWizard() {
               </div>
               <button
                 onClick={() => setOpen(false)}
-                className="w-9 h-9 rounded-sm border border-[#d9d4e8] bg-white text-[#6b668f] hover:text-[#3b35d6]"
+                className="w-9 h-9 rounded-sm border border-ok-border bg-white text-ok-text-muted hover:text-ok-brand"
               >
                 ✕
               </button>
@@ -58,7 +58,7 @@ export function CreateStoreWizard() {
               {[1, 2].map((item) => (
                 <div
                   key={item}
-                  className={`h-2 flex-1 rounded-full ${item <= step ? "bg-[#3b35d6]" : "bg-[#e7e2f3]"}`}
+                  className={`h-2 flex-1 rounded-full ${item <= step ? "bg-ok-brand" : "bg-ok-border"}`}
                 />
               ))}
             </div>
@@ -67,7 +67,7 @@ export function CreateStoreWizard() {
               {step === 1 && (
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <label className="text-sm font-semibold text-[#111827]">
+                    <label className="text-sm font-semibold text-ok-heading">
                       Store name
                     </label>
                     <Input
@@ -79,7 +79,7 @@ export function CreateStoreWizard() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-semibold text-[#111827]">
+                    <label className="text-sm font-semibold text-ok-heading">
                       Handle
                     </label>
                     <Input
@@ -108,11 +108,11 @@ export function CreateStoreWizard() {
               {step === 2 && (
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <label className="text-sm font-semibold text-[#111827]">
+                    <label className="text-sm font-semibold text-ok-heading">
                       Description
                     </label>
                     <textarea
-                      className="w-full h-24 p-3 border border-[#d9d4e8] rounded-sm bg-white text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#3b35d6]/20 focus:border-[#3b35d6]"
+                      className="w-full h-24 p-3 border border-ok-border rounded-sm bg-white text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-ok-brand/20 focus:border-ok-brand"
                       placeholder="Tell customers what your store is about..."
                       value={formData.description}
                       onChange={(e) =>
