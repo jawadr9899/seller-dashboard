@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { useAppSelector } from "@/hooks/useRedux";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { BottomTabBar } from "@/components/layout/BottomTabBar";
@@ -39,8 +39,9 @@ export const Orders: React.FC = () => {
 
   return (
     <div className="flex bg-ok-surface-alt min-h-screen">
-      <Sidebar items={navigationItems} />
-
+      <Suspense fallback={<div>Loading...</div>}>
+        <Sidebar items={navigationItems} />
+      </Suspense>
       <main className="flex-1 pb-20 lg:pb-0">
         <div className="p-4 md:p-6 max-w-7xl mx-auto space-y-6">
           <PageHeader title="All Orders" label="ORDER MANAGEMENT" />

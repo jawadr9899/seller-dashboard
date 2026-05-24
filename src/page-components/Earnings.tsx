@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { Suspense, useMemo, useState } from "react";
 import { useAppSelector } from "@/hooks/useRedux";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { BottomTabBar } from "@/components/layout/BottomTabBar";
@@ -167,7 +167,9 @@ export const Earnings: React.FC = () => {
 
   return (
     <div className="flex min-h-screen bg-ok-earnings-bg">
-      <Sidebar items={navigationItems} />
+    <Suspense fallback={<div>Loading...</div>}>
+            <Sidebar items={navigationItems} />
+    </Suspense>
       <main className="flex-1 pb-20 lg:pb-0">
         <div className="max-w-[1400px] mx-auto px-4 md:px-6 py-6 space-y-6">
           {/* Header */}

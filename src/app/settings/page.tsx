@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { BottomTabBar } from "@/components/layout/BottomTabBar";
 import { navigationItems, bottomTabs } from "@/config/navigation";
 
-export default function SettingsPage() {
+function SettingsContent() {
   const [activeSection, setActiveSection] = useState("account");
   const [selectedPaymentMethod, setSelectedPaymentMethod] =
     useState("jazzcash");
@@ -599,6 +599,14 @@ export default function SettingsPage() {
         <BottomTabBar items={bottomTabs} />
       </div>
     </div>
+  );
+}
+
+export default function SettingsPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SettingsContent />
+    </Suspense>
   );
 }
 

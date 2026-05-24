@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, Suspense } from "react";
 import { useAppSelector } from "@/hooks/useRedux";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { BottomTabBar } from "@/components/layout/BottomTabBar";
@@ -96,8 +96,10 @@ export const Stores: React.FC = () => {
   if (!store) return null;
 
   const statusStyles: Record<string, string> = {
-    Delivered: "bg-ok-success-bg text-ok-success border border-ok-success-border",
-    Processing: "bg-ok-warning-bg text-ok-warning border border-ok-warning-border",
+    Delivered:
+      "bg-ok-success-bg text-ok-success border border-ok-success-border",
+    Processing:
+      "bg-ok-warning-bg text-ok-warning border border-ok-warning-border",
     Cancelled: "bg-ok-danger-bg text-ok-danger border border-ok-danger-border",
     Settled: "bg-ok-success-bg text-ok-success border border-ok-success-border",
     Pending: "bg-ok-gray-badge text-ok-text-muted border border-ok-border",
@@ -105,7 +107,9 @@ export const Stores: React.FC = () => {
 
   return (
     <div className="flex min-h-screen bg-ok-surface-page">
-      <Sidebar items={navigationItems} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Sidebar items={navigationItems} />
+      </Suspense>
 
       <main className="flex-1 pb-20 lg:pb-0">
         <div className="max-w-[1320px] mx-auto px-4 md:px-6 py-6 space-y-6">
@@ -215,7 +219,10 @@ export const Stores: React.FC = () => {
                 </thead>
                 <tbody className="divide-y divide-ok-border">
                   {visibleRows.map((row) => (
-                    <tr key={row.id} className="transition-colors hover:bg-ok-brand/5">
+                    <tr
+                      key={row.id}
+                      className="transition-colors hover:bg-ok-brand/5"
+                    >
                       <td className="px-6 py-4 text-sm font-semibold text-ok-chart-bar">
                         {row.id}
                       </td>

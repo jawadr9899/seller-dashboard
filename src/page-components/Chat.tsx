@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { useAppSelector, useAppDispatch } from "@/hooks/useRedux";
 import { selectContact, sendMessage } from "@/store/slices/chatSlice";
 import { Sidebar } from "@/components/layout/Sidebar";
@@ -29,7 +29,9 @@ export const Chat: React.FC = () => {
 
   return (
     <div className="flex h-screen bg-ok-surface-page overflow-hidden">
-      <Sidebar items={navigationItems} />
+      <Suspense fallback={<div>Loading...</div>}>
+              <Sidebar items={navigationItems} />
+      </Suspense>
 
       <main className="flex-1 pb-16 lg:pb-0 p-4 md:p-6 overflow-hidden">
         <div className="h-full grid grid-cols-1 lg:grid-cols-[340px_1fr] gap-6">
