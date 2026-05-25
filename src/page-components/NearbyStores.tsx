@@ -509,26 +509,7 @@ export default function NearbyStores() {
         </div>
       </div>
 
-      {/* Mobile bottom navigation */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-ok-border">
-        <div className="mx-auto grid max-w-md grid-cols-4 px-6 py-2 text-xs">
-          {mobileNavItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <button
-                key={item.label}
-                className={`flex flex-col items-center gap-1 ${
-                  item.active ? "text-ok-brand" : "text-ok-text-muted"
-                }`}
-              >
-                <Icon className="h-5 w-5" />
-                <span>{item.label}</span>
-              </button>
-            );
-          })}
-        </div>
-      </nav>
-
+   
       <div
         className={`fixed inset-0 z-50 transition-opacity duration-300 ${
           isFilterOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
