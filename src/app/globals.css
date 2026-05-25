@@ -289,7 +289,7 @@
         position: absolute;
         inset: -1px;
         border-radius: inherit;
-        padding: 1.5px;
+        padding: 3px;
         background: linear-gradient(
             135deg,
             var(--ok-icon-blue),
